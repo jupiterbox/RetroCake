@@ -3,7 +3,10 @@
 ::I have commented as much as I think is needed, but if there is any confusion just message me through github!::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 @echo off
-if not "%1" == "max" start /MAX cmd /c %0 max & exit/b
+::
+:: Disabled this max window size for command because I prefer not to take up whole screen
+:: if not "%1" == "max" start /MAX cmd /c %0 max & exit/b
+::
 ::Checks if the batch file was run as admin. If not it yells at you and will exit.
 :check_Permissions
     net session >nul 2>&1
