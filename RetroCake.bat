@@ -10205,10 +10205,8 @@ echo =
 echo =   This will open Cxbx-Reloaded's GitHub site in 
 echo =   MS Edge web browser.
 echo =
-echo =     - Download the compressed file of latest
-echo =       version of  Cxbx-Reloaded... Look for
-             the link "Latest Development Build".
-echo =     - Please get portable version, not installer!!
+echo =     - Look for the link "Latest Development Build"
+echo =       and click on that to download the zipped file.
 echo =     - Extract contents of this file into
 echo =       'C:\RetroCake\Emulators\Cxbx-Reloaded'
 echo =       directory
@@ -10249,12 +10247,13 @@ echo =
 echo =   Some websites require some interactivity
 echo =   in web browser in order to download a file
 echo = 
-echo =   This will open Xenia's GitHub site in 
+echo =   This will open Xenia's project site in 
 echo =   MS Edge web browser.
 echo =
-echo =     - Download  TWO  compressed files of latest
-echo =       version of  Xenia  D3d12  and  Vulkan
-echo =     - Please avoid self installing exe file.!!
+echo =     - Click on link "Download" on left side
+echo =     - Download  TWO  compressed files:
+echo =          - master (Vulkan)
+                - d3d12 (D3D12)
 echo =     - Extract contents of both files into 
 echo =       'C:\RetroCake\Emulators\Xenia-directx'
 echo =         and
@@ -10266,7 +10265,7 @@ echo =
 
 pause
 
-start microsoft-edge:https://github.com/xenia-project/xenia
+start microsoft-edge:https://xenia.jp
 
 pause
 
