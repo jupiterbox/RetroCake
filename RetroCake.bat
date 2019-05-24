@@ -309,7 +309,7 @@ goto menu
 ::
 
 cls
-echo A fork of Flerp/RetroCake.  Modified date: May 20, 2019
+echo A fork of Flerp/RetroCake.  Modified date: May 23, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
