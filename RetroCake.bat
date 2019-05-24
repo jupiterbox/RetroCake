@@ -2489,21 +2489,19 @@ echo     ^<theme^>videopac-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>macintosh^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Macintosh - (Jan 1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\macintosh^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .dsk .img .rom .7Z .ZIP .DSK .IMG .ROM^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo ^<!-- START:  THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\SheepShaver\sheepshaver.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\BasiliskII\basiliskii.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\MinivMac\minivmac.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo ^<!-- END:  THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>macintosh^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>macintosh^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4079,21 +4077,19 @@ echo     ^<theme^>videopac-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>macintosh^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Macintosh - (Jan 1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\macintosh^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .dsk .img .rom .7Z .ZIP .DSK .IMG .ROM^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo ^<!-- START:  THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\SheepShaver\sheepshaver.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\BasiliskII\basiliskii.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\MinivMac\minivmac.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo ^<!-- END:  THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>macintosh^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>macintosh^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5665,21 +5661,19 @@ echo     ^<theme^>videopac-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>macintosh^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Macintosh - (Jan 1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path%cusromdir%ROMS\computer\macintosh^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .dsk .img .rom .7Z .ZIP .DSK .IMG .ROM^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo ^<!-- START:  THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command%cusromdir%Emulators\SheepShaver\sheepshaver.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command%cusromdir%Emulators\BasiliskII\basiliskii.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command%cusromdir%Emulators\MinivMac\minivmac.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo ^<!-- END:  THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>macintosh^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>macintosh^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo ^<!-- THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -10253,7 +10247,7 @@ echo =
 echo =     - Click on link "Download" on left side
 echo =     - Download  TWO  compressed files:
 echo =          - master (Vulkan)
-                - d3d12 (D3D12)
+echo =          - d3d12 (D3D12)
 echo =     - Extract contents of both files into 
 echo =       'C:\RetroCake\Emulators\Xenia-directx'
 echo =         and
