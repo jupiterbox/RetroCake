@@ -41,18 +41,20 @@ goto CheckRetroCake
 :CusInstall
 ::Prompts to install in a custom directory or default C:\RetroCake.
 cls
+
 echo =================================================================
 echo =                                                               =
-echo =    Install RetroCake in default or custom directory ?         =
+echo =    Install RetroCake in which directory...                    =
 echo =                                                               =
-echo =       N  =  Default directory ( C:\RetroCake )                =
+echo =       1  =  Default directory  ( C:\RetroCake )               =
 echo =                                                               =
-echo =       Y  =  Custom directory                                  =
+echo =       2  =  Custom directory   ( Preferred folder name )      =
 echo =                                                               =
 echo =================================================================
-set /P c=Your choice [Y/N] ?
-if /I "%c%" EQU "Y" goto CusInstallY
-if /I "%c%" EQU "N" goto CusInstallN
+echo .
+CHOICE /N /C:12 /M ".. Your choice (1 or 2)"
+IF ERRORLEVEL ==2 GOTO CusInstallY
+IF ERRORLEVEL ==1 GOTO CusInstallN
 
 :CusInstallY
 ::Pronpts to enter the custom installation directory.
