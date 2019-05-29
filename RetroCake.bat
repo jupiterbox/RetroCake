@@ -41,7 +41,6 @@ goto CheckRetroCake
 :CusInstall
 ::Prompts to install in a custom directory or default C:\RetroCake.
 cls
-
 echo =================================================================
 echo =                                                               =
 echo =    Install RetroCake in default or custom directory ?         =
@@ -51,7 +50,6 @@ echo =                                                               =
 echo =       Y  =  Custom directory                                  =
 echo =                                                               =
 echo =================================================================
-
 set /P c=Your choice [Y/N] ?
 if /I "%c%" EQU "Y" goto CusInstallY
 if /I "%c%" EQU "N" goto CusInstallN
