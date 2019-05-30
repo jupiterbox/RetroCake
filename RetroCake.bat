@@ -618,7 +618,7 @@ cls
 ping 127.0.0.1 -n 2 >nul
 echo @echo off
 echo del %rkdir%\Tools\RetroCake.bat /S /Q > "%rkdir%\Tools\Updater.bat"
-echo %rkdir%\Tools\git\bin\git.exe clone --depth=1 https://github.com/Flerp/RetroCake.git %rkdir%\Temp\Script >> "%rkdir%\Tools\Updater.bat"
+echo %rkdir%\Tools\git\bin\git.exe clone --depth=1 https://github.com/jupiterbox/RetroCake.git %rkdir%\Temp\Script >> "%rkdir%\Tools\Updater.bat"
 echo xcopy %rkdir%\Temp\Script\RetroCake.bat %rkdir%\Tools\ >> "%rkdir%\Tools\Updater.bat"
 echo rmdir %rkdir%\Temp\Script\ /S /Q >> "%rkdir%\Tools\Updater.bat"
 echo start %rkdir%\Tools\RetroCake.bat >> "%rkdir%\Tools\Updater.bat"
