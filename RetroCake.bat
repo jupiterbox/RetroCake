@@ -387,11 +387,11 @@ echo ===========================================================================
 echo =                                                                         =
 echo =    1.) CHECK EMULATIONSTATION FOR UPDATES                               =
 echo =                                                                         =
-echo =    2.) VISIT EMULATIONSTATION GITHUB SITE                               =
+echo =    2.) MANAGE ES_SYSTEMS.CFG                                            =
 echo =                                                                         =
-echo =    3.) MANAGE ES_SYSTEMS.CFG                                            =
+echo =    3.) MANAGE EMULATIONSTATION THEMES                                   =
 echo =                                                                         =
-echo =    4.) MANAGE EMULATIONSTATION THEMES                                   =
+echo =    4.) VISIT EMULATIONSTATION GITHUB SITE                               =
 echo =                                                                         =
 echo =                                                                         =
 echo =    5.) RETURN TO MAIN MENU                                              =
@@ -399,9 +399,9 @@ echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
 IF ERRORLEVEL ==5 GOTO menu
-IF ERRORLEVEL ==4 GOTO ThemeManager
-IF ERRORLEVEL ==3 GOTO ManESCFG
-IF ERRORLEVEL ==2 GOTO VisitESWeb
+IF ERRORLEVEL ==4 GOTO VisitESWeb
+IF ERRORLEVEL ==3 GOTO ThemeManager
+IF ERRORLEVEL ==2 GOTO ManESCFG
 IF ERRORLEVEL ==1 GOTO StartESVerCheck
 
 ::=================================================================================================================================================================================================================================================================================================================
