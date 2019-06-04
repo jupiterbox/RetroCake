@@ -6326,11 +6326,11 @@ goto completed
 cls
 echo ==================================================================================
 echo =                                                                                =
-Echo =  This option creates slightly modified RetroArch config file  (99^% default)    =
+Echo =  This option creates slightly modified RetroArch config file  (99%% default)    =
 echo =                                                                                =
 echo =       (For instance...)                                                        =
 echo =            -- Adds the Start+Select opening of RetroArch menu in game          =
-echo =            -- Display frames counter (framecount_show = "true")                =
+echo =            -- Displays frames counter (framecount_show = "true")               =
 echo =                                                                                =
 echo =   Create config file ?                                                         =
 echo =                                                                                =
