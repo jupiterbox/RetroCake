@@ -6326,7 +6326,7 @@ goto completed
 cls
 echo ==================================================================================
 echo =                                                                                =
-Echo =  This option creates slightly modified RetroArch config file  (99% default)    =
+Echo =  This option creates slightly modified RetroArch config file  (99^% default)    =
 echo =                                                                                =
 echo =       (For instance...)                                                        =
 echo =            -- Adds the Start+Select opening of RetroArch menu in game          =
