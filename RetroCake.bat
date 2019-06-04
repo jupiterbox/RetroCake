@@ -8041,7 +8041,7 @@ echo input_keyboard_layout = "">> %rkdir%\RetroArch\retroarch.cfg
 echo bundle_assets_src_path = "">> %rkdir%\RetroArch\retroarch.cfg
 echo bundle_assets_dst_path = "">> %rkdir%\RetroArch\retroarch.cfg
 echo bundle_assets_dst_path_subdir = "">> %rkdir%\RetroArch\retroarch.cfg
-goto updatecores
+goto RAMenu
 
 
 ::=================================================================================================================================================================================================================================================================================================================
