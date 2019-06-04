@@ -415,7 +415,7 @@ Echo =    1.) INSTALL RETROARCH 1.7.7                                          =
 echo =                                                                         =
 echo =    2.) UPDATE/INSTALL RETROARCH TO THE LATEST NIGHTLY BUILD             =
 echo =                                                                         =
-echo =    3.) GENERATE CLEAN RETROARCH.CFG                                     =
+echo =    3.) GENERATE SLIGHTLY MODIFIED RETROARCH.CFG                         =
 echo =                                                                         =
 echo =    4.) UPDATE RETROARCH CORES TO THE LATEST NIGHTLY BUILD               =
 echo =                                                                         =
@@ -1016,11 +1016,11 @@ goto completed
 cls
 echo ===================================================================================
 echo =                                                                                 =
-Echo =    1.) CREATE NEW ES_SYSTEMS.CFG WITHOUT ROM PATHS                              =
-echo =                                                                                 =
-echo =    2.) CREATE NEW ES_SYSTEMS.CFG WITH DEFAULT ROM PATH %rkdir%\ROMS\SYSTEM =
-echo =                                                                                 =
-echo =    3.) CREATE NEW ES_SYSTEMS.CFG WITH CUSTOM ROM PATH                           =
+Echo =    1.) CREATE NEW ES_SYSTEMS.CFG WITHOUT ROM PATHS                              
+echo =                                                                                 
+echo =    2.) CREATE NEW ES_SYSTEMS.CFG WITH DEFAULT ROM PATH %rkdir%\ROMS\SYSTEM 
+echo =                                                                                 
+echo =    3.) CREATE NEW ES_SYSTEMS.CFG WITH CUSTOM ROM PATH                           
 echo =                                                                                 =
 echo =    4.) EDIT ES_SYSTEMS.CFG                                                      =
 echo =                                                                                 =
@@ -1128,7 +1128,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>fba^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Final Burn Alpha^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Final Burn Neo (FBA)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\fba^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.fba .zip .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1139,7 +1139,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>fba-selects^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>FBA Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>FBNeo Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\fba-selects^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.fba .zip .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2734,7 +2734,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>fba^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Final Burn Alpha^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Final Burn Neo (FBA)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\arcade\fba^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.fba .zip .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2745,7 +2745,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>fba-selects^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>FBA Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>FBNeo Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\arcade\fba-selects^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.fba .zip .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4332,7 +4332,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>fba^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Final Burn Alpha^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Final Burn Neo (FBA)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\arcade\fba^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.fba .zip .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4343,7 +4343,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>fba-selects^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>FBA Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>FBNeo Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\arcade\fba-selects^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.fba .zip .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5874,11 +5874,10 @@ mkdir %rkdir%\ROMS\arcade\mame2000
 mkdir %rkdir%\ROMS\arcade\mame2003
 mkdir %rkdir%\ROMS\arcade\mame2003-plus
 mkdir %rkdir%\ROMS\arcade\mame2010
-mkdir %rkdir%\ROMS\arcade\mame2014
 mkdir %rkdir%\ROMS\arcade\mame2015
 mkdir %rkdir%\ROMS\arcade\mame2016
 mkdir %rkdir%\ROMS\arcade\neogeo-mvs
-mkdir %rkdir%\ROMS\arcade\vector-fbneo
+mkdir %rkdir%\ROMS\arcade\vector-games
 
 
 mkdir %rkdir%\ROMS\console\atari2600
@@ -6049,11 +6048,10 @@ mkdir %cusromdir%\ROMS\arcade\mame2000
 mkdir %cusromdir%\ROMS\arcade\mame2003
 mkdir %cusromdir%\ROMS\arcade\mame2003-plus
 mkdir %cusromdir%\ROMS\arcade\mame2010
-mkdir %cusromdir%\ROMS\arcade\mame2014
 mkdir %cusromdir%\ROMS\arcade\mame2015
 mkdir %cusromdir%\ROMS\arcade\mame2016
 mkdir %cusromdir%\ROMS\arcade\neogeo-mvs
-mkdir %cusromdir%\ROMS\arcade\vector-fbneo
+mkdir %cusromdir%\ROMS\arcade\vector-games
 
 
 mkdir %cusromdir%\ROMS\console\atari2600
@@ -6325,7 +6323,27 @@ goto completed
 ::  RACFG is now optional for creating a modified retroarch.cfg file.  My preference is to let RetroArch to create its default retroarch.cfg file at first run.  Make a copy of that file, and then edit RetroArch as I see fit. 
 ::
 
+cls
+echo ==================================================================================
+echo =                                                                                =
+Echo =  This option creates slightly modified RetroArch config file  (99% default)    =
+echo =                                                                                =
+echo =       (For instance...)                                                        =
+echo =            -- Adds the Start+Select opening of RetroArch menu in game          =
+echo =            -- Display frames counter (framecount_show = "true")                =
+echo =                                                                                =
+echo =   Create config file ?                                                         =
+echo =                                                                                =
+echo =      Y - YES                                                                   =
+echo =                                                                                =
+echo =      N - NO/CANCEL  - RetroArch will create default config file at first run   =
+echo =                                                                                =
+echo ==================================================================================
+CHOICE /N /C:YN /M "Enter Y  or  N"
+IF ERRORLEVEL ==2 GOTO RAMenu
+IF ERRORLEVEL ==1 GOTO CreateRACfg
 
+:CreateRACfg
 echo config_save_on_exit = "true"> %rkdir%\RetroArch\retroarch.cfg
 echo core_updater_buildbot_url = "http://buildbot.libretro.com/nightly/windows/x86_64/latest/">> %rkdir%\RetroArch\retroarch.cfg
 echo core_updater_buildbot_assets_url = "http://buildbot.libretro.com/assets/">> %rkdir%\RetroArch\retroarch.cfg
