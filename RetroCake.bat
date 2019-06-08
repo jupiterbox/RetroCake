@@ -8616,11 +8616,14 @@ IF ERRORLEVEL ==1 GOTO SelectThemes
 cls
 echo ===========================================================================
 echo =                                                                         =
-echo =   This will open RetroPie's website in MS Edge web browser.             =
+echo =   Visit RetroPie's website in MS Edge web browser.                      =
+echo =                                                                         =
+echo =   This only allows you to preview images of named select ES theme.      =
+echo =                                                                         =
+echo =   Other themes are not downloadable.                                    =
 echo =                                                                         =
 echo =                                                                         =
 echo =   https://github.com/RetroPie/RetroPie-Setup/wiki/Themes#theme-gallery  = 
-echo =                                                                         =
 echo =                                                                         =
 pause
 start microsoft-edge:https://github.com/RetroPie/RetroPie-Setup/wiki/Themes#theme-gallery
