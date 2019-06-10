@@ -311,7 +311,7 @@ goto menu
 ::
 
 cls
-echo A fork of Flerp/RetroCake v1.4.5     Modified date: June 7, 2019
+echo A fork of Flerp/RetroCake v1.4.5     Modified date: June 9, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -8587,10 +8587,11 @@ goto CleanAllExit
 
 ::
 :: Themes reduction.  Selects are based on... 
-::    1) avoid total black screen for unknown systems
-::    2) more systems (art)
-::    3) reduce screen brightness
-:: Also, a few themes of are easy to add/modify art/system/XML files/folders for unknown systems
+::    1) more systems  (logo and system images)
+::    2) reduce screen brightness  (such as dark mode, and easy on my eyes)
+::    3) simple and elegant 'look' as much as possible  (my preference)
+:: Also, a few of them are easy to learn how to add some more matching
+:: logo and system images for some ES theme pack with missing graphics.
 ::
 
 cls
@@ -8616,11 +8617,11 @@ IF ERRORLEVEL ==1 GOTO SelectThemes
 cls
 echo ===========================================================================
 echo =                                                                         =
-echo =   Visit RetroPie's website in MS Edge web browser.                      =
+echo =   Visit RetroPie's ES Themes webpage in MS Edge web browser.            =
 echo =                                                                         =
-echo =   This only allows you to preview images of named select ES theme.      =
-echo =                                                                         =
-echo =   Other themes are not downloadable.                                    =
+echo =   That site has set of preview images of different themes, but          =
+echo =   they are not downloadable.  It just gives you idea of what            =
+echo =   some ES themes look like...(provided in this batch script).           =
 echo =                                                                         =
 echo =                                                                         =
 echo =   https://github.com/RetroPie/RetroPie-Setup/wiki/Themes#theme-gallery  = 
