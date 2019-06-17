@@ -513,7 +513,7 @@ echo =    4.) INSTALL 3DS EMULATOR (Citra)                                     =
 echo =                                                                         =
 echo =    5.) INSTALL MSX/ColecoVision EMULATOR (BlueMSX)                      =
 echo =                                                                         =
-echo =    6.) INSTALL TI-99/4A EMULATOR (Classic99)                            =
+echo =    6.) -- TEMPORARILY DISABLED -- INSTALL TI-99/4A EMULATOR (Classic99) =
 echo =                                                                         =
 echo =    7.) INSTALL AdvanceMAME                                              =
 echo =                                                                         =
@@ -527,7 +527,7 @@ CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7,
 IF ERRORLEVEL ==9 GOTO EmuPage3
 IF ERRORLEVEL ==8 GOTO MAME
 IF ERRORLEVEL ==7 GOTO AdvanceMAME
-IF ERRORLEVEL ==6 GOTO Classic99
+IF ERRORLEVEL ==6 GOTO EmuPage2
 IF ERRORLEVEL ==5 GOTO BlueMSX
 IF ERRORLEVEL ==4 GOTO Citra
 IF ERRORLEVEL ==3 GOTO CemuEmu
@@ -9333,7 +9333,7 @@ echo =                      DOWNLOADING CEMU                         =
 echo =                                                               =
 echo =================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.6.zip -O "%rkdir%\Temp\cemu.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.8.zip -O "%rkdir%\Temp\cemu.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cemu.zip" -o"%rkdir%\Emulators" -aoa > nul
 ren %rkdir%\Emulators\cemu_1.15.6 Cemu
 
@@ -9363,7 +9363,7 @@ echo =                    DOWNLOADING CITRA                         =
 echo =                                                              =
 echo ================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/citra-emu/citra-nightly/releases/download/nightly-1268/citra-windows-mingw-20190511-af197c1.7z -O "%rkdir%\Temp\citra.7z"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/citra-emu/citra-nightly/releases/download/nightly-1280/citra-windows-mingw-20190610-73bf92f.7z -O "%rkdir%\Temp\citra.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\citra.7z" -o"%rkdir%\Emulators" -aoa > nul
 ren %rkdir%\Emulators\nightly-mingw Citra
 
@@ -9375,38 +9375,42 @@ echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\citra.7z
-if EXIST %rkdir%\Emulators\tmp.txt goto Classic99
+if EXIST %rkdir%\Emulators\tmp.txt goto Daphne
 goto completed
 
 
 ::=================================================================================================================================================================================================================================================================================================================
 
 
+::  Skipping this section because Windows Defender detected a malware 
+::  in 'Classic99' zip file from its developer's GitHub site.
+::  Until the developer has resolved the malware issue, this will be
+::  restored.
 
-:Classic99
+::Classic99
 ::Installs  Classic99  emulator  ( Ti-99 / 4A )
-cls
+::cls
 
-echo =================================================================
-echo =                                                               =
-echo =             DOWNLOADING Classic99                             =
-echo =                                                               =
-echo =================================================================
+::echo =================================================================
+::echo =                                                               =
+::echo =             DOWNLOADING Classic99                             =
+::echo =                                                               =
+::echo =================================================================
 
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/tursilion/classic99/raw/master/dist/classic99.zip -O "%rkdir%\Temp\Classic99.zip"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Classic99.zip" -o"%rkdir%\Emulators" -aoa > nul
+::%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/tursilion/classic99/raw/master/dist/classic99.zip -O "%rkdir%\Temp\Classic99.zip"
+::%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Classic99.zip" -o"%rkdir%\Emulators" -aoa > nul
 
-cls
+::cls
 
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+::echo ================================================
+::echo =        Cleaning up downloaded file(s)        =
+::echo ================================================
 
-ping 127.0.0.1 -n 3 > nul
-del %rkdir%\Temp\Classic99.zip
-if EXIST %rkdir%\Emulators\tmp.txt goto Daphne
-goto completed
+::ping 127.0.0.1 -n 3 > nul
+::del %rkdir%\Temp\Classic99.zip
+::if EXIST %rkdir%\Emulators\tmp.txt goto Daphne
+::goto completed
 
 
 
@@ -9454,7 +9458,7 @@ echo =                     DOWNLOADING DOLPHIN                       =
 echo =                                                               =
 echo =================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://dl.dolphin-emu.org/builds/dolphin-master-5.0-10200-x64.7z -O "%rkdir%\Temp\Dolphin.7z"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://dl.dolphin-emu.org/builds/dolphin-master-5.0-10506-x64.7z -O "%rkdir%\Temp\Dolphin.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Dolphin.7z" -o"%rkdir%\Emulators" -aoa > nul
 ren %rkdir%\Emulators\Dolphin-x64 Dolphin
 
@@ -9665,13 +9669,13 @@ echo ===========================================================
 echo =                                                         =
 echo =                DOWNLOADING MAME 32-bit                  =
 echo =                                                         =
-echo =                   Version:  0.209b                      =
+echo =                   Version:  0.210b                      =
 echo =                                                         =
 echo =              Replace version as necessary               =
 echo =                                                         =
 echo ===========================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0209/mame0209b_32bit.exe -O "%rkdir%\Temp\Mame32.exe"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0210/mame0210b_32bit.exe -O "%rkdir%\Temp\Mame32.exe"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame32.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
@@ -9692,13 +9696,13 @@ echo ===========================================================
 echo =                                                         =
 echo =                DOWNLOADING MAME 64-bit                  =
 echo =                                                         =
-echo =                   Version:  0.209b                      =
+echo =                   Version:  0.210b                      =
 echo =                                                         =
 echo =              Replace version as necessary               =
 echo =                                                         =
 echo ===========================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0209/mame0209b_64bit.exe -O "%rkdir%\Temp\Mame64.exe"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0210/mame0210b_64bit.exe -O "%rkdir%\Temp\Mame64.exe"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame64.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
@@ -9760,7 +9764,7 @@ echo =           NOTE:  Only available for Win 64-bit               =
 echo =                                                              =
 echo ================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/RPCS3/rpcs3-binaries-win/releases/download/build-fce9d6a7b851682e78814da813d4c0d9d98f6f81/rpcs3-v0.0.6-8086-fce9d6a7_win64.7z -O "%rkdir%\Temp\rpcs3.7z"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/RPCS3/rpcs3-binaries-win/releases/download/build-d52953fca6ea5ae3ae0eee52cc91507c52bd8ff2/rpcs3-v0.0.6-8261-d52953fc_win64.7z -O "%rkdir%\Temp\rpcs3.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\rpcs3.7z" -o"%rkdir%\Emulators\Rpcs3" -aoa > nul
 
 cls
