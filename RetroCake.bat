@@ -311,7 +311,7 @@ goto menu
 ::
 
 cls
-echo A fork of Flerp/RetroCake v1.4.5     Modified date: June 9, 2019
+echo A fork of Flerp/RetroCake v1.4.5     Modified date: June 16, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -8586,12 +8586,10 @@ goto CleanAllExit
 ::Menu for managing and installing select themes for EmulationStation
 
 ::
-:: Themes reduction.  Selects are based on... 
-::    1) more systems  (logo and system images)
-::    2) reduce screen brightness  (such as dark mode, and easy on my eyes)
-::    3) simple and elegant 'look' as much as possible  (my preference)
-:: Also, a few of them are easy to learn how to add some more matching
-:: logo and system images for some ES theme pack with missing graphics.
+:: Themes Collection is based on... 
+::    1) simple and elegant 'look' as much as possible  (my preference for HDTV and small display or window)
+::    2) more hardware systems  
+::    3) if missing systems, then themes should be easy to study and learn for adding more images
 ::
 
 cls
@@ -8636,8 +8634,38 @@ goto ThemeManager
 ::Using git to download a selection of themes
 cd /D "%USERPROFILE%\.emulationstation\themes"
 
+set repo=lilbud
+set theme=angular
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=waweedman
+set theme=Blade-360
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=bluray
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=CapcomColorSpin
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
 set repo=RetroPie
 set theme=carbon
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroPie
+set theme=carbon-nometa
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=circuit
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -8647,7 +8675,22 @@ rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
 set repo=ChoccyHobNob
-set theme=cygnus
+set theme=Cygnus
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=darkswitch
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=donkeykonkey
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=AmadhiX
+set theme=eudora
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -8656,8 +8699,53 @@ set theme=eudora-bigshot
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+set repo=lilbud
+set theme=flat
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=lilbud
+set theme=flat-dark
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=rxbrad
+set theme=freeplay
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=G-rila
+set theme=fundamental
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=dmmarti
+set theme=gamehat
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
 set repo=rxbrad
 set theme=gbz35-dark
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=mattrixk
+set theme=io
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=blowfinger77
+set theme=locomotion
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=lilbud
+set theme=material
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=mattrixk
+set theme=metapixel
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -8666,8 +8754,38 @@ set theme=minimal
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+set repo=RetroPie
+set theme=nbba
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=anthonycaccese
+set theme=picade
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
 set repo=ehettervik
 set theme=pixel
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=ehettervik
+set theme=pixel-metadata
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=lipebello
+set theme=retrorama
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=retroroid
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=nickearl
+set theme=retrowave
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -8676,13 +8794,38 @@ set theme=snes-mini
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+set repo=RetroHursty69
+set theme=spaceinvaders
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
 set repo=lipebello
 set theme=SpaceOddity
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+set repo=dmmarti
+set theme=steampunk
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=mrharias
+set theme=superdisplay
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
 set repo=lilbud
 set theme=switch-dark
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=anthonycaccese
+set theme=tft
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=mattrixk
+set theme=core
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -8694,62 +8837,179 @@ goto ThemeManager
 cls
 echo ===========================================================================
 echo =                               Page 1                                    =
-Echo =    1.) CARBON                                                           =
-echo =    2.) COMICBOOK SE - WHEELART                                          =
-echo =    3.) CYGNUS                                                           =
-echo =    4.) EUDORA BIGSHOT                                                   =
-echo =    5.) GBZ35-DARK                                                       =
-echo =    6.) MINIMAL                                                          =
-echo =    7.) PIXEL                                                            =
-echo =    8.) SNES-MINI                                                        =
+echo =    1.) ANGULAR                                                          =
+echo =    2.) BLADE-360                                                        =
+echo =    3.) BLURAY                                                           =
+echo =    4.) CAPCOMCOLORSPIN                                                  =
+echo =    5.) CARBON                                                           =
+echo =    6.) CARBON-NOMETA                                                    =
+echo =    7.) CIRCUIT                                                          =
+echo =    8.) COMICBOOK_SE-WHEELART                                            =
 echo =                                                                         =
 echo =    9.) Page 2                                                           =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO page2
-IF ERRORLEVEL ==8 goto snesminiind 
-IF ERRORLEVEL ==7 goto pixel 
-IF ERRORLEVEL ==6 goto minimal 
-IF ERRORLEVEL ==5 goto gbz35-dark 
-IF ERRORLEVEL ==4 goto eudora-bigshot 
-IF ERRORLEVEL ==3 goto cygnus 
-IF ERRORLEVEL ==2 goto ComicBook_SE-Wheelart 
-IF ERRORLEVEL ==1 goto carbon 
+IF ERRORLEVEL ==8 goto ComicBook_SE-Wheelart 
+IF ERRORLEVEL ==7 goto circuit 
+IF ERRORLEVEL ==6 goto carbon-nometa 
+IF ERRORLEVEL ==5 goto carbon 
+IF ERRORLEVEL ==4 goto CapcomColorSpin 
+IF ERRORLEVEL ==3 goto bluray 
+IF ERRORLEVEL ==2 goto blade-360 
+IF ERRORLEVEL ==1 goto angular 
 
 :page2
 cls
 echo ===========================================================================
 echo =                               Page 2                                    =
-Echo =    1.) SPACEODDITY                                                      =
-echo =    2.) SWITCH - DARK                                                    =
-echo =    3.)                                                                  =
-echo =    4.)                                                                  =
-echo =    5.)                                                                  =
-echo =    6.)                                                                  =
-echo =    7.)                                                                  =
-echo =    8.)                                                                  =
+echo =    1.) CYGNUS                                                           =
+echo =    2.) DARKSWITCH                                                       =
+echo =    3.) DONKEYKONKEY                                                     =
+echo =    4.) EUDORA                                                           =
+echo =    5.) EUDORA-BIGSHOT                                                   =
+echo =    6.) FLAT                                                             =
+echo =    7.) FLAT-DARK                                                        =
+echo =    8.) FREEPLAY                                                         =
+echo =                                                                         =
+echo =    9.) Page 3                                                           =
+echo =                                                                         =
+echo ===========================================================================
+CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
+IF ERRORLEVEL ==9 GOTO page3
+IF ERRORLEVEL ==8 goto freeplay
+IF ERRORLEVEL ==7 goto flat-dark
+IF ERRORLEVEL ==6 goto flat
+IF ERRORLEVEL ==5 goto eudora-bigshot
+IF ERRORLEVEL ==4 goto eudora
+IF ERRORLEVEL ==3 goto DonkeyKonkey
+IF ERRORLEVEL ==2 goto DarkSwitch 
+IF ERRORLEVEL ==1 goto cygnus
+
+
+
+:page3
+cls
+echo ===========================================================================
+echo =                               Page 3                                    =
+echo =    1.) FUNDAMENTAL                                                      =
+echo =    2.) GAMEHAT                                                          =
+echo =    3.) GBZ35-DARK                                                       =
+echo =    4.) IO                                                               =
+echo =    5.) LOCOMOTION                                                       =
+echo =    6.) MATERIAL                                                         =
+echo =    7.) METAPIXEL                                                        =
+echo =    8.) MINIMAL                                                          =
+echo =                                                                         =
+echo =    9.) Page 4                                                           =
+echo =                                                                         =
+echo ===========================================================================
+CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
+IF ERRORLEVEL ==9 GOTO page4
+IF ERRORLEVEL ==8 goto minimal
+IF ERRORLEVEL ==7 goto metapixel
+IF ERRORLEVEL ==6 goto material
+IF ERRORLEVEL ==5 goto locomotion
+IF ERRORLEVEL ==4 goto io
+IF ERRORLEVEL ==3 goto gbz35-dark
+IF ERRORLEVEL ==2 goto gamehat 
+IF ERRORLEVEL ==1 goto fundamental
+
+
+
+
+:page4
+cls
+echo ===========================================================================
+echo =                               Page 4                                    =
+echo =    1.) NBBA                                                             =
+echo =    2.) PICADE                                                           =
+echo =    3.) PIXEL                                                            =
+echo =    4.) PIXEL-METADATA                                                   =
+echo =    5.) RETRORAMA                                                        =
+echo =    6.) RETROROID                                                        =
+echo =    7.) RETROWAVE                                                        =
+echo =    8.) SNES-MINI                                                        =
+echo =                                                                         =
+echo =    9.) Page 5                                                           =
+echo =                                                                         =
+echo ===========================================================================
+CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
+IF ERRORLEVEL ==9 GOTO page5
+IF ERRORLEVEL ==8 goto snes-mini
+IF ERRORLEVEL ==7 goto retrowave
+IF ERRORLEVEL ==6 goto retroroid
+IF ERRORLEVEL ==5 goto retrorama
+IF ERRORLEVEL ==4 goto pixel-metadata
+IF ERRORLEVEL ==3 goto pixel
+IF ERRORLEVEL ==2 goto picade 
+IF ERRORLEVEL ==1 goto nbba
+
+
+
+:page5
+cls
+echo ===========================================================================
+echo =                               Page 5                                    =
+echo =    1.) SPACEINVADERS                                                    =
+echo =    2.) SPACEODDITY                                                      =
+echo =    3.) STEAMPUNK                                                        =
+echo =    4.) SUPERDISPLAY                                                     =
+echo =    5.) SWITCH-DARK                                                      =
+echo =    6.) TFT                                                              =
+echo =    7.) CORE  (few systems but easy add more images)                     =
+echo =                                                                         =
 echo =                                                                         =
 echo =    9.) Return to ThemeManager                                           =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO ThemeManager
-IF ERRORLEVEL ==8 goto page2
-IF ERRORLEVEL ==7 goto page2
-IF ERRORLEVEL ==6 goto page2
-IF ERRORLEVEL ==5 goto page2
-IF ERRORLEVEL ==4 goto page2
-IF ERRORLEVEL ==3 goto page2
-IF ERRORLEVEL ==2 goto switch-dark 
-IF ERRORLEVEL ==1 goto SpaceOddity
+IF ERRORLEVEL ==7 goto coretheme
+IF ERRORLEVEL ==6 goto tft
+IF ERRORLEVEL ==5 goto switch-dark
+IF ERRORLEVEL ==4 goto superdisplay
+IF ERRORLEVEL ==3 goto steampunk
+IF ERRORLEVEL ==2 goto SpaceOddity 
+IF ERRORLEVEL ==1 goto SpaceInvaders
 
 
 ::Sets a variable for each theme individually. Then moves to cloning from github.
 
+:angular
+set repo=lilbud
+set theme=angular
+goto insttheme
+
+:blade-360
+set repo=waweedman
+set theme=Blade-360
+goto insttheme
+
+:bluray
+set repo=RetroHursty69
+set theme=bluray
+goto insttheme
+
+:CapcomColorSpin
+set repo=RetroHursty69
+set theme=CapcomColorSpin
+goto insttheme
+
 :carbon
 set repo=RetroPie
 set theme=carbon
+goto insttheme
+
+:carbon-nometa
+set repo=RetroPie
+set theme=carbon-nometa
+goto insttheme
+
+:circuit
+set repo=RetroHursty69
+set theme=circuit
 goto insttheme
 
 :ComicBook_SE-Wheelart
@@ -8762,9 +9022,49 @@ set repo=ChoccyHobNob
 set theme=cygnus
 goto insttheme
 
+:DarkSwitch
+set repo=RetroHursty69
+set theme=darkswitch
+goto insttheme
+
+:DonkeyKonkey
+set repo=RetroHursty69
+set theme=donkeykonkey
+goto insttheme
+
+:eudora
+set repo=AmadhiX
+set theme=eudora
+goto insttheme
+
 :eudora-bigshot
 set repo=AmadhiX
 set theme=eudora-bigshot
+goto insttheme
+
+:flat
+set repo=lilbud
+set theme=flat
+goto insttheme
+
+:flat-dark
+set repo=lilbud
+set theme=flat-dark
+goto insttheme
+
+:freeplay
+set repo=rxbrad
+set theme=freeplay
+goto insttheme
+
+:fundamental
+set repo=G-rila
+set theme=fundamental
+goto insttheme
+
+:gamehat
+set repo=dmmarti
+set theme=gamehat
 goto insttheme
 
 :gbz35-dark
@@ -8772,9 +9072,39 @@ set repo=rxbrad
 set theme=gbz35-dark
 goto insttheme
 
+:io
+set repo=mattrixk
+set theme=io
+goto insttheme
+
+:locomotion
+set repo=blowfinger77
+set theme=locomotion
+goto insttheme
+
+:material
+set repo=lilbud
+set theme=material
+goto insttheme
+
+:metapixel
+set repo=mattrixk
+set theme=metapixel
+goto insttheme
+
 :minimal
 set repo=lilbud
 set theme=minimal
+goto insttheme
+
+:nbba
+set repo=RetroPie
+set theme=nbba
+goto insttheme
+
+:picade
+set repo=anthonycaccese
+set theme=picade
 goto insttheme
 
 :pixel
@@ -8782,9 +9112,34 @@ set repo=ehettervik
 set theme=pixel
 goto insttheme
 
-:snesminiind
+:pixel-metadata
+set repo=ehettervik
+set theme=pixel-metadata
+goto insttheme
+
+:retrorama
+set repo=lipebello
+set theme=retrorama
+goto insttheme
+
+:retroroid
+set repo=RetroHursty69
+set theme=retroroid
+goto insttheme
+
+:retrowave
+set repo=nickearl
+set theme=retrowave
+goto insttheme
+
+:snes-mini
 set repo=ruckage
 set theme=snes-mini
+goto insttheme
+
+:SpaceInvaders
+set repo=RetroHursty69
+set theme=spaceinvaders
 goto insttheme
 
 :SpaceOddity
@@ -8792,9 +9147,29 @@ set repo=lipebello
 set theme=SpaceOddity
 goto insttheme
 
+:steampunk
+set repo=dmmarti
+set theme=steampunk
+goto insttheme
+
+:superdisplay
+set repo=mrharias
+set theme=superdisplay
+goto insttheme
+
 :switch-dark
 set repo=lilbud
 set theme=switch-dark
+goto insttheme
+
+:tft
+set repo=anthonycaccese
+set theme=tft
+goto insttheme
+
+:coretheme
+set repo=mattrixk
+set theme=core
 goto insttheme
 
 :insttheme
