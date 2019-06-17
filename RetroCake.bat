@@ -311,7 +311,7 @@ goto menu
 ::
 
 cls
-echo A fork of Flerp/RetroCake v1.4.5     Modified date: June 16, 2019
+echo A fork of Flerp/RetroCake v1.4.5     Modified date: June 17, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -572,7 +572,7 @@ goto StartAllEmu
 :StartAllEmu
 ::Creates a temporary file (tmp.txt) for the goto statements after each emulator is installed. Allows chaining emulator installation.
 Echo This file is temporary. You should never see it > %rkdir%\Emulators\tmp.txt
-goto AppleWin
+goto AdvanceMAME
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
@@ -9193,7 +9193,6 @@ goto ThemeManager
 ::=================================================================================================================================================================================================================================================================================================================
 
 
-
 ::
 :: Added some more emulators, and then rearranged them in alphabetical order.  Added 'Fairchild Channel F' core for RetroArch.  Added Xbox and Xbox 360 emulators with instruction on how to get and set up them.
 ::
@@ -9337,7 +9336,7 @@ echo =================================================================
 
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.8.zip -O "%rkdir%\Temp\cemu.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cemu.zip" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\cemu_1.15.6 Cemu
+ren %rkdir%\Emulators\cemu_1.15.8 Cemu
 
 cls
 
