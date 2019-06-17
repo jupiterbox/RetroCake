@@ -481,7 +481,7 @@ echo =    6.) INSTALL INTELLIVISION EMULATOR (jzIntv)                          =
 echo =                                                                         =
 echo =    7.) INSTALL PS2 EMULATOR (PCSX2 1.4.0)                               =
 echo =                                                                         =
-echo =    8.) INSTALL GAMECUBE EMULATOR (Dolphin 5.0)                          =
+echo =    8.) INSTALL GAMECUBE EMULATOR (Dolphin)                              =
 echo =                                                                         =
 echo =                                                                         =
 echo =    9.) Page 2                                                           =
@@ -517,7 +517,7 @@ echo =    6.) -- TEMPORARILY DISABLED -- INSTALL TI-99/4A EMULATOR (Classic99) =
 echo =                                                                         =
 echo =    7.) INSTALL AdvanceMAME                                              =
 echo =                                                                         =
-echo =    8.) INSTALL MAME  (0.209b)                                           =
+echo =    8.) INSTALL MAME                                                     =
 echo =                                                                         =
 echo =                                                                         =
 echo =    9.) Page 3                                                           =
@@ -551,10 +551,10 @@ echo =                                                                         =
 echo =    5.) INSTALL XBOX 360 EMULATOR (Xenia)                                =
 echo =                                                                         =
 echo =                                                                         =
-echo =    6.) RETURN TO MAIN MENU                                              =
+echo =    9.) RETURN TO MAIN MENU                                              =
 echo =                                                                         =
 echo ===========================================================================
-CHOICE /N /C:123456 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6)"
+CHOICE /N /C:123459 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 9)"
 IF ERRORLEVEL ==6 GOTO menu
 IF ERRORLEVEL ==5 GOTO xenia
 IF ERRORLEVEL ==4 GOTO Cxbx-Reloaded
@@ -987,7 +987,7 @@ echo oLink.Save >> "%rkdir%\Temp\CreateShortcut.vbs"
 cscript "%rkdir%\Temp\CreateShortcut.vbs"
 del "%rkdir%\Temp\CreateShortcut.vbs"
 
-::Cleans up Downlaoded zip
+::Cleans up Downloaded zip
 del "%rkdir%\Temp\ES.zip"
 if EXIST "%rkdir%\EmulationStation\emulationstation.exe" goto ESNewSucceed
 goto ESInstallTotalFailure
@@ -996,8 +996,10 @@ goto ESInstallTotalFailure
 ::Installs default Carbon theme
 mkdir "%USERPROFILE%\.emulationstation\themes"
 cd /D "%USERPROFILE%\.emulationstation\themes"
-rmdir carbon /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/Flerp/es-theme-carbon.git %theme%
+set repo=RetroPie
+set theme=carbon
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
 ::Checks for temporary files created during automated installer selection
 IF EXIST %rkdir%\Temp\BrandNewBlank goto blankESCFG
