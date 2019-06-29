@@ -1746,7 +1746,7 @@ echo     ^<name^>amigacdtv^</name^> >> "%USERPROFILE%\.emulationstation\es_syste
 echo     ^<fullname^>Amiga CDTV - (Mar 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\amigacdtv^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\FS-UAE\Programs\Windows\x86-64\fs-uae.exe --amiga-model=CDTV --joystick-port-0-mode=joystick --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\FS-UAE\System\FS-UAE\Windows\x86-64\fs-uae.exe --amiga-model=CDTV --joystick-port-0-mode=joystick --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>amigacdtv^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>amigacdtv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1780,7 +1780,7 @@ echo     ^<name^>amigacd32^</name^> >> "%USERPROFILE%\.emulationstation\es_syste
 echo     ^<fullname^>Amiga CD32 - Europe - (Sep 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\amigacd32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\FS-UAE\Programs\Windows\x86-64\fs-uae.exe --amiga-model=CD32 --joystick-port-0-mode="cd32 gamepad" --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\FS-UAE\System\FS-UAE\Windows\x86-64\fs-uae.exe --amiga-model=CD32 --joystick-port-0-mode="cd32 gamepad" --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>amigacd32^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>amigacd32^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3353,7 +3353,7 @@ echo     ^<name^>amigacdtv^</name^> >> "%USERPROFILE%\.emulationstation\es_syste
 echo     ^<fullname^>Amiga CDTV - (Mar 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\amigacdtv^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\FS-UAE\Programs\Windows\x86-64\fs-uae.exe --amiga-model=CDTV --joystick-port-0-mode=joystick --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\FS-UAE\System\FS-UAE\Windows\x86-64\fs-uae.exe --amiga-model=CDTV --joystick-port-0-mode=joystick --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>amigacdtv^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>amigacdtv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3387,7 +3387,7 @@ echo     ^<name^>amigacd32^</name^> >> "%USERPROFILE%\.emulationstation\es_syste
 echo     ^<fullname^>Amiga CD32 - Europe - (Sep 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\amigacd32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\FS-UAE\Programs\Windows\x86-64\fs-uae.exe --amiga-model=CD32 --joystick-port-0-mode="cd32 gamepad" --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\FS-UAE\System\FS-UAE\Windows\x86-64\fs-uae.exe --amiga-model=CD32 --joystick-port-0-mode="cd32 gamepad" --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>amigacd32^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>amigacd32^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4952,7 +4952,7 @@ echo     ^<name^>amigacdtv^</name^> >> "%USERPROFILE%\.emulationstation\es_syste
 echo     ^<fullname^>Amiga CDTV - (Mar 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\amigacdtv^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\FS-UAE\Programs\Windows\x86-64\fs-uae.exe --amiga-model=CDTV --joystick-port-0-mode=joystick --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\FS-UAE\System\FS-UAE\Windows\x86-64\fs-uae.exe --amiga-model=CDTV --joystick-port-0-mode=joystick --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>amigacdtv^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>amigacdtv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4986,7 +4986,7 @@ echo     ^<name^>amigacd32^</name^> >> "%USERPROFILE%\.emulationstation\es_syste
 echo     ^<fullname^>Amiga CD32 - Europe - (Sep 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\amigacd32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\FS-UAE\Programs\Windows\x86-64\fs-uae.exe --amiga-model=CD32 --joystick-port-0-mode="cd32 gamepad" --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\FS-UAE\System\FS-UAE\Windows\x86-64\fs-uae.exe --amiga-model=CD32 --joystick-port-0-mode="cd32 gamepad" --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>amigacd32^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>amigacd32^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -9156,7 +9156,7 @@ goto ThemeManager
 
 
 :: 
-:: -- This fork of RetroCake uses RetroArch cores as much as possible.  If not available or working properly, dedicated emulators are used.
+:: -- This fork of RetroCake uses RetroArch cores as much as possible.  If not available or not working properly, dedicated emulators are used.
 ::
 
 :AdvanceMAME
