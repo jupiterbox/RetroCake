@@ -4,11 +4,6 @@
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 @echo off
 
-::
-:: Disabled this max window size for command because I prefer not to take up whole screen
-::if not "%1" == "max" start /MAX cmd /c %0 max & exit/b
-::
-
 ::Checks if the batch file was run as admin. If not it yells at you and will exit.
 :check_Permissions
     net session >nul 2>&1
@@ -304,14 +299,8 @@ goto menu
 :menu
 ::Main menu selection. Uses keys 1-9
 
-::
-:: In this menu, 'ROM Scraper' is replaced with 'Update Retrocake Script'.  Scraper has become unstable for me.  I now prefer to use a stand-alone scraping app which is easier for me to manage with category-based ROMS folder. (Universal XML Scraper and/or Skraper).
-::
-:: 'ROM Scraper' script is still in here-- at near bottom of this script file.  Leaving that as-is for a while-- just in case Scraper app gets updated by its developer.
-::
-
 cls
-echo A fork of Flerp/RetroCake v1.4.5     Modified date: June 23, 2019
+echo A fork of Flerp/RetroCake v1.4.5     Modified date: June 29, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -513,7 +502,7 @@ echo =    4.) INSTALL 3DS EMULATOR (Citra)                                     =
 echo =                                                                         =
 echo =    5.) INSTALL MSX/ColecoVision EMULATOR (BlueMSX)                      =
 echo =                                                                         =
-echo =    6.) -- TEMPORARILY DISABLED -- INSTALL TI-99/4A EMULATOR (Classic99) =
+echo =    6.) INSTALL TI-99/4A EMULATOR (Classic99)                            =
 echo =                                                                         =
 echo =    7.) INSTALL AdvanceMAME                                              =
 echo =                                                                         =
@@ -527,7 +516,7 @@ CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7,
 IF ERRORLEVEL ==9 GOTO EmuPage3
 IF ERRORLEVEL ==8 GOTO MAME
 IF ERRORLEVEL ==7 GOTO AdvanceMAME
-IF ERRORLEVEL ==6 GOTO EmuPage2
+IF ERRORLEVEL ==6 GOTO Classic99
 IF ERRORLEVEL ==5 GOTO BlueMSX
 IF ERRORLEVEL ==4 GOTO Citra
 IF ERRORLEVEL ==3 GOTO CemuEmu
@@ -6328,10 +6317,6 @@ goto completed
 :RACFG
 ::Generates a retroarch config file. 99% default. Adds the start+select opening of the retroarch menu in game. RetroPie accomplishes this by using custom mapping with RetroPad, but I found this to be simpler.
 
-::
-::  RACFG is now optional for creating a modified retroarch.cfg file.  My preference is to let RetroArch to create its default retroarch.cfg file at first run.  Make a copy of that file, and then edit RetroArch as I see fit. 
-::
-
 cls
 echo ==================================================================================
 echo =                                                                                =
@@ -8071,11 +8056,7 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 		goto x86core
 	)
 :x64core
-::Installed all RetroArch cores needed by RetroCake. 64 bit
-
-::
-:: Prefers to get all of cores at once to save time when switching to different cores
-::
+::Install RetroArch cores -- 64 bit version
 
 cls
 
@@ -8256,11 +8237,7 @@ goto completed
 
 
 :x86core
-::Installed all RetroArch cores needed by RetroCake. 32 bit
-
-::
-:: Prefers to get all of cores at once to save time when switching to different cores
-::
+::Install RetroArch cores -- 32 bit version
 
 cls
 
@@ -8582,21 +8559,14 @@ goto CleanAllExit
 ::=================================================================================================================================================================================================================================================================================================================
 
 :ThemeManager
-::Menu for managing and installing select themes for EmulationStation
-
-::
-:: Themes Collection is based on... 
-::    1) simple and elegant 'look' as much as possible  (my preference for HDTV and small display or window)
-::    2) more hardware systems  
-::    3) if missing systems, then themes should be easy to study and learn for adding more images
-::
+::Menu for managing and installing themes for EmulationStation
 
 cls
 echo ===========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL/UPDATE ALL OF SELECT EMULATIONSTATION THEMES             =
+Echo =    1.) INSTALL/UPDATE ALL OF EMULATIONSTATION THEMES                    =
 echo =                                                                         =
-echo =    2.) INSTALL/UPDATE INDIVIDUAL SELECT ES THEMES                       =
+echo =    2.) INSTALL/UPDATE INDIVIDUAL ES THEMES                              =
 echo =                                                                         =
 echo =    3.) VIEW THEME GALLERY  (RetroPie's website)                         =
 echo =                                                                         =
@@ -9185,10 +9155,8 @@ goto ThemeManager
 ::=================================================================================================================================================================================================================================================================================================================
 
 
-::
-:: Added some more emulators, and then rearranged them in alphabetical order.  Added 'Fairchild Channel F' core for RetroArch.  Added Xbox and Xbox 360 emulators with instruction on how to get and set up them.
-::
-::A few of emulators are not used in 'es_systems.cfg' because either I prefer to use/test with RetroArch's Cores first or I am trying to figure out how to make them work properly.  If a Core doesn't work properly, then emulator app will be used.
+:: 
+:: -- This fork of RetroCake uses RetroArch cores as much as possible.  If not available or working properly, dedicated emulators are used.
 ::
 
 :AdvanceMAME
@@ -9238,7 +9206,7 @@ echo =                                                               =
 echo =================================================================
 
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/AppleWin/AppleWin/releases/download/v1.28.5.0/AppleWin1.28.5.0.zip -O "%rkdir%\Temp\AppleWin.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/AppleWin/AppleWin/releases/download/v1.28.8.0/AppleWin1.28.8.0.zip -O "%rkdir%\Temp\AppleWin.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\AppleWin.zip" -o"%rkdir%\Emulators\AppleWin" -aoa > nul
 cls
 
@@ -9326,9 +9294,9 @@ echo =                      DOWNLOADING CEMU                         =
 echo =                                                               =
 echo =================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.8.zip -O "%rkdir%\Temp\cemu.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.9.zip -O "%rkdir%\Temp\cemu.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cemu.zip" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\cemu_1.15.8 Cemu
+ren %rkdir%\Emulators\cemu_1.15.9 Cemu
 
 cls
 
@@ -9356,7 +9324,7 @@ echo =                    DOWNLOADING CITRA                         =
 echo =                                                              =
 echo ================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/citra-emu/citra-nightly/releases/download/nightly-1280/citra-windows-mingw-20190610-73bf92f.7z -O "%rkdir%\Temp\citra.7z"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/citra-emu/citra-nightly/releases/download/nightly-1285/citra-windows-mingw-20190625-c81a96b.7z -O "%rkdir%\Temp\citra.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\citra.7z" -o"%rkdir%\Emulators" -aoa > nul
 ren %rkdir%\Emulators\nightly-mingw Citra
 
@@ -9368,42 +9336,37 @@ echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\citra.7z
-if EXIST %rkdir%\Emulators\tmp.txt goto Daphne
+if EXIST %rkdir%\Emulators\tmp.txt goto Classic99
 goto completed
 
 
 ::=================================================================================================================================================================================================================================================================================================================
 
 
-::  Skipping this section because Windows Defender detected a malware 
-::  in 'Classic99' zip file from its developer's GitHub site.
-::  Until the developer has resolved the malware issue, this will be
-::  restored.
-
-::Classic99
+:Classic99
 ::Installs  Classic99  emulator  ( Ti-99 / 4A )
-::cls
+cls
 
-::echo =================================================================
-::echo =                                                               =
-::echo =             DOWNLOADING Classic99                             =
-::echo =                                                               =
-::echo =================================================================
+echo =================================================================
+echo =                                                               =
+echo =             DOWNLOADING Classic99                             =
+echo =                                                               =
+echo =================================================================
 
 
-::%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/tursilion/classic99/raw/master/dist/classic99.zip -O "%rkdir%\Temp\Classic99.zip"
-::%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Classic99.zip" -o"%rkdir%\Emulators" -aoa > nul
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/tursilion/classic99/raw/master/dist/classic99.zip -O "%rkdir%\Temp\Classic99.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Classic99.zip" -o"%rkdir%\Emulators" -aoa > nul
 
-::cls
+cls
 
-::echo ================================================
-::echo =        Cleaning up downloaded file(s)        =
-::echo ================================================
+echo ================================================
+echo =        Cleaning up downloaded file(s)        =
+echo ================================================
 
-::ping 127.0.0.1 -n 3 > nul
-::del %rkdir%\Temp\Classic99.zip
-::if EXIST %rkdir%\Emulators\tmp.txt goto Daphne
-::goto completed
+ping 127.0.0.1 -n 3 > nul
+del %rkdir%\Temp\Classic99.zip
+if EXIST %rkdir%\Emulators\tmp.txt goto Daphne
+goto completed
 
 
 
@@ -9451,7 +9414,7 @@ echo =                     DOWNLOADING DOLPHIN                       =
 echo =                                                               =
 echo =================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://dl.dolphin-emu.org/builds/dolphin-master-5.0-10506-x64.7z -O "%rkdir%\Temp\Dolphin.7z"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://dl.dolphin-emu.org/builds/dolphin-master-5.0-10599-x64.7z -O "%rkdir%\Temp\Dolphin.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Dolphin.7z" -o"%rkdir%\Emulators" -aoa > nul
 ren %rkdir%\Emulators\Dolphin-x64 Dolphin
 
@@ -9472,30 +9435,20 @@ goto completed
 
 
 
-
 :FS-UAE
 ::Installs  FS-UAE  emulator  ( Amiga, Amiga CD32 )
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto fs-uae64
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto fs-uae32
-	)
 
-:fs-uae32
 cls
 
 echo =========================================================
 echo =                                                       =
-echo =             DOWNLOADING FS-UAE  32-bit                =
+echo =             DOWNLOADING FS-UAE                        =
 echo =                                                       =
 echo =========================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://fs-uae.net/stable/2.8.3/fs-uae-portable-suite_2.8.3_windows_x86.zip -O "%rkdir%\Temp\FS-UAE32.7z"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\FS-UAE32.7z" -o"%rkdir%\Emulators\FS-UAE" -aoa > nul
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://fs-uae.net/stable/3.0.0/FS-UAE-Suite_3.0.0_Windows_x86-64.zip -O "%rkdir%\Temp\FS-UAE.7z"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\FS-UAE.7z" -o"%rkdir%\Emulators\FS-UAE" -aoa > nul
 
-
-:: ren %rkdir%\Emulators\WinVICE-3.1-x86 Vice32
 
 cls
 
@@ -9504,33 +9457,7 @@ echo =        Cleaning up downloaded file(s)        =
 echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\FS-UAE32.7z
-if EXIST %rkdir%\Emulators\tmp.txt goto Hatari
-goto completed
-
-:fs-uae64
-cls
-
-echo =========================================================
-echo =                                                       =
-echo =             DOWNLOADING FS-UAE  64-bit                =
-echo =                                                       =
-echo =========================================================
-
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://fs-uae.net/stable/2.8.3/fs-uae-portable-suite_2.8.3_windows_x86-64.zip -O "%rkdir%\Temp\FS-UAE64.7z"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\FS-UAE64.7z" -o"%rkdir%\Emulators\FS-UAE" -aoa > nul
-
-
-::  ren %rkdir%\Emulators\WinVICE-3.1-x64 Vice
-
-cls
-
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-
-ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\FS-UAE64.7z
+del %rkdir%\Temp\FS-UAE.7z
 if EXIST %rkdir%\Emulators\tmp.txt goto Hatari
 goto completed
 
@@ -9662,13 +9589,13 @@ echo ===========================================================
 echo =                                                         =
 echo =                DOWNLOADING MAME 32-bit                  =
 echo =                                                         =
-echo =                   Version:  0.210b                      =
+echo =                   Version:  0.211b                      =
 echo =                                                         =
 echo =              Replace version as necessary               =
 echo =                                                         =
 echo ===========================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0210/mame0210b_32bit.exe -O "%rkdir%\Temp\Mame32.exe"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0211/mame0211b_32bit.exe -O "%rkdir%\Temp\Mame32.exe"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame32.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
@@ -9689,13 +9616,13 @@ echo ===========================================================
 echo =                                                         =
 echo =                DOWNLOADING MAME 64-bit                  =
 echo =                                                         =
-echo =                   Version:  0.210b                      =
+echo =                   Version:  0.211b                      =
 echo =                                                         =
 echo =              Replace version as necessary               =
 echo =                                                         =
 echo ===========================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0210/mame0210b_64bit.exe -O "%rkdir%\Temp\Mame64.exe"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0211/mame0211b_64bit.exe -O "%rkdir%\Temp\Mame64.exe"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame64.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
@@ -9724,6 +9651,9 @@ echo =                                                               =
 echo =                       DOWNLOADING PCSX2                       =
 echo =                                                               =
 echo =================================================================
+
+:: official site... https://github.com/PCSX2/pcsx2
+:: official download site... https://pcsx2.net/download/releases/windows/send/40-windows/119-pcsx2-1-4-0-binaries.html
 
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://www.emulator-zone.com/download.php/emulators/ps2/pcsx2/pcsx2-1.4.0-binaries.7z -O "%rkdir%\Temp\PCSX2.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\PCSX2.7z" -o"%rkdir%\Emulators" -aoa > nul
@@ -9757,7 +9687,9 @@ echo =           NOTE:  Only available for Win 64-bit               =
 echo =                                                              =
 echo ================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/RPCS3/rpcs3-binaries-win/releases/download/build-d52953fca6ea5ae3ae0eee52cc91507c52bd8ff2/rpcs3-v0.0.6-8261-d52953fc_win64.7z -O "%rkdir%\Temp\rpcs3.7z"
+:: official site...  https://rpcs3.net/
+
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/RPCS3/rpcs3-binaries-win/releases/download/build-43f919c04b6f6ce6bad1cf61d9e641147d5f4475/rpcs3-v0.0.6-8314-43f919c0_win64.7z -O "%rkdir%\Temp\rpcs3.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\rpcs3.7z" -o"%rkdir%\Emulators\Rpcs3" -aoa > nul
 
 cls
@@ -9796,7 +9728,9 @@ echo =               DOWNLOADING VICE  32-bit                =
 echo =                                                       =
 echo =========================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://superb-sea2.dl.sourceforge.net/project/vice-emu/releases/binaries/windows/WinVICE-3.1-x86.7z -O "%rkdir%\Temp\Vice32.7z"
+:: official site... http://vice-emu.sourceforge.net/windows.html
+
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://iweb.dl.sourceforge.net/project/vice-emu/releases/binaries/windows/WinVICE-3.1-x86.7z -O "%rkdir%\Temp\Vice32.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Vice32.7z" -o"%rkdir%\Emulators" -aoa > nul
 ren %rkdir%\Emulators\WinVICE-3.1-x86 Vice
 
@@ -9819,6 +9753,8 @@ echo =                                                       =
 echo =               DOWNLOADING VICE  64-bit                =
 echo =                                                       =
 echo =========================================================
+
+:: official site... http://vice-emu.sourceforge.net/windows.html
 
 %rkdir%\Tools\Wget\wget.exe -q --show-progress https://iweb.dl.sourceforge.net/project/vice-emu/releases/binaries/windows/WinVICE-3.1-x64.7z -O "%rkdir%\Temp\Vice64.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Vice64.7z" -o"%rkdir%\Emulators" -aoa > nul
@@ -10052,159 +9988,6 @@ goto completed
 
 
 ::=================================================================================================================================================================================================================================================================================================================
-::Rom Scraper
-
-
-
-:ScraperSetup
-IF EXIST %rkdir%\Tools\scraper.exe goto ScraperMenu
-
-:ScraperArch
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto ScraperDL64
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto ScraperDL86
-	)
-	
-:ScraperDL86
-%rkdir%\Tools\Wget\wget.exe -q https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_386.zip -O "%rkdir%\Temp\scraperx86.zip"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx86.zip" -o"%rkdir%\Tools" -aoa > nul
-goto ScraperMenu
-
-:ScraperDL64
-%rkdir%\Tools\Wget\wget.exe -q https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_amd64.zip -O "%rkdir%\Temp\scraperx64.zip"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx64.zip" -o"%rkdir%\Tools" -aoa > nul
-goto ScraperMenu
-
-:ScraperMenu
-::Currently Disabling as SSelph's scraper no longer works.
-goto Disabled
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) SCRAPE ALL ROMS                                                  =
-echo =                                                                         =
-echo =    2.) SCRAPE INDIVIDUAL SYSTEMS                                        =
-echo =                                                                         =
-echo =    3.) RETURN TO MAIN MENU                                              =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123 /M "Enter Corresponding Menu choice (1, 2, 3)"
-IF ERRORLEVEL ==3 GOTO menu
-IF ERRORLEVEL ==2 GOTO ScraperSysMenu
-IF ERRORLEVEL ==1 GOTO ScrapeAll
-
-:ScrapeAll
-%rkdir%\Tools\scraper.exe -scrape_all
-goto completed
-
-:ScraperSysMenu
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) NINTENDO                                                         =
-echo =                                                                         =
-echo =    2.) SEGA                                                             =
-echo =                                                                         =
-echo =    3.) SONY                                                             =
-echo =                                                                         =
-echo =    4.) OTHER                                                            =
-echo =                                                                         =
-echo =                                                                         =
-echo =    5.) RETURN TO PREVIOUS MENU                                          =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
-IF ERRORLEVEL ==5 GOTO ScraperMenu
-IF ERRORLEVEL ==4 GOTO OtherScrapeList
-IF ERRORLEVEL ==3 GOTO SonyScrapeList
-IF ERRORLEVEL ==2 GOTO SegaScrapeList
-IF ERRORLEVEL ==1 GOTO NintendoScrapeList
-
-:NintendoScrapeList
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) CONSOLE                                                          =
-echo =                                                                         =
-echo =    2.) PORTABLE                                                         =
-echo =                                                                         =
-echo =                                                                         =
-echo =    3.) RETURN TO PREVIOUS MENU                                          =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123 /M "Enter Corresponding Menu choice (1, 2, 3)"
-IF ERRORLEVEL ==3 GOTO ScraperSysMenu
-IF ERRORLEVEL ==2 GOTO NintendoScrapeListPortable
-IF ERRORLEVEL ==1 GOTO NintendoScrapeListConsole
-
-:NintendoScrapeListConsole
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) NES                                                              =
-Echo =    2.) FAMICOM DISK SYSTEM                                              =
-echo =    3.) SNES                                                             =
-echo =    4.) VIRTUAL BOY                                                      =
-echo =    5.) NINTENDO 64                                                      =
-echo =    6.) GAMECUBE                                                         =
-echo =    7.) WII                                                              =
-echo =    8.) WII U                                                            =
-echo =                                                                         =
-echo =    9.) RETURN TO PREVIOUS MENU                                          =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO NintendoScrapeList
-IF ERRORLEVEL ==8 goto NoFeat
-IF ERRORLEVEL ==7 goto NoFeat
-IF ERRORLEVEL ==6 goto GCScrape
-IF ERRORLEVEL ==5 goto N64Scrape
-IF ERRORLEVEL ==4 goto VBOYScrape
-IF ERRORLEVEL ==3 goto SNESScrape
-IF ERRORLEVEL ==2 goto FDSScrape
-IF ERRORLEVEL ==1 goto NesScrape
-
-
-:NintendoScrapeListPortable
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) GAMEBOY                                                          =
-Echo =    2.) GAMEBOY COLOR                                                    =
-echo =    3.) GAMEBOY ADVANCE                                                  =
-echo =    4.) NINTENDO DS                                                      =
-echo =    5.) NINTENDO 3DS                                                     =
-echo =    6.) NINTENDO Switch                                                  =
-echo =                                                                         =
-echo =    7.) RETURN TO PREVIOUS MENU                                          =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:1234567 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7)"
-IF ERRORLEVEL ==7 goto NintendoScrapeList
-IF ERRORLEVEL ==6 goto NoFeat
-IF ERRORLEVEL ==5 goto 3DSScrape
-IF ERRORLEVEL ==4 goto DSScrape
-IF ERRORLEVEL ==3 goto GBAScrape
-IF ERRORLEVEL ==2 goto GBCScrape
-IF ERRORLEVEL ==1 goto GBScrape
-
-
-:SegaScrapeList
-goto NoFeat 
-
-
-:SonyScrapeList
-goto NoFeat
-
-
-:OtherScrapeList
-goto NoFeat
-
-
-
-
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
