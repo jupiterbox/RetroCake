@@ -168,10 +168,10 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 cls
 echo =================================================================
 echo =                                                               =
-echo =                      SETTING UP GIT...                        =
+echo =                      SETTING UP GIT...  (32-bit)              =
 echo =                                                               =
 echo =================================================================
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/git-for-windows/git/releases/download/v2.21.0.windows.1/PortableGit-2.21.0-32-bit.7z.exe -O "%rkdir%\Temp\git.zip"
+%rkdir%\Tools\Wget\wget.exe -q https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/PortableGit-2.22.0-32-bit.7z.exe -O "%rkdir%\Temp\git.zip"
 mkdir %rkdir%\Tools\git
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\git.zip" -o"%rkdir%\Tools\git" -aoa > nul
 cls
@@ -188,10 +188,10 @@ goto GITerror
 cls
 echo =================================================================
 echo =                                                               =
-echo =                      SETTING UP GIT...                        =
+echo =                      SETTING UP GIT...  (64-bit)              =
 echo =                                                               =
 echo =================================================================
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/git-for-windows/git/releases/download/v2.21.0.windows.1/PortableGit-2.21.0-64-bit.7z.exe -O "%rkdir%\Temp\git.zip"
+%rkdir%\Tools\Wget\wget.exe -q https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/PortableGit-2.22.0-64-bit.7z.exe -O "%rkdir%\Temp\git.zip"
 mkdir %rkdir%\Tools\git
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\git.zip" -o"%rkdir%\Tools\git" -aoa > nul
 cls
@@ -221,7 +221,7 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 cls
 echo =================================================================
 echo =                                                               =
-echo =                    SETTING UP VC REDIST                       =
+echo =            SETTING UP VC REDIST   (64 and 32 bit)             =
 echo =                                                               =
 echo =================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress https://download.visualstudio.microsoft.com/download/pr/11100230/15ccb3f02745c7b206ad10373cbca89b/VC_redist.x64.exe -O "%rkdir%\Temp\VC_Redist_2017.exe"
@@ -243,15 +243,15 @@ ping 127.0.0.1 -n 3 > nul
 del "%rkdir%\Temp\VC_Redist_2017.exe"
 del "%rkdir%\Temp\VC_Redist_2015_64.exe"
 del "%rkdir%\Temp\VC_Redist_2015_32.exe"
-del "%rkdir%\Temp\VC_Redist_2010_64.exe"
 del "%rkdir%\Temp\VC_Redist_2010_32.exe"
+del "%rkdir%\Temp\VC_Redist_2010_64.exe"
 goto DirectXSetupCheck
 
 :VCRedistInstall32
 cls
 echo =================================================================
 echo =                                                               =
-echo =                    SETTING UP VC REDIST                       =
+echo =               SETTING UP VC REDIST   (32-bit)                 =
 echo =                                                               =
 echo =================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe -O "%rkdir%\Temp\VC_Redist_2015_32.exe"
@@ -298,9 +298,8 @@ goto menu
 
 :menu
 ::Main menu selection. Uses keys 1-9
-
 cls
-echo A fork of Flerp/RetroCake v1.4.5     Modified date: June 29, 2019
+echo A fork of Flerp/RetroCake v1.4.5     Modified date: July 19, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -351,12 +350,12 @@ exit
 cls
 echo =================================================================================
 echo =                                                                               =
-Echo =    1.) FULL SETUP WITHOUT ROM DIRECTORIES (NEED TO EDIT ES_SYSTEMS.CFG)       
-echo =                                                                               
+Echo =    1.) FULL SETUP WITHOUT ROM DIRECTORIES (NEED TO EDIT ES_SYSTEMS.CFG)
+echo = 
 echo =    2.) FULL SETUP WITH DEFAULT ROM DIRECTORIES (%rkdir%\ROMS\SYSTEMNAME)
-echo =                                                                               
-echo =    3.) FULL SETUP WITH CUSTOM ROM DIRECTORIES                                 
-echo =                                                                               
+echo = 
+echo =    3.) FULL SETUP WITH CUSTOM ROM DIRECTORIES
+echo = 
 echo =                                                                               =
 echo =    4.) RETURN TO MAIN MENU                                                    =
 echo =                                                                               =
@@ -380,15 +379,12 @@ echo =    2.) MANAGE ES_SYSTEMS.CFG                                            =
 echo =                                                                         =
 echo =    3.) MANAGE EMULATIONSTATION THEMES                                   =
 echo =                                                                         =
-echo =    4.) VISIT EMULATIONSTATION GITHUB SITE                               =
 echo =                                                                         =
-echo =                                                                         =
-echo =    5.) RETURN TO MAIN MENU                                              =
+echo =    4.) RETURN TO MAIN MENU                                              =
 echo =                                                                         =
 echo ===========================================================================
-CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
-IF ERRORLEVEL ==5 GOTO menu
-IF ERRORLEVEL ==4 GOTO VisitESWeb
+CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
+IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO ThemeManager
 IF ERRORLEVEL ==2 GOTO ManESCFG
 IF ERRORLEVEL ==1 GOTO StartESVerCheck
@@ -425,9 +421,9 @@ IF ERRORLEVEL ==1 GOTO UpdateRA
 ::Menu for managing ROM directories in both windows and es_systems.cfg. Can also share your ROM directories.
 cls
 echo ===========================================================================
-echo =                                                                         
+echo =
 Echo =    1.) CREATE DEFAULT ROM DIRECTORIES (%rkdir%\ROMS\SYSTEMNAME)
-echo =                                                                         
+echo =
 Echo =    2.) CREATE CUSTOM ROM DIRECTORIES                                    =
 echo =                                                                         =
 echo =    3.) SHARE ROM DIRECTORIES                                            =
@@ -470,7 +466,7 @@ echo =    6.) INSTALL INTELLIVISION EMULATOR (jzIntv)                          =
 echo =                                                                         =
 echo =    7.) INSTALL PS2 EMULATOR (PCSX2 1.4.0)                               =
 echo =                                                                         =
-echo =    8.) INSTALL GAMECUBE EMULATOR (Dolphin)                              =
+echo =    8.) INSTALL GAMECUBE EMULATOR (Dolphin 5.0)                          =
 echo =                                                                         =
 echo =                                                                         =
 echo =    9.) Page 2                                                           =
@@ -498,15 +494,15 @@ Echo =    2.) INSTALL COMMODORE 64 EMULATOR (WinVICE)                          =
 echo =                                                                         =
 Echo =    3.) INSTALL WII U EMULATOR (Cemu)                                    =
 echo =                                                                         =
-echo =    4.) INSTALL 3DS EMULATOR (Citra)                                     =
+Echo =    4.) INSTALL 3DS EMULATOR (Citra)                                     =
 echo =                                                                         =
-echo =    5.) INSTALL MSX/ColecoVision EMULATOR (BlueMSX)                      =
+Echo =    5.) INSTALL Colecovision/MSX EMULATOR (BlueMSX)                      =
 echo =                                                                         =
-echo =    6.) INSTALL TI-99/4A EMULATOR (Classic99)                            =
+Echo =    6.) INSTALL TI-99/4A EMULATOR (Classic99)                            =
 echo =                                                                         =
-echo =    7.) INSTALL AdvanceMAME                                              =
+Echo =    7.) INSTALL AdvanceMAME EMULATOR                                     =
 echo =                                                                         =
-echo =    8.) INSTALL MAME                                                     =
+Echo =    8.) INSTALL MAME EMULATOR                                            =
 echo =                                                                         =
 echo =                                                                         =
 echo =    9.) Page 3                                                           =
@@ -522,7 +518,6 @@ IF ERRORLEVEL ==4 GOTO Citra
 IF ERRORLEVEL ==3 GOTO CemuEmu
 IF ERRORLEVEL ==2 GOTO VICE
 IF ERRORLEVEL ==1 GOTO AppleWin
-
 
 :EmuPage3
 ::Additional Emulators continued.
@@ -540,17 +535,16 @@ echo =                                                                         =
 echo =    5.) INSTALL XBOX 360 EMULATOR (Xenia)                                =
 echo =                                                                         =
 echo =                                                                         =
-echo =    9.) RETURN TO MAIN MENU                                              =
+echo =    6.) RETURN TO MAIN MENU                                              =
 echo =                                                                         =
 echo ===========================================================================
-CHOICE /N /C:123459 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 9)"
+CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
 IF ERRORLEVEL ==6 GOTO menu
 IF ERRORLEVEL ==5 GOTO xenia
 IF ERRORLEVEL ==4 GOTO Cxbx-Reloaded
 IF ERRORLEVEL ==3 GOTO FreeChaF
 IF ERRORLEVEL ==2 GOTO RPCS3
 IF ERRORLEVEL ==1 GOTO FS-UAE
-
 
 :InstallAllEmu
 ::Secondary Emulator Folder check. May not be needed
@@ -890,25 +884,6 @@ if /I "%c%" EQU "N" goto cancelled
 
 ::=================================================================================================================================================================================================================================================================================================================
 
-:VisitESWeb
-::Visit developer's fork of EmulationStation at GitHub 
-cls
-
-echo ====================================================
-echo =                                                  =
-echo =    This will start Microsoft Edge web browser    =
-echo =    with the webpage of the developer's fork      =
-echo =    of EmulationStation.                          =
-echo =                                                  =
-echo ====================================================
-pause
-start microsoft-edge:https://github.com/jrassa/EmulationStation
-
-goto ESMenu
-
-::=================================================================================================================================================================================================================================================================================================================
-
-
 :updateES
 ::Backs up old installation
 %rkdir%\Tools\7za\7za.exe a "%rkdir%\Backup\ES_Backup_%gooddayte%_%goodthyme%.zip" "%rkdir%\EmulationStation\"
@@ -976,7 +951,7 @@ echo oLink.Save >> "%rkdir%\Temp\CreateShortcut.vbs"
 cscript "%rkdir%\Temp\CreateShortcut.vbs"
 del "%rkdir%\Temp\CreateShortcut.vbs"
 
-::Cleans up Downloaded zip
+::Cleans up Downlaoded zip
 del "%rkdir%\Temp\ES.zip"
 if EXIST "%rkdir%\EmulationStation\emulationstation.exe" goto ESNewSucceed
 goto ESInstallTotalFailure
@@ -985,10 +960,9 @@ goto ESInstallTotalFailure
 ::Installs default Carbon theme
 mkdir "%USERPROFILE%\.emulationstation\themes"
 cd /D "%USERPROFILE%\.emulationstation\themes"
-set repo=RetroPie
-set theme=carbon
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+rmdir carbon /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/Flerp/es-theme-carbon.git %theme%
+ren es-theme-carbon carbon
 
 ::Checks for temporary files created during automated installer selection
 IF EXIST %rkdir%\Temp\BrandNewBlank goto blankESCFG
@@ -1007,11 +981,11 @@ goto completed
 cls
 echo ===================================================================================
 echo =                                                                                 =
-Echo =    1.) CREATE NEW ES_SYSTEMS.CFG WITHOUT ROM PATHS                              
-echo =                                                                                 
-echo =    2.) CREATE NEW ES_SYSTEMS.CFG WITH DEFAULT ROM PATH %rkdir%\ROMS\SYSTEM 
-echo =                                                                                 
-echo =    3.) CREATE NEW ES_SYSTEMS.CFG WITH CUSTOM ROM PATH                           
+Echo =    1.) CREATE NEW ES_SYSTEMS.CFG WITHOUT ROM PATHS
+echo =
+echo =    2.) CREATE NEW ES_SYSTEMS.CFG WITH DEFAULT ROM PATH %rkdir%\ROMS\SYSTEM
+echo =
+echo =    3.) CREATE NEW ES_SYSTEMS.CFG WITH CUSTOM ROM PATH
 echo =                                                                                 =
 echo =    4.) EDIT ES_SYSTEMS.CFG                                                      =
 echo =                                                                                 =
@@ -1038,8 +1012,6 @@ del "%USERPROFILE%\.emulationstation\es_systems.cfg" /q
 ::Creates a new es_systems.cfg
 cls
 mkdir "%USERPROFILE%\.emulationstation"
-
-
 
 ::======================================================================================================================================================================================================================================
 ::======================================================================================================================================================================================================================================
@@ -1860,6 +1832,7 @@ echo     ^<fullname^>PlayStation 2 - (Oct 2000)^</fullname^> >> "%USERPROFILE%\.
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\ps2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cue .cbn .gz .img .iso .m3u .mdf .pbp .toc .z .znx .GZ .CUE .CBN .IMG .ISO .M3U .MDF .PBP .TOC .Z .ZNX^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\PCSX2\pcsx2.exe "%%ROM_RAW%%" --fullscreen^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\play_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>ps2^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>ps2^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2248,7 +2221,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>nes-classic^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>NES Classic mini - (Nov 2016)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\nes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\nes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .nes .zip .7Z .NES .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>nes-classic^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2259,11 +2232,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>snes-classic^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>SNES Classic mini - (Sep 2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\snes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\snes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x2010_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>snes-classic^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>snes-classic^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>tic-80^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>TIC-80 tiny computer - (2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\tic-80^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\tic80_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>tic-80^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tic-80^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -2625,9 +2609,6 @@ echo ^</systemList^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-
-
-
 IF EXIST %rkdir%\Temp\BrandNewBlank goto updateRA
 goto completed
 
@@ -2643,11 +2624,6 @@ del "%USERPROFILE%\.emulationstation\es_systems.cfg" /q
 ::Creates a new es_systems.cfg
 cls
 mkdir "%USERPROFILE%\.emulationstation"
-
-
-
-
-
 
 ::======================================================================================================================================================================================================================================
 ::======================================================================================================================================================================================================================================
@@ -3467,6 +3443,7 @@ echo     ^<fullname^>PlayStation 2 - (Oct 2000)^</fullname^> >> "%USERPROFILE%\.
 echo     ^<path^>%rkdir%\ROMS\console-optical\ps2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cue .cbn .gz .img .iso .m3u .mdf .pbp .toc .z .znx .GZ .CUE .CBN .IMG .ISO .M3U .MDF .PBP .TOC .Z .ZNX^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\PCSX2\pcsx2.exe "%%ROM_RAW%%" --fullscreen^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\play_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>ps2^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>ps2^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3855,7 +3832,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>nes-classic^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>NES Classic mini - (Nov 2016)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\nes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\specialty\nes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .nes .zip .7Z .NES .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>nes-classic^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3866,11 +3843,21 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>snes-classic^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>SNES Classic mini - (Sep 2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\snes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\specialty\snes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x2010_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>snes-classic^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>snes-classic^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>tic-80^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>TIC-80 tiny computer - (2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\specialty\tic-80^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\tic80_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>tic-80^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tic-80^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -4232,10 +4219,6 @@ echo ^</systemList^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-
-
-
-
 IF EXIST %rkdir%\Temp\BrandNewDef goto DefaultRomFolders
 goto completed
 
@@ -4245,7 +4228,6 @@ goto completed
 cls
 
 set /p cusromdir="Enter Path for ROM Folder (default %rkdir%\ROMS): "
-
 
 
 ::======================================================================================================================================================================================================================================
@@ -5066,6 +5048,7 @@ echo     ^<fullname^>PlayStation 2 - (Oct 2000)^</fullname^> >> "%USERPROFILE%\.
 echo     ^<path^>%cusromdir%\ROMS\console-optical\ps2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cue .cbn .gz .img .iso .m3u .mdf .pbp .toc .z .znx .GZ .CUE .CBN .IMG .ISO .M3U .MDF .PBP .TOC .Z .ZNX^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\PCSX2\pcsx2.exe "%%ROM_RAW%%" --fullscreen^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\play_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>ps2^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>ps2^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5454,7 +5437,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>nes-classic^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>NES Classic mini - (Nov 2016)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\nes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\specialty\nes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .nes .zip .7Z .NES .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>nes-classic^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5465,11 +5448,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>snes-classic^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>SNES Classic mini - (Sep 2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\snes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\specialty\snes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x2010_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>snes-classic^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>snes-classic^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>tic-80^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>TIC-80 tiny computer - (2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\specialty\tic-80^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\tic80_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>tic-80^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tic-80^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -5832,24 +5826,13 @@ echo ^</systemList^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 
-
 IF EXIST %rkdir%\Temp\BrandNewCus goto CustomRomFolders
 goto completed
-
-
-::======================================================================================================================================================================================================================================
-
-
-
 
 :editES
 cls
 notepad %USERPROFILE%\.emulationstation\es_systems.cfg
 goto ManESCFG
-
-
-
-
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
@@ -5966,6 +5949,7 @@ mkdir %rkdir%\ROMS\specialty\gameandwatch
 mkdir %rkdir%\ROMS\specialty\nes-classic
 mkdir %rkdir%\ROMS\specialty\snes-classic
 mkdir %rkdir%\ROMS\specialty\snes-msu1
+mkdir %rkdir%\ROMS\specialty\tic-80
 mkdir %rkdir%\ROMS\specialty\vectrex
 mkdir %rkdir%\ROMS\specialty\vectrex-parajve
 mkdir %rkdir%\ROMS\specialty\virtualboy
@@ -6000,13 +5984,6 @@ mkdir %rkdir%\ROMS\computer\zx81
 mkdir %rkdir%\ROMS\computer\zxspectrum
 
 
-
-:: optional-- "start /min" opens ROMS folder  minimized 
-:: start /min %rkdir%\ROMS
-:: IF EXIST %rkdir%\Temp\BrandNewDef goto updateRA
-:: goto completed
-
-
 :RkRomsDir
 echo . 
 Choice /M "  Do you want to open ROMS directory? "
@@ -6021,9 +5998,6 @@ goto completed
 start %rkdir%\ROMS
 IF EXIST %rkdir%\Temp\BrandNewDef goto updateRA
 goto completed
-
-
-
 
 
 :CusRomDirSet
@@ -6140,6 +6114,7 @@ mkdir %cusromdir%\ROMS\specialty\gameandwatch
 mkdir %cusromdir%\ROMS\specialty\nes-classic
 mkdir %cusromdir%\ROMS\specialty\snes-classic
 mkdir %cusromdir%\ROMS\specialty\snes-msu1
+mkdir %cusromdir%\ROMS\specialty\tic-80
 mkdir %cusromdir%\ROMS\specialty\vectrex
 mkdir %cusromdir%\ROMS\specialty\vectrex-parajve
 mkdir %cusromdir%\ROMS\specialty\virtualboy
@@ -6174,11 +6149,6 @@ mkdir %cusromdir%\ROMS\computer\zx81
 mkdir %cusromdir%\ROMS\computer\zxspectrum
 
 
-:: optional-- "start /min" opens ROMS folder  minimized
-:: start /min %cusromdir%
-:: IF EXIST %rkdir%\Temp\BrandNewCus goto updateRA
-:: goto completed
-
 
 :CustomRomsDir
 echo .
@@ -6191,12 +6161,9 @@ IF EXIST %rkdir%\Temp\BrandNewDef goto updateRA
 goto completed
 
 :Yes-CustomRomsDir
-start %cusromdir%\ROMS
+start %cusromdir%
 IF EXIST %rkdir%\Temp\BrandNewCus goto updateRA
 goto completed
-
-
-
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
@@ -6220,7 +6187,7 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 ::Installs RetroArch 1.7.7 to RetroCake\RetroArch. Cleans up all downloaded files when done. 64 bit
 echo =================================================================
 echo =                                                               =
-echo =        Downloading RetroArch. This will take some time        =
+echo =   Downloading RetroArch (64-bit). This will take some time    =
 echo =                                                               =
 echo =================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress https://buildbot.libretro.com/stable/1.7.7/windows/x86_64/RetroArch.7z -O "%rkdir%\Temp\RetroArch_x64.zip"
@@ -6242,7 +6209,7 @@ goto UpdateRACores
 ::Installs RetroArch 1.7.7 to RetroCake\RetroArch. Cleans up all downloaded files when done. 32 bit
 echo =================================================================
 echo =                                                               =
-echo =        Downloading RetroArch. This will take some time        =
+echo =   Downloading RetroArch (32-bit). This will take some time    =
 echo =                                                               =
 echo =================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress https://buildbot.libretro.com/stable/1.7.7/windows/x86/RetroArch.7z -O "%rkdir%\Temp\RetroArch_x86.zip"
@@ -6259,7 +6226,6 @@ goto UpdateRACores
 ::
 :: 'goto RACFG'  was changed to  'goto UpdateRACores'  for RetroArch to create the default retroarch.cfg file by itself.  This is my preference.
 ::
-
 
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -6278,11 +6244,11 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 :x64RAn
 ::Installs RetroArch to RetroCake\RetroArch. Cleans up all downloaded files when done. x64 version of latest nightly
 
-echo =================================================================
-echo =                                                               =
-echo =        Downloading RetroArch. This will take some time        =
-echo =                                                               =
-echo =================================================================
+echo =======================================================================
+echo =                                                                     =
+echo =  Downloading nightly RetroArch (64-bit). This will take some time   =
+echo =                                                                     =
+echo =======================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress https://buildbot.libretro.com/nightly/windows/x86_64/RetroArch.7z -O "%rkdir%\Temp\RetroArch_x64.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
 cls
@@ -6295,11 +6261,11 @@ goto completed
 
 :x86RAn
 ::Installs RetroArch to RetroCake\RetroArch. Cleans up all downloaded files when done. 32 bit version of the latest nightly
-echo =================================================================
-echo =                                                               =
-echo =        Downloading RetroArch. This will take some time        =
-echo =                                                               =
-echo =================================================================
+echo =======================================================================
+echo =                                                                     =
+echo =  Downloading nightly RetroArch (32-bit). This will take some time   =
+echo =                                                                     =
+echo =======================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress https://buildbot.libretro.com/nightly/windows/x86/RetroArch.7z -O "%rkdir%\Temp\RetroArch_x86.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x86.zip" -o"%rkdir%\RetroArch" -aoa > nul
 cls
@@ -6310,9 +6276,7 @@ ping 127.0.0.1 -n 4 >nul
 del "%rkdir%\Temp\RetroArch_x86.zip" /q
 goto completed
 
-
 ::=================================================================================================================================================================================================================================================================================================================
-
 
 :RACFG
 ::Generates a retroarch config file. 99% default. Adds the start+select opening of the retroarch menu in game. RetroPie accomplishes this by using custom mapping with RetroPad, but I found this to be simpler.
@@ -8037,6 +8001,9 @@ echo bundle_assets_dst_path = "">> %rkdir%\RetroArch\retroarch.cfg
 echo bundle_assets_dst_path_subdir = "">> %rkdir%\RetroArch\retroarch.cfg
 goto RAMenu
 
+::
+::  goto updatecores  was changed to  goto RAMenu
+::
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
@@ -8056,13 +8023,11 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 		goto x86core
 	)
 :x64core
-::Install RetroArch cores -- 64 bit version
-
+::Install RetroArch cores -- 64 bit
 cls
-
 echo ========================================================================
 echo =                                                                      =
-echo =     Downloading  138  cores  (nightly) for 64-bit RetroArch          =
+echo =     Downloading  139  cores  (nightly) for 64-bit RetroArch          =
 echo =                                                                      =
 echo =     This will take some time...                                      =
 echo =                                                                      =
@@ -8159,13 +8124,13 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -O "%rkdir%\Temp\cores\81.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -O "%rkdir%\Temp\cores\82.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -O "%rkdir%\Temp\cores\83.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -O "%rkdir%\Temp\cores\84.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -O "%rkdir%\Temp\cores\85.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/meteor_libretro.dll.zip -O "%rkdir%\Temp\cores\86.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -O "%rkdir%\Temp\cores\87.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -O "%rkdir%\Temp\cores\88.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -O "%rkdir%\Temp\cores\89.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_libretro.dll.zip -O "%rkdir%\Temp\cores\90.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -O "%rkdir%\Temp\cores\84.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -O "%rkdir%\Temp\cores\85.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -O "%rkdir%\Temp\cores\86.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/meteor_libretro.dll.zip -O "%rkdir%\Temp\cores\87.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -O "%rkdir%\Temp\cores\88.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -O "%rkdir%\Temp\cores\89.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -O "%rkdir%\Temp\cores\90.zip"
 
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -O "%rkdir%\Temp\cores\91.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -O "%rkdir%\Temp\cores\92.zip"
@@ -8178,49 +8143,49 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -O "%rkdir%\Temp\cores\99.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -O "%rkdir%\Temp\cores\100.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -O "%rkdir%\Temp\cores\101.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -O "%rkdir%\Temp\cores\102.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -O "%rkdir%\Temp\cores\103.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -O "%rkdir%\Temp\cores\104.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -O "%rkdir%\Temp\cores\105.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -O "%rkdir%\Temp\cores\106.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -O "%rkdir%\Temp\cores\107.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -O "%rkdir%\Temp\cores\108.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -O "%rkdir%\Temp\cores\109.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -O "%rkdir%\Temp\cores\110.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/play_libretro.dll.zip -O "%rkdir%\Temp\cores\101.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -O "%rkdir%\Temp\cores\102.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -O "%rkdir%\Temp\cores\103.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -O "%rkdir%\Temp\cores\104.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -O "%rkdir%\Temp\cores\105.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -O "%rkdir%\Temp\cores\106.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -O "%rkdir%\Temp\cores\107.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -O "%rkdir%\Temp\cores\108.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -O "%rkdir%\Temp\cores\109.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -O "%rkdir%\Temp\cores\110.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/remotejoy_libretro.dll.zip -O "%rkdir%\Temp\cores\111.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -O "%rkdir%\Temp\cores\112.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -O "%rkdir%\Temp\cores\113.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -O "%rkdir%\Temp\cores\114.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -O "%rkdir%\Temp\cores\115.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\116.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -O "%rkdir%\Temp\cores\117.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -O "%rkdir%\Temp\cores\118.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -O "%rkdir%\Temp\cores\119.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -O "%rkdir%\Temp\cores\120.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -O "%rkdir%\Temp\cores\111.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/remotejoy_libretro.dll.zip -O "%rkdir%\Temp\cores\112.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -O "%rkdir%\Temp\cores\113.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -O "%rkdir%\Temp\cores\114.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -O "%rkdir%\Temp\cores\115.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -O "%rkdir%\Temp\cores\116.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\117.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -O "%rkdir%\Temp\cores\118.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -O "%rkdir%\Temp\cores\119.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -O "%rkdir%\Temp\cores\120.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -O "%rkdir%\Temp\cores\121.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -O "%rkdir%\Temp\cores\122.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -O "%rkdir%\Temp\cores\123.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -O "%rkdir%\Temp\cores\124.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -O "%rkdir%\Temp\cores\125.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -O "%rkdir%\Temp\cores\126.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -O "%rkdir%\Temp\cores\127.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -O "%rkdir%\Temp\cores\128.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -O "%rkdir%\Temp\cores\129.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -O "%rkdir%\Temp\cores\121.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -O "%rkdir%\Temp\cores\122.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -O "%rkdir%\Temp\cores\123.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -O "%rkdir%\Temp\cores\124.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -O "%rkdir%\Temp\cores\125.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -O "%rkdir%\Temp\cores\126.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -O "%rkdir%\Temp\cores\127.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -O "%rkdir%\Temp\cores\128.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -O "%rkdir%\Temp\cores\129.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -O "%rkdir%\Temp\cores\131.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -O "%rkdir%\Temp\cores\132.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -O "%rkdir%\Temp\cores\133.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -O "%rkdir%\Temp\cores\134.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -O "%rkdir%\Temp\cores\135.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -O "%rkdir%\Temp\cores\136.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\137.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\138.zip"
-
-
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -O "%rkdir%\Temp\cores\131.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -O "%rkdir%\Temp\cores\132.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -O "%rkdir%\Temp\cores\133.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -O "%rkdir%\Temp\cores\134.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -O "%rkdir%\Temp\cores\135.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -O "%rkdir%\Temp\cores\136.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -O "%rkdir%\Temp\cores\137.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\138.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\139.zip"
 
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
@@ -8235,15 +8200,12 @@ IF EXIST %rkdir%\Temp\BrandNewDef goto InstallAllEmu
 IF EXIST %rkdir%\Temp\BrandNewCus goto InstallAllEmu
 goto completed
 
-
 :x86core
 ::Install RetroArch cores -- 32 bit version
-
 cls
-
 echo ========================================================================
 echo =                                                                      =
-echo =     Downloading  138  cores  (nightly) for 32-bit RetroArch          =
+echo =     Downloading  139  cores  (nightly) for 32-bit RetroArch          =
 echo =                                                                      =
 echo =     This will take some time...                                      =
 echo =                                                                      =
@@ -8340,13 +8302,13 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_vb_libretro.dll.zip -O "%rkdir%\Temp\cores\81.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_wswan_libretro.dll.zip -O "%rkdir%\Temp\cores\82.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/melonds_libretro.dll.zip -O "%rkdir%\Temp\cores\83.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mesen_libretro.dll.zip -O "%rkdir%\Temp\cores\84.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mess2015_libretro.dll.zip -O "%rkdir%\Temp\cores\85.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/meteor_libretro.dll.zip -O "%rkdir%\Temp\cores\86.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mgba_libretro.dll.zip -O "%rkdir%\Temp\cores\87.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mrboom_libretro.dll.zip -O "%rkdir%\Temp\cores\88.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mu_libretro.dll.zip -O "%rkdir%\Temp\cores\89.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mupen64plus_libretro.dll.zip -O "%rkdir%\Temp\cores\90.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mesen-s_libretro.dll.zip -O "%rkdir%\Temp\cores\84.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mesen_libretro.dll.zip -O "%rkdir%\Temp\cores\85.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mess2015_libretro.dll.zip -O "%rkdir%\Temp\cores\86.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/meteor_libretro.dll.zip -O "%rkdir%\Temp\cores\87.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mgba_libretro.dll.zip -O "%rkdir%\Temp\cores\88.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mrboom_libretro.dll.zip -O "%rkdir%\Temp\cores\89.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mu_libretro.dll.zip -O "%rkdir%\Temp\cores\90.zip"
 
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mupen64plus_next_libretro.dll.zip -O "%rkdir%\Temp\cores\91.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/nekop2_libretro.dll.zip -O "%rkdir%\Temp\cores\92.zip"
@@ -8359,49 +8321,49 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pcsx_rearmed_libretro.dll.zip -O "%rkdir%\Temp\cores\99.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/picodrive_libretro.dll.zip -O "%rkdir%\Temp\cores\100.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pocketcdg_libretro.dll.zip -O "%rkdir%\Temp\cores\101.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pokemini_libretro.dll.zip -O "%rkdir%\Temp\cores\102.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/ppsspp_libretro.dll.zip -O "%rkdir%\Temp\cores\103.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/prboom_libretro.dll.zip -O "%rkdir%\Temp\cores\104.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/prosystem_libretro.dll.zip -O "%rkdir%\Temp\cores\105.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/puae_libretro.dll.zip -O "%rkdir%\Temp\cores\106.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/px68k_libretro.dll.zip -O "%rkdir%\Temp\cores\107.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/quasi88_libretro.dll.zip -O "%rkdir%\Temp\cores\108.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/quicknes_libretro.dll.zip -O "%rkdir%\Temp\cores\109.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/reminiscence_libretro.dll.zip -O "%rkdir%\Temp\cores\110.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/play_libretro.dll.zip -O "%rkdir%\Temp\cores\101.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pocketcdg_libretro.dll.zip -O "%rkdir%\Temp\cores\102.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pokemini_libretro.dll.zip -O "%rkdir%\Temp\cores\103.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/ppsspp_libretro.dll.zip -O "%rkdir%\Temp\cores\104.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/prboom_libretro.dll.zip -O "%rkdir%\Temp\cores\105.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/prosystem_libretro.dll.zip -O "%rkdir%\Temp\cores\106.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/puae_libretro.dll.zip -O "%rkdir%\Temp\cores\107.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/px68k_libretro.dll.zip -O "%rkdir%\Temp\cores\108.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/quasi88_libretro.dll.zip -O "%rkdir%\Temp\cores\109.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/quicknes_libretro.dll.zip -O "%rkdir%\Temp\cores\110.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/remotejoy_libretro.dll.zip -O "%rkdir%\Temp\cores\111.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/sameboy_libretro.dll.zip -O "%rkdir%\Temp\cores\112.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/scummvm_libretro.dll.zip -O "%rkdir%\Temp\cores\113.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2002_libretro.dll.zip -O "%rkdir%\Temp\cores\114.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_libretro.dll.zip -O "%rkdir%\Temp\cores\115.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\116.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2010_libretro.dll.zip -O "%rkdir%\Temp\cores\117.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x_libretro.dll.zip -O "%rkdir%\Temp\cores\118.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/squirreljme_libretro.dll.zip -O "%rkdir%\Temp\cores\119.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/stella2014_libretro.dll.zip -O "%rkdir%\Temp\cores\120.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/reminiscence_libretro.dll.zip -O "%rkdir%\Temp\cores\111.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/remotejoy_libretro.dll.zip -O "%rkdir%\Temp\cores\112.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/sameboy_libretro.dll.zip -O "%rkdir%\Temp\cores\113.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/scummvm_libretro.dll.zip -O "%rkdir%\Temp\cores\114.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2002_libretro.dll.zip -O "%rkdir%\Temp\cores\115.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_libretro.dll.zip -O "%rkdir%\Temp\cores\116.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\117.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2010_libretro.dll.zip -O "%rkdir%\Temp\cores\118.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x_libretro.dll.zip -O "%rkdir%\Temp\cores\119.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/squirreljme_libretro.dll.zip -O "%rkdir%\Temp\cores\120.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/stella_libretro.dll.zip -O "%rkdir%\Temp\cores\121.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tgbdual_libretro.dll.zip -O "%rkdir%\Temp\cores\122.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/theodore_libretro.dll.zip -O "%rkdir%\Temp\cores\123.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/thepowdertoy_libretro.dll.zip -O "%rkdir%\Temp\cores\124.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tyrquake_libretro.dll.zip -O "%rkdir%\Temp\cores\125.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/ume2015_libretro.dll.zip -O "%rkdir%\Temp\cores\126.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vba_next_libretro.dll.zip -O "%rkdir%\Temp\cores\127.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vbam_libretro.dll.zip -O "%rkdir%\Temp\cores\128.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vecx_libretro.dll.zip -O "%rkdir%\Temp\cores\129.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vemulator_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/stella2014_libretro.dll.zip -O "%rkdir%\Temp\cores\121.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/stella_libretro.dll.zip -O "%rkdir%\Temp\cores\122.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tgbdual_libretro.dll.zip -O "%rkdir%\Temp\cores\123.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/theodore_libretro.dll.zip -O "%rkdir%\Temp\cores\124.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/thepowdertoy_libretro.dll.zip -O "%rkdir%\Temp\cores\125.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tic80_libretro.dll.zip -O "%rkdir%\Temp\cores\126.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tyrquake_libretro.dll.zip -O "%rkdir%\Temp\cores\127.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/ume2015_libretro.dll.zip -O "%rkdir%\Temp\cores\128.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vba_next_libretro.dll.zip -O "%rkdir%\Temp\cores\129.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vbam_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x64_libretro.dll.zip -O "%rkdir%\Temp\cores\131.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x128_libretro.dll.zip -O "%rkdir%\Temp\cores\132.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xplus4_libretro.dll.zip -O "%rkdir%\Temp\cores\133.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xvic_libretro.dll.zip -O "%rkdir%\Temp\cores\134.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/virtualjaguar_libretro.dll.zip -O "%rkdir%\Temp\cores\135.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/xrick_libretro.dll.zip -O "%rkdir%\Temp\cores\136.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\137.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\138.zip"
-
-
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vecx_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vemulator_libretro.dll.zip -O "%rkdir%\Temp\cores\131.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x64_libretro.dll.zip -O "%rkdir%\Temp\cores\132.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x128_libretro.dll.zip -O "%rkdir%\Temp\cores\133.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xplus4_libretro.dll.zip -O "%rkdir%\Temp\cores\134.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xvic_libretro.dll.zip -O "%rkdir%\Temp\cores\135.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/virtualjaguar_libretro.dll.zip -O "%rkdir%\Temp\cores\136.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/xrick_libretro.dll.zip -O "%rkdir%\Temp\cores\137.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\138.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\139.zip"
 
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
@@ -8560,11 +8522,10 @@ goto CleanAllExit
 
 :ThemeManager
 ::Menu for managing and installing themes for EmulationStation
-
 cls
 echo ===========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL/UPDATE ALL OF EMULATIONSTATION THEMES                    =
+Echo =    1.) INSTALL/UPDATE A SET OF EMULATIONSTATION THEMES                  =
 echo =                                                                         =
 echo =    2.) INSTALL/UPDATE INDIVIDUAL ES THEMES                              =
 echo =                                                                         =
@@ -8578,7 +8539,6 @@ IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO ThemeGallery
 IF ERRORLEVEL ==2 GOTO IndThemes
 IF ERRORLEVEL ==1 GOTO SelectThemes
-
 
 :ThemeGallery
 cls
@@ -8597,7 +8557,6 @@ pause
 start microsoft-edge:https://github.com/RetroPie/RetroPie-Setup/wiki/Themes#theme-gallery
 pause
 goto ThemeManager
-
 
 :SelectThemes
 ::Using git to download a selection of themes
@@ -9294,9 +9253,9 @@ echo =                      DOWNLOADING CEMU                         =
 echo =                                                               =
 echo =================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.9.zip -O "%rkdir%\Temp\cemu.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.10.zip -O "%rkdir%\Temp\cemu.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cemu.zip" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\cemu_1.15.9 Cemu
+ren %rkdir%\Emulators\cemu_1.15.10 Cemu
 
 cls
 
@@ -9324,7 +9283,7 @@ echo =                    DOWNLOADING CITRA                         =
 echo =                                                              =
 echo ================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/citra-emu/citra-nightly/releases/download/nightly-1285/citra-windows-mingw-20190625-c81a96b.7z -O "%rkdir%\Temp\citra.7z"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/citra-emu/citra-nightly/releases/download/nightly-1311/citra-windows-mingw-20190718-a9df1c2.7z -O "%rkdir%\Temp\citra.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\citra.7z" -o"%rkdir%\Emulators" -aoa > nul
 ren %rkdir%\Emulators\nightly-mingw Citra
 
@@ -9414,7 +9373,7 @@ echo =                     DOWNLOADING DOLPHIN                       =
 echo =                                                               =
 echo =================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://dl.dolphin-emu.org/builds/dolphin-master-5.0-10599-x64.7z -O "%rkdir%\Temp\Dolphin.7z"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://dl.dolphin-emu.org/builds/dolphin-master-5.0-10638-x64.7z -O "%rkdir%\Temp\Dolphin.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Dolphin.7z" -o"%rkdir%\Emulators" -aoa > nul
 ren %rkdir%\Emulators\Dolphin-x64 Dolphin
 
@@ -9970,12 +9929,7 @@ pause
 if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
 goto completed
 
-
-
-
 ::=================================================================================================================================================================================================================================================================================================================
-
-
 
 :tmpClean
 ::Cleans up temp files created by the automated installers.
@@ -9984,8 +9938,6 @@ IF EXIST %rkdir%\Temp\BrandNewBlank goto DediAsk
 IF EXIST %rkdir%\Temp\BrandNewDef goto DediAsk
 IF EXIST %rkdir%\Temp\BrandNewCus goto DediAsk
 goto completed
-
-
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
