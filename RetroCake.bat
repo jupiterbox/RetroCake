@@ -299,7 +299,7 @@ goto menu
 :menu
 ::Main menu selection. Uses keys 1-9
 cls
-echo A fork of Flerp/RetroCake v1.4.5     Modified date: July 19, 2019
+echo A fork of Flerp/RetroCake v1.4.5     Modified date: July 22, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -466,7 +466,7 @@ echo =    6.) INSTALL INTELLIVISION EMULATOR (jzIntv)                          =
 echo =                                                                         =
 echo =    7.) INSTALL PS2 EMULATOR (PCSX2 1.4.0)                               =
 echo =                                                                         =
-echo =    8.) INSTALL GAMECUBE EMULATOR (Dolphin 5.0)                          =
+echo =    8.) INSTALL DEMUL EMULATOR (Dreamcast/Naomi/Hikaru/Atomiswave)       =
 echo =                                                                         =
 echo =                                                                         =
 echo =    9.) Page 2                                                           =
@@ -474,7 +474,7 @@ echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO EmuPage2
-IF ERRORLEVEL ==8 GOTO DolphinEmu
+IF ERRORLEVEL ==8 GOTO Demul
 IF ERRORLEVEL ==7 GOTO PCSX2
 IF ERRORLEVEL ==6 GOTO jzIntv
 IF ERRORLEVEL ==5 GOTO Daphne
@@ -492,11 +492,11 @@ Echo =    1.) INSTALL APPLE II EMULATOR (AppleWin)                             =
 echo =                                                                         =
 Echo =    2.) INSTALL COMMODORE 64 EMULATOR (WinVICE)                          =
 echo =                                                                         =
-Echo =    3.) INSTALL WII U EMULATOR (Cemu)                                    =
+Echo =    3.) INSTALL Wii U EMULATOR (Cemu)                                    =
 echo =                                                                         =
-Echo =    4.) INSTALL 3DS EMULATOR (Citra)                                     =
+Echo =    4.) INSTALL ColecoVision (ColEm)                                     =
 echo =                                                                         =
-Echo =    5.) INSTALL Colecovision/MSX EMULATOR (BlueMSX)                      =
+Echo =    5.) INSTALL  MSX / SG-1000 / Colecovision  EMULATOR  (BlueMSX)       =
 echo =                                                                         =
 Echo =    6.) INSTALL TI-99/4A EMULATOR (Classic99)                            =
 echo =                                                                         =
@@ -514,7 +514,7 @@ IF ERRORLEVEL ==8 GOTO MAME
 IF ERRORLEVEL ==7 GOTO AdvanceMAME
 IF ERRORLEVEL ==6 GOTO Classic99
 IF ERRORLEVEL ==5 GOTO BlueMSX
-IF ERRORLEVEL ==4 GOTO Citra
+IF ERRORLEVEL ==4 GOTO ColecoEmu
 IF ERRORLEVEL ==3 GOTO CemuEmu
 IF ERRORLEVEL ==2 GOTO VICE
 IF ERRORLEVEL ==1 GOTO AppleWin
@@ -526,24 +526,33 @@ echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) INSTALL AMIGA / CD32 / CDTV EMULATOR (FS-UAE)                    =
 echo =                                                                         =
-Echo =    2.) INSTALL PLAYSTATION 3 EMULATOR (RPCS3)                           =
+Echo =    2.) INSTALL  Playstation Portable  emulator (ppsspp)                 =
 echo =                                                                         =
 Echo =    3.) INSTALL CHANNEL F CORE FOR RETROARCH (freechaf_libretro)         =
 echo =                                                                         =
-echo =    4.) INSTALL XBOX EMULATOR (Cxbx-Reloaded)                            =
+echo =    4.) MANUAL INSTALL XBOX EMULATOR (Cxbx-Reloaded)                     =
 echo =                                                                         =
-echo =    5.) INSTALL XBOX 360 EMULATOR (Xenia)                                =
+Echo =    5.) MANUAL INSTALL PLAYSTATION 3 EMULATOR (RPCS3)                    =
+echo =                                                                         =
+echo =    6.) MANUAL INSTALL XBOX 360 EMULATOR (Xenia)                         =
+echo =                                                                         =
+echo =    7.) MANUAL INSTALL Dolphin - Development  (GameCube / Wii)           =
+echo =                                                                         =
+echo =    8.) MANUAL INSTALL Citra - Nightly  (3DS)                            =
 echo =                                                                         =
 echo =                                                                         =
-echo =    6.) RETURN TO MAIN MENU                                              =
+echo =    9.) RETURN TO MAIN MENU                                              =
 echo =                                                                         =
 echo ===========================================================================
-CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
-IF ERRORLEVEL ==6 GOTO menu
-IF ERRORLEVEL ==5 GOTO xenia
+CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
+IF ERRORLEVEL ==9 GOTO menu
+IF ERRORLEVEL ==8 GOTO Citra
+IF ERRORLEVEL ==7 GOTO Dolphin-Dev
+IF ERRORLEVEL ==6 GOTO xenia
+IF ERRORLEVEL ==5 GOTO RPCS3
 IF ERRORLEVEL ==4 GOTO Cxbx-Reloaded
 IF ERRORLEVEL ==3 GOTO FreeChaF
-IF ERRORLEVEL ==2 GOTO RPCS3
+IF ERRORLEVEL ==2 GOTO PPSSPP
 IF ERRORLEVEL ==1 GOTO FS-UAE
 
 :InstallAllEmu
@@ -8525,7 +8534,7 @@ goto CleanAllExit
 cls
 echo ===========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL/UPDATE A SET OF EMULATIONSTATION THEMES                  =
+Echo =    1.) INSTALL/UPDATE A SET OF  39  EMULATIONSTATION THEMES             =
 echo =                                                                         =
 echo =    2.) INSTALL/UPDATE INDIVIDUAL ES THEMES                              =
 echo =                                                                         =
@@ -8556,7 +8565,7 @@ echo =                                                                         =
 pause
 start microsoft-edge:https://github.com/RetroPie/RetroPie-Setup/wiki/Themes#theme-gallery
 pause
-goto ThemeManager
+goto menu
 
 :SelectThemes
 ::Using git to download a selection of themes
@@ -8757,7 +8766,7 @@ set theme=core
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-goto ThemeManager
+goto completed
 
 :IndThemes
 ::Menus for installing individual themes for EmulationStation.
@@ -8889,7 +8898,7 @@ echo =    6.) TFT                                                              =
 echo =    7.) CORE  (few systems but easy add more images)                     =
 echo =                                                                         =
 echo =                                                                         =
-echo =    9.) Return to ThemeManager                                           =
+echo =    9.) Return to Theme Manager                                           =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
@@ -9265,7 +9274,7 @@ echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\cemu.zip
-if EXIST %rkdir%\Emulators\tmp.txt goto Citra
+if EXIST %rkdir%\Emulators\tmp.txt goto ColecoEmu
 goto completed
 
 
@@ -9273,19 +9282,18 @@ goto completed
 
 
 
-:Citra
-::Installs  Citra  emulator  ( 3DS emulator )
+:ColecoEmu
+::Installs  ColEm  emulator  ( ColecoVision emulator )
 cls
 
 echo ================================================================
 echo =                                                              =
-echo =                    DOWNLOADING CITRA                         =
+echo =                    DOWNLOADING ColEm                         =
 echo =                                                              =
 echo ================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/citra-emu/citra-nightly/releases/download/nightly-1311/citra-windows-mingw-20190718-a9df1c2.7z -O "%rkdir%\Temp\citra.7z"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\citra.7z" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\nightly-mingw Citra
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://fms.komkon.org/ColEm/ColEm47-Windows-bin.zip -O "%rkdir%\Temp\colem.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\colem.zip" -o"%rkdir%\Emulators\ColEm" -aoa > nul
 
 cls
 
@@ -9294,7 +9302,7 @@ echo =        Cleaning up downloaded file(s)        =
 echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\citra.7z
+del %rkdir%\Temp\colem.zip
 if EXIST %rkdir%\Emulators\tmp.txt goto Classic99
 goto completed
 
@@ -9356,26 +9364,26 @@ echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\Daphne.zip
-if EXIST %rkdir%\Emulators\tmp.txt goto DolphinEmu
+if EXIST %rkdir%\Emulators\tmp.txt goto Demul
 goto completed
 
 
 ::=================================================================================================================================================================================================================================================================================================================
 
 
-:DolphinEmu
-::Installs  Dolphin  emulator  ( Gamecube, Wii )
+:Demul
+::Installs  DEMUL emulator  (Dreamcast/Naomi/Hikaru/Atomiswave)
 cls
 
 echo =================================================================
 echo =                                                               =
-echo =                     DOWNLOADING DOLPHIN                       =
+echo =              DOWNLOADING DEMUL                                =
 echo =                                                               =
 echo =================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://dl.dolphin-emu.org/builds/dolphin-master-5.0-10638-x64.7z -O "%rkdir%\Temp\Dolphin.7z"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Dolphin.7z" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\Dolphin-x64 Dolphin
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://demul.emulation64.com/files/demul07_111117.7z -O "%rkdir%\Temp\demul.7z"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\demul.7z" -o"%rkdir%\Emulators\Demul" -aoa > nul
+::ren %rkdir%\Emulators\Dolphin-x64 Dolphin
 
 cls
 
@@ -9384,7 +9392,7 @@ echo =        Cleaning up downloaded file(s)        =
 echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\Dolphin.7z
+del %rkdir%\Temp\demul.7z
 if EXIST %rkdir%\Emulators\tmp.txt goto FS-UAE
 goto completed
 
@@ -9626,30 +9634,28 @@ echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\PCSX2.7z
-if EXIST %rkdir%\Emulators\tmp.txt goto RPCS3
+if EXIST %rkdir%\Emulators\tmp.txt goto PPSSPP
 goto completed
 
 
 ::=================================================================================================================================================================================================================================================================================================================
 
 
-:RPCS3
-::Installs  RPCS3  emulator  ( PlayStation 3 )
+:PPSSPP
+::Installs  PPSSPP  emulator  ( Playstation Portable )
 
 cls
 
 echo ================================================================
 echo =                                                              =
-echo =             DOWNLOADING RPCS3 (PS3 Emulator)                 =
+echo =           DOWNLOADING PPSSPP  (Sony PSP Emulator)            =
 echo =                                                              =
-echo =           NOTE:  Only available for Win 64-bit               =
 echo =                                                              =
 echo ================================================================
 
-:: official site...  https://rpcs3.net/
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/RPCS3/rpcs3-binaries-win/releases/download/build-43f919c04b6f6ce6bad1cf61d9e641147d5f4475/rpcs3-v0.0.6-8314-43f919c0_win64.7z -O "%rkdir%\Temp\rpcs3.7z"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\rpcs3.7z" -o"%rkdir%\Emulators\Rpcs3" -aoa > nul
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://www.ppsspp.org/files/1_8_0/ppsspp_win.zip -O "%rkdir%\Temp\ppsspp.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ppsspp.zip" -o"%rkdir%\Emulators\ppsspp" -aoa > nul
 
 cls
 
@@ -9658,7 +9664,7 @@ echo =        Cleaning up downloaded file(s)        =
 echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\rpcs3.7z
+del %rkdir%\Temp\ppsspp.zip
 if EXIST %rkdir%\Emulators\tmp.txt goto VICE
 goto completed
 
@@ -9833,18 +9839,16 @@ goto completed
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
 
 
 
 
 :Cxbx-Reloaded
-::Manual install of  Cxbx-Reloaded  emulator  ( XBOX ) 
+::Manual install for  Cxbx-Reloaded  emulator  ( XBOX ) 
 
 start %rkdir%\Emulators
 mkdir %rkdir%\Emulators\Cxbx-Reloaded
-mkdir %rkdir%\Emulators\xenia-directx
-mkdir %rkdir%\Emulators\xenia-vulkan
+
 
 cls
 
@@ -9864,9 +9868,10 @@ echo =   MS Edge web browser.
 echo =
 echo =     - Look for the link "Latest Development Build"
 echo =       and click on that to download the zipped file.
-echo =     - Extract contents of this file into
+echo = 
+echo =     - Extract contents of this file into this directory
+echo = 
 echo =       'C:\RetroCake\Emulators\Cxbx-Reloaded'
-echo =       directory
 echo =
 echo =
 echo =
@@ -9874,6 +9879,59 @@ echo =
 pause
 
 start microsoft-edge:https://github.com/Cxbx-Reloaded/Cxbx-Reloaded
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto RPCS3
+goto completed
+
+
+
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+
+
+:RPCS3
+::Manual install for  RPCS3  emulator  ( Playstation 3 ) 
+
+:: official site...  https://rpcs3.net/
+
+start %rkdir%\Emulators
+mkdir %rkdir%\Emulators\rpcs3
+
+
+cls
+
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =        RPCS3  (Playstation 3 Emulator)       =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to download a file
+echo = 
+echo =   This will open RPCS3's website in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Look for the latest build for Windows and
+echo =       click on that link to download the zipped file.
+echo = 
+echo =     - Extract contents of this file into this directory
+echo = 
+echo =       'C:\RetroCake\Emulators\rpcs3'
+echo =
+echo =
+echo =
+
+pause
+
+start microsoft-edge:https://rpcs3.net/download
 
 pause
 
@@ -9889,7 +9947,11 @@ goto completed
 
   
 :xenia
-::Manual install of  xenia  emulator  ( XBOX 360 ) 
+::Manual install for  xenia  emulator  ( XBOX 360 ) 
+
+start %rkdir%\Emulators
+mkdir %rkdir%\Emulators\Xenia-DirectX
+mkdir %rkdir%\Emulators\Xenia-Vulkan
 
 cls
 
@@ -9908,14 +9970,19 @@ echo =   This will open Xenia's project site in
 echo =   MS Edge web browser.
 echo =
 echo =     - Click on link "Download" on left side
+echo = 
 echo =     - Download  TWO  compressed files:
+echo = 
 echo =          - master (Vulkan)
-echo =          - d3d12 (D3D12)
-echo =     - Extract contents of both files into 
-echo =       'C:\RetroCake\Emulators\Xenia-directx'
-echo =         and
-echo =       'C:\RetroCake\Emulators\Xenia-vulkan'
-echo =       directories
+echo = 
+echo =          - d3d12 (DirectX)
+echo = 
+echo =     - Extract contents of both files into their
+echo =       two separate directories respectively
+echo = 
+echo =       'C:\RetroCake\Emulators\Xenia-Vulkan'
+echo =
+echo =       'C:\RetroCake\Emulators\Xenia-DirectX'
 echo =
 echo =
 echo =
@@ -9926,9 +9993,111 @@ start microsoft-edge:https://xenia.jp
 
 pause
 
+if EXIST %rkdir%\Emulators\tmp.txt goto Citra
+goto completed
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+
+
+:Citra
+::Manual install for  Citra (Nightly)  emulator  ( 3DS )
+
+start %rkdir%\Emulators
+mkdir %rkdir%\Emulators\Citra
+
+cls
+
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =        Citra (Nightly)  (3DS Emulator)       =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to download a file
+echo = 
+echo =   This will open Citra's GitHub site in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Look for the latest build number for
+echo =       Windows, such as  citra-windows-mingw-xxxxx.7z
+echo =       and click on that link to download the zipped file
+echo = 
+echo =     - Extract contents inside  "nightly-mingw"  folder
+echo =       of this zipped file into this directory
+echo = 
+echo =       'C:\RetroCake\Emulators\Citra'
+echo =
+echo =
+echo =
+
+pause
+
+start microsoft-edge:https://github.com/citra-emu/citra-nightly/releases
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto Dolphin-Dev
+goto completed
+
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+
+
+:Dolphin-Dev
+::Manual install for  Dolphin (Development) emulator  ( GameCube / Wii )
+
+start %rkdir%\Emulators
+mkdir %rkdir%\Emulators\Dolphin
+
+
+cls
+
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =     Dolphin Development  (GameCube / Wii)    =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to download a file
+echo = 
+echo =   This will open Dolphin's website in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Look for the latest build for Windows and
+echo =       click on that link to download the zipped file.
+echo = 
+echo =     - Extract contents inside  "Dolphin-x64"  folder
+echo =       of this zipped file into this directory
+echo = 
+echo =       'C:\RetroCake\Emulators\Dolphin'
+echo =
+echo =
+echo =
+
+pause
+
+start microsoft-edge:https://dolphin-emu.org/download/
+
+pause
+
 if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
 goto completed
 
+
+
+::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
 :tmpClean
