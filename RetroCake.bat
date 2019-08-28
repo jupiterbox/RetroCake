@@ -299,7 +299,7 @@ goto menu
 :menu
 ::Main menu selection. Uses keys 1-9
 cls
-echo A fork of Flerp/RetroCake v1.4.5     Modified date: Aug 15, 2019
+echo A fork of Flerp/RetroCake v1.4.5     Modified date: Aug 28, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -396,7 +396,7 @@ IF ERRORLEVEL ==1 GOTO StartESVerCheck
 cls
 echo ===========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL RETROARCH 1.7.7                                          =
+Echo =    1.) INSTALL RETROARCH 1.7.8                                          =
 echo =                                                                         =
 echo =    2.) INSTALL/UPDATE CORES FOR RETROARCH  -- NIGHTLY BUILD (LATEST)    =
 echo =                                                                         =
@@ -6196,13 +6196,13 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 	)
 
 :x64RA
-::Installs RetroArch 1.7.7 to RetroCake\RetroArch. Cleans up all downloaded files when done. 64 bit
+::Installs RetroArch 1.7.8 to RetroCake\RetroArch. Cleans up all downloaded files when done. 64 bit
 echo =================================================================
 echo =                                                               =
 echo =   Downloading RetroArch (64-bit). This will take some time    =
 echo =                                                               =
 echo =================================================================
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://buildbot.libretro.com/stable/1.7.7/windows/x86_64/RetroArch.7z -O "%rkdir%\Temp\RetroArch_x64.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://buildbot.libretro.com/stable/1.7.8/windows/x86_64/RetroArch.7z -O "%rkdir%\Temp\RetroArch_x64.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
 cls
@@ -6218,13 +6218,13 @@ goto UpdateRACores
 ::
 
 :x86RA
-::Installs RetroArch 1.7.7 to RetroCake\RetroArch. Cleans up all downloaded files when done. 32 bit
+::Installs RetroArch 1.7.8 to RetroCake\RetroArch. Cleans up all downloaded files when done. 32 bit
 echo =================================================================
 echo =                                                               =
 echo =   Downloading RetroArch (32-bit). This will take some time    =
 echo =                                                               =
 echo =================================================================
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://buildbot.libretro.com/stable/1.7.7/windows/x86/RetroArch.7z -O "%rkdir%\Temp\RetroArch_x86.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://buildbot.libretro.com/stable/1.7.8/windows/x86/RetroArch.7z -O "%rkdir%\Temp\RetroArch_x86.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x86.zip" -o"%rkdir%\RetroArch" -aoa > nul
 cls
