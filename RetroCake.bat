@@ -9277,9 +9277,9 @@ echo =                      DOWNLOADING CEMU                         =
 echo =                                                               =
 echo =================================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.11.zip -O "%rkdir%\Temp\cemu.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.12.zip -O "%rkdir%\Temp\cemu.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cemu.zip" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\cemu_1.15.11 Cemu
+ren %rkdir%\Emulators\cemu_1.15.12 Cemu
 
 cls
 
