@@ -8548,7 +8548,7 @@ goto CleanAllExit
 cls
 echo ===========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL/UPDATE A SET OF  39  EMULATIONSTATION THEMES             =
+Echo =    1.) INSTALL/UPDATE A SET OF  42  EMULATIONSTATION THEMES             =
 echo =                                                                         =
 echo =    2.) INSTALL/UPDATE INDIVIDUAL ES THEMES                              =
 echo =                                                                         =
@@ -8780,6 +8780,22 @@ set repo=mattrixk
 set theme=core
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=macro
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=swatch
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=supersweet
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
 
 goto completed
 
