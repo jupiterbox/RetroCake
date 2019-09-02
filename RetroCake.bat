@@ -9258,39 +9258,9 @@ echo ================================================
 
 ping 127.0.0.1 -n 3 > nul
 del %rkdir%\Temp\BlueMSX.zip
-if EXIST %rkdir%\Emulators\tmp.txt goto CemuEmu
-goto completed
-
-
-
-
-::=================================================================================================================================================================================================================================================================================================================
-
-
-:CemuEmu
-::Installs  Cemu  emulator  ( Wii U )
-cls
-
-echo =================================================================
-echo =                                                               =
-echo =                      DOWNLOADING CEMU                         =
-echo =                                                               =
-echo =================================================================
-
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://cemu.info/releases/cemu_1.15.12.zip -O "%rkdir%\Temp\cemu.zip"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cemu.zip" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\cemu_1.15.12 Cemu
-
-cls
-
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-
-ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\cemu.zip
 if EXIST %rkdir%\Emulators\tmp.txt goto ColecoEmu
 goto completed
+
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -10132,6 +10102,57 @@ echo =
 pause
 
 start microsoft-edge:https://dolphin-emu.org/download/
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto CemuEmu
+goto completed
+
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+
+:CemuEmu
+::Manual install for  Cemu emulator  ( Wii U )
+
+start %rkdir%\Emulators
+mkdir %rkdir%\Emulators\Cemu
+
+
+cls
+
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =               Cemu  (Wii U)                  =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to obtain proper file
+echo = 
+echo =   This will open Cemu's website in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Look for and click on 'Download' link
+echo = 
+echo =     - Click on the link: 'Download latest version...'
+echo =       to download the file.
+echo = 
+echo =     - Extract contents inside  "cemu_..."  folder
+echo =       of this zipped file into this directory
+echo = 
+echo =       'C:\RetroCake\Emulators\Cemu'
+echo =
+echo =
+echo =
+
+pause
+
+start microsoft-edge:http://cemu.info/
 
 pause
 
