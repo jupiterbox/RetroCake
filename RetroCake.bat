@@ -8548,7 +8548,7 @@ goto CleanAllExit
 cls
 echo ===========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL/UPDATE A SET OF  42  EMULATIONSTATION THEMES             =
+Echo =    1.) INSTALL/UPDATE A SET OF  38  EMULATIONSTATION THEMES             =
 echo =                                                                         =
 echo =    2.) INSTALL/UPDATE INDIVIDUAL ES THEMES                              =
 echo =                                                                         =
@@ -8591,11 +8591,6 @@ set theme=angular
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=waweedman
-set theme=Blade-360
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
 set repo=RetroHursty69
 set theme=bluray
 rmdir %theme% /S /Q
@@ -8626,6 +8621,11 @@ set theme=ComicBook_SE-Wheelart
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+set repo=mattrixk
+set theme=core
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
 set repo=ChoccyHobNob
 set theme=Cygnus
 rmdir %theme% /S /Q
@@ -8633,11 +8633,6 @@ rmdir %theme% /S /Q
 
 set repo=RetroHursty69
 set theme=darkswitch
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=donkeykonkey
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -8653,11 +8648,6 @@ rmdir %theme% /S /Q
 
 set repo=lilbud
 set theme=flat
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=lilbud
-set theme=flat-dark
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -8686,13 +8676,18 @@ set theme=io
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=blowfinger77
-set theme=locomotion
+set repo=RetroHursty69
+set theme=marco
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
 set repo=lilbud
 set theme=material
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=meshy
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -8746,23 +8741,28 @@ set theme=snes-mini
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=RetroHursty69
-set theme=spaceinvaders
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
 set repo=lipebello
 set theme=SpaceOddity
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=dmmarti
-set theme=steampunk
+set repo=mrharias
+set theme=superdisplay
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=mrharias
-set theme=superdisplay
+set repo=RetroHursty69
+set theme=supersweet
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=swatch
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=sweet_tinkerboard
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -8776,25 +8776,13 @@ set theme=tft
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=mattrixk
-set theme=core
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=RetroHursty69
-set theme=macro
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=RetroHursty69
-set theme=swatch
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=RetroHursty69
-set theme=supersweet
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+
+
+
 
 
 goto completed
@@ -8806,26 +8794,26 @@ cls
 echo ===========================================================================
 echo =                               Page 1                                    =
 echo =    1.) ANGULAR                                                          =
-echo =    2.) BLADE-360                                                        =
-echo =    3.) BLURAY                                                           =
-echo =    4.) CAPCOMCOLORSPIN                                                  =
-echo =    5.) CARBON                                                           =
-echo =    6.) CARBON-NOMETA                                                    =
-echo =    7.) CIRCUIT                                                          =
-echo =    8.) COMICBOOK_SE-WHEELART                                            =
+echo =    2.) BLURAY                                                           =
+echo =    3.) CAPCOMCOLORSPIN                                                  =
+echo =    4.) CARBON                                                           =
+echo =    5.) CARBON-NOMETA                                                    =
+echo =    6.) CIRCUIT                                                          =
+echo =    7.) COMICBOOK_SE-WHEELART                                            =
+echo =    8.) CORE  (fewer but easy to add more systems)                       =
 echo =                                                                         =
 echo =    9.) Page 2                                                           =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO page2
-IF ERRORLEVEL ==8 goto ComicBook_SE-Wheelart 
-IF ERRORLEVEL ==7 goto circuit 
-IF ERRORLEVEL ==6 goto carbon-nometa 
-IF ERRORLEVEL ==5 goto carbon 
-IF ERRORLEVEL ==4 goto CapcomColorSpin 
-IF ERRORLEVEL ==3 goto bluray 
-IF ERRORLEVEL ==2 goto blade-360 
+IF ERRORLEVEL ==8 goto core 
+IF ERRORLEVEL ==7 goto ComicBook_SE-Wheelart 
+IF ERRORLEVEL ==6 goto circuit 
+IF ERRORLEVEL ==5 goto carbon-nometa 
+IF ERRORLEVEL ==4 goto carbon 
+IF ERRORLEVEL ==3 goto CapcomColorSpin 
+IF ERRORLEVEL ==2 goto bluray 
 IF ERRORLEVEL ==1 goto angular 
 
 :page2
@@ -8834,24 +8822,24 @@ echo ===========================================================================
 echo =                               Page 2                                    =
 echo =    1.) CYGNUS                                                           =
 echo =    2.) DARKSWITCH                                                       =
-echo =    3.) DONKEYKONKEY                                                     =
-echo =    4.) EUDORA                                                           =
-echo =    5.) EUDORA-BIGSHOT                                                   =
-echo =    6.) FLAT                                                             =
-echo =    7.) FLAT-DARK                                                        =
-echo =    8.) FREEPLAY                                                         =
+echo =    3.) EUDORA                                                           =
+echo =    4.) EUDORA-BIGSHOT                                                   =
+echo =    5.) FLAT                                                             =
+echo =    6.) FREEPLAY                                                         =
+echo =    7.) FUNDAMENTAL                                                      =
+echo =    8.) GAMEHAT                                                          =
 echo =                                                                         =
 echo =    9.) Page 3                                                           =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO page3
-IF ERRORLEVEL ==8 goto freeplay
-IF ERRORLEVEL ==7 goto flat-dark
-IF ERRORLEVEL ==6 goto flat
-IF ERRORLEVEL ==5 goto eudora-bigshot
-IF ERRORLEVEL ==4 goto eudora
-IF ERRORLEVEL ==3 goto DonkeyKonkey
+IF ERRORLEVEL ==8 goto gamehat
+IF ERRORLEVEL ==7 goto fundamental
+IF ERRORLEVEL ==6 goto freeplay
+IF ERRORLEVEL ==5 goto flat
+IF ERRORLEVEL ==4 goto eudora-bigshot
+IF ERRORLEVEL ==3 goto eudora
 IF ERRORLEVEL ==2 goto DarkSwitch 
 IF ERRORLEVEL ==1 goto cygnus
 
@@ -8861,28 +8849,28 @@ IF ERRORLEVEL ==1 goto cygnus
 cls
 echo ===========================================================================
 echo =                               Page 3                                    =
-echo =    1.) FUNDAMENTAL                                                      =
-echo =    2.) GAMEHAT                                                          =
-echo =    3.) GBZ35-DARK                                                       =
-echo =    4.) IO                                                               =
-echo =    5.) LOCOMOTION                                                       =
-echo =    6.) MATERIAL                                                         =
-echo =    7.) METAPIXEL                                                        =
-echo =    8.) MINIMAL                                                          =
+echo =    1.) GBZ35-DARK                                                       =
+echo =    2.) IO                                                               =
+echo =    3.) MARCO                                                            =
+echo =    4.) MATERIAL                                                         =
+echo =    5.) MESHY                                                            =
+echo =    6.) METAPIXEL                                                        =
+echo =    7.) MINIMAL                                                          =
+echo =    8.) NBBA                                                             =
 echo =                                                                         =
 echo =    9.) Page 4                                                           =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO page4
-IF ERRORLEVEL ==8 goto minimal
-IF ERRORLEVEL ==7 goto metapixel
-IF ERRORLEVEL ==6 goto material
-IF ERRORLEVEL ==5 goto locomotion
-IF ERRORLEVEL ==4 goto io
-IF ERRORLEVEL ==3 goto gbz35-dark
-IF ERRORLEVEL ==2 goto gamehat 
-IF ERRORLEVEL ==1 goto fundamental
+IF ERRORLEVEL ==8 goto nbba
+IF ERRORLEVEL ==7 goto minimal
+IF ERRORLEVEL ==6 goto metapixel
+IF ERRORLEVEL ==5 goto meshy
+IF ERRORLEVEL ==4 goto material
+IF ERRORLEVEL ==3 goto marco
+IF ERRORLEVEL ==2 goto io 
+IF ERRORLEVEL ==1 goto gbz35-dark
 
 
 
@@ -8891,28 +8879,28 @@ IF ERRORLEVEL ==1 goto fundamental
 cls
 echo ===========================================================================
 echo =                               Page 4                                    =
-echo =    1.) NBBA                                                             =
-echo =    2.) PICADE                                                           =
-echo =    3.) PIXEL                                                            =
-echo =    4.) PIXEL-METADATA                                                   =
-echo =    5.) RETRORAMA                                                        =
-echo =    6.) RETROROID                                                        =
-echo =    7.) RETROWAVE                                                        =
-echo =    8.) SNES-MINI                                                        =
+echo =    1.) PICADE                                                           =
+echo =    2.) PIXEL                                                            =
+echo =    3.) PIXEL-METADATA                                                   =
+echo =    4.) RETRORAMA                                                        =
+echo =    5.) RETROROID                                                        =
+echo =    6.) RETROWAVE                                                        =
+echo =    7.) SNES-MINI                                                        =
+echo =    8.) SPACEODDITY                                                      =
 echo =                                                                         =
 echo =    9.) Page 5                                                           =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO page5
-IF ERRORLEVEL ==8 goto snes-mini
-IF ERRORLEVEL ==7 goto retrowave
-IF ERRORLEVEL ==6 goto retroroid
-IF ERRORLEVEL ==5 goto retrorama
-IF ERRORLEVEL ==4 goto pixel-metadata
-IF ERRORLEVEL ==3 goto pixel
-IF ERRORLEVEL ==2 goto picade 
-IF ERRORLEVEL ==1 goto nbba
+IF ERRORLEVEL ==8 goto SpaceOddity
+IF ERRORLEVEL ==7 goto snes-mini
+IF ERRORLEVEL ==6 goto retrowave
+IF ERRORLEVEL ==5 goto retroroid
+IF ERRORLEVEL ==4 goto retrorama
+IF ERRORLEVEL ==3 goto pixel-metadata
+IF ERRORLEVEL ==2 goto pixel 
+IF ERRORLEVEL ==1 goto picade
 
 
 
@@ -8920,27 +8908,27 @@ IF ERRORLEVEL ==1 goto nbba
 cls
 echo ===========================================================================
 echo =                               Page 5                                    =
-echo =    1.) SPACEINVADERS                                                    =
-echo =    2.) SPACEODDITY                                                      =
-echo =    3.) STEAMPUNK                                                        =
-echo =    4.) SUPERDISPLAY                                                     =
+echo =    1.) SUPERDISPLAY                                                     =
+echo =    2.) SUPERSWEET                                                       =
+echo =    3.) SWATCH                                                           =
+echo =    4.) SWEET_TINKERBOARD                                                =
 echo =    5.) SWITCH-DARK                                                      =
 echo =    6.) TFT                                                              =
-echo =    7.) CORE  (few systems but easy add more images)                     =
+echo =    7.)                                                                  =
+echo =    8.)                                                                  =
 echo =                                                                         =
-echo =                                                                         =
-echo =    9.) Return to Theme Manager                                           =
+echo =    9.) Return to Theme Manager                                          =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO ThemeManager
-IF ERRORLEVEL ==7 goto coretheme
-IF ERRORLEVEL ==6 goto tft
-IF ERRORLEVEL ==5 goto switch-dark
-IF ERRORLEVEL ==4 goto superdisplay
-IF ERRORLEVEL ==3 goto steampunk
-IF ERRORLEVEL ==2 goto SpaceOddity 
-IF ERRORLEVEL ==1 goto SpaceInvaders
+IF ERRORLEVEL ==7 goto page5
+IF ERRORLEVEL ==6 goto page5
+IF ERRORLEVEL ==5 goto tft
+IF ERRORLEVEL ==4 goto switch-dark
+IF ERRORLEVEL ==3 goto sweet_tinkerboard
+IF ERRORLEVEL ==2 goto supersweet
+IF ERRORLEVEL ==1 goto superdisplay
 
 
 ::Sets a variable for each theme individually. Then moves to cloning from github.
@@ -8948,11 +8936,6 @@ IF ERRORLEVEL ==1 goto SpaceInvaders
 :angular
 set repo=lilbud
 set theme=angular
-goto insttheme
-
-:blade-360
-set repo=waweedman
-set theme=Blade-360
 goto insttheme
 
 :bluray
@@ -8985,6 +8968,11 @@ set repo=TMNTturtleguy
 set theme=ComicBook_SE-Wheelart
 goto insttheme
 
+:coretheme
+set repo=mattrixk
+set theme=core
+goto insttheme
+
 :cygnus
 set repo=ChoccyHobNob
 set theme=cygnus
@@ -8993,11 +8981,6 @@ goto insttheme
 :DarkSwitch
 set repo=RetroHursty69
 set theme=darkswitch
-goto insttheme
-
-:DonkeyKonkey
-set repo=RetroHursty69
-set theme=donkeykonkey
 goto insttheme
 
 :eudora
@@ -9013,11 +8996,6 @@ goto insttheme
 :flat
 set repo=lilbud
 set theme=flat
-goto insttheme
-
-:flat-dark
-set repo=lilbud
-set theme=flat-dark
 goto insttheme
 
 :freeplay
@@ -9045,14 +9023,19 @@ set repo=mattrixk
 set theme=io
 goto insttheme
 
-:locomotion
-set repo=blowfinger77
-set theme=locomotion
+:marco
+set repo=RetroHursty69
+set theme=marco
 goto insttheme
 
 :material
 set repo=lilbud
 set theme=material
+goto insttheme
+
+:meshy
+set repo=RetroHursty69
+set theme=meshy
 goto insttheme
 
 :metapixel
@@ -9105,24 +9088,29 @@ set repo=ruckage
 set theme=snes-mini
 goto insttheme
 
-:SpaceInvaders
-set repo=RetroHursty69
-set theme=spaceinvaders
-goto insttheme
-
 :SpaceOddity
 set repo=lipebello
 set theme=SpaceOddity
 goto insttheme
 
-:steampunk
-set repo=dmmarti
-set theme=steampunk
-goto insttheme
-
 :superdisplay
 set repo=mrharias
 set theme=superdisplay
+goto insttheme
+
+:supersweet
+set repo=RetroHursty69
+set theme=supersweet
+goto insttheme
+
+:swatch
+set repo=RetroHursty69
+set theme=swatch
+goto insttheme
+
+:sweet_tinkerboard
+set repo=RetroHursty69
+set theme=sweet_tinkerboard
 goto insttheme
 
 :switch-dark
@@ -9135,10 +9123,8 @@ set repo=anthonycaccese
 set theme=tft
 goto insttheme
 
-:coretheme
-set repo=mattrixk
-set theme=core
-goto insttheme
+
+
 
 :insttheme
 ::Uses the variable set in the selection for git cloning.
