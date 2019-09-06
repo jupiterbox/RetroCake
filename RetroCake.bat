@@ -8600,11 +8600,13 @@ set repo=RetroHursty69
 set theme=CapcomColorSpin
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+rename CapcomColorSpin capcomcolorspin
 
 set repo=RetroPie
 set theme=carbon
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+rename carbon Carbon
 
 set repo=RetroPie
 set theme=carbon-nometa
@@ -8620,6 +8622,7 @@ set repo=TMNTturtleguy
 set theme=ComicBook_SE-Wheelart
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+rename ComicBook_SE-Wheelart comicbook_se-wheelart
 
 set repo=mattrixk
 set theme=core
@@ -8630,6 +8633,7 @@ set repo=ChoccyHobNob
 set theme=Cygnus
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+rename Cygnus cygnus
 
 set repo=RetroHursty69
 set theme=darkswitch
@@ -8745,6 +8749,7 @@ set repo=lipebello
 set theme=SpaceOddity
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+rename SpaceOddity spaceoddity
 
 set repo=mrharias
 set theme=superdisplay
@@ -9131,6 +9136,12 @@ goto insttheme
 cd /D %USERPROFILE%\.emulationstation\themes
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+rename carbon Carbon
+rename CapcomColorSpin capcomcolorspin
+rename ComicBook_SE-Wheelart comicbook_se-wheelart
+rename Cygnus cygnus
+rename SpaceOddity spaceoddity
+
 goto IndThemes
 
 ::=================================================================================================================================================================================================================================================================================================================
