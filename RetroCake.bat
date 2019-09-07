@@ -9556,7 +9556,7 @@ echo =             DOWNLOADING LATEST MAME 32-bit              =
 echo =                                                         =
 echo ===========================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0212/mame0212b_32bit.exe -O "%rkdir%\Temp\Mame32.exe"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0213/mame0213b_32bit.exe -O "%rkdir%\Temp\Mame32.exe"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame32.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
@@ -9579,7 +9579,7 @@ echo =             DOWNLOADING LATEST MAME 64-bit              =
 echo =                                                         =
 echo ===========================================================
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0212/mame0212b_64bit.exe -O "%rkdir%\Temp\Mame64.exe"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress https://github.com/mamedev/mame/releases/download/mame0213/mame0213b_64bit.exe -O "%rkdir%\Temp\Mame64.exe"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame64.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
