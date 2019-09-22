@@ -299,7 +299,7 @@ goto menu
 :menu
 ::Main menu selection. Uses keys 1-9
 cls
-echo A fork of Flerp/RetroCake v1.4.5     Modified date: Sept 6, 2019
+echo A fork of Flerp/RetroCake v1.4.5     Modified date: Sept 22, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -312,7 +312,7 @@ echo =    3.) MANAGE RETROARCH                                                 =
 echo =                                                                         =
 echo =    4.) MANAGE ADDITIONAL EMULATORS                                      =
 echo =                                                                         =
-echo =    5.) MANAGE ROM DIRECTORIES                                           =
+echo =    5.) MANAGE ROM DIRECTORIES AND SCRAPER                               =
 echo =                                                                         =
 echo =    6.) MANAGE DEDICATED EMUBOX SETTINGS                                 =
 echo =                                                                         =
@@ -423,18 +423,23 @@ IF ERRORLEVEL ==1 GOTO UpdateRA
 cls
 echo ===========================================================================
 echo =
-Echo =    1.) CREATE DEFAULT ROM DIRECTORIES (%rkdir%\ROMS\SYSTEMNAME)
+Echo =    1.) CREATE DEFAULT ROM DIRECTORIES -  %rkdir%\ROMS\SYSTEMNAME
 echo =
 Echo =    2.) CREATE CUSTOM ROM DIRECTORIES                                    =
 echo =                                                                         =
 echo =    3.) SHARE ROM DIRECTORIES                                            =
+echo =                                                                         
+echo =    4.) SCRAPER FOR DEFAULT ROM DIRECTORY -  %rkdir%\ROMS\SYSTEMNAME
+echo =                                                                         
+echo =    5.) SCRAPER FOR CUSTOM ROM DIRECTORY
 echo =                                                                         =
-echo =                                                                         =
-echo =    4.) RETURN TO MAIN MENU                                              =
+echo =    6.) RETURN TO MAIN MENU                                              =
 echo =                                                                         =
 echo ===========================================================================
-CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
-IF ERRORLEVEL ==4 GOTO menu
+CHOICE /N /C:123456 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6)"
+IF ERRORLEVEL ==6 GOTO menu
+IF ERRORLEVEL ==5 GOTO ScraperSetupCustom
+IF ERRORLEVEL ==4 GOTO ScraperSetupDefault
 IF ERRORLEVEL ==3 GOTO DediShare
 IF ERRORLEVEL ==2 GOTO CusRomDirSet
 IF ERRORLEVEL ==1 GOTO DefaultRomFolders
@@ -1415,7 +1420,7 @@ echo     ^<name^>n64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg
 echo     ^<fullname^>Nintendo 64 - (Sep 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\n64^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>n64^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1425,7 +1430,7 @@ echo     ^<name^>n64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg
 echo     ^<fullname^>N64 - Japan - (Jun 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\n64-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>n64-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1676,7 +1681,7 @@ echo     ^<name^>n64-dd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.
 echo     ^<fullname^>Nintendo 64DD - (Dec 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\n64-dd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .ndd .v64 .7Z .ZIP .Z64 .N64 .NDD .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64-dd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>n64-dd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3026,7 +3031,7 @@ echo     ^<name^>n64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg
 echo     ^<fullname^>Nintendo 64 - (Sep 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\n64^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>n64^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3036,7 +3041,7 @@ echo     ^<name^>n64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg
 echo     ^<fullname^>N64 - Japan - (Jun 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\n64-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>n64-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3287,7 +3292,7 @@ echo     ^<name^>n64-dd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.
 echo     ^<fullname^>Nintendo 64DD - (Dec 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\n64-dd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .ndd .v64 .7Z .ZIP .Z64 .N64 .NDD .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64-dd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>n64-dd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4631,7 +4636,7 @@ echo     ^<name^>n64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg
 echo     ^<fullname^>Nintendo 64 - (Sep 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\n64^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>n64^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4641,7 +4646,7 @@ echo     ^<name^>n64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg
 echo     ^<fullname^>N64 - Japan - (Jun 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\n64-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>n64-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4892,7 +4897,7 @@ echo     ^<name^>n64-dd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.
 echo     ^<fullname^>Nintendo 64DD - (Dec 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\n64-dd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .ndd .v64 .7Z .ZIP .Z64 .N64 .NDD .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64-dd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>n64-dd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6258,7 +6263,7 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 cls
 echo ========================================================================
 echo =                                                                      =
-echo =     Downloading  143  cores  (nightly) for 64-bit RetroArch          =
+echo =     Downloading  142  cores  (nightly) for 64-bit RetroArch          =
 echo =                                                                      =
 echo =     This will take some time...                                      =
 echo =                                                                      =
@@ -6271,7 +6276,7 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/atari800_libretro.dll.zip -O "%rkdir%\Temp\cores\5.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/blastem_libretro.dll.zip -O "%rkdir%\Temp\cores\6.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bluemsx_libretro.dll.zip -O "%rkdir%\Temp\cores\7.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bnes_libretro.dll.zip -O "%rkdir%\Temp\cores\8.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bnes_hd_libretro.dll.zip -O "%rkdir%\Temp\cores\8.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_accuracy_libretro.dll.zip -O "%rkdir%\Temp\cores\9.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_balanced_libretro.dll.zip -O "%rkdir%\Temp\cores\10.zip"
 
@@ -6312,115 +6317,114 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/fceumm_libretro.dll.zip -O "%rkdir%\Temp\cores\42.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/ffmpeg_libretro.dll.zip -O "%rkdir%\Temp\cores\43.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_libretro.dll.zip -O "%rkdir%\Temp\cores\44.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_wince_libretro.dll.zip -O "%rkdir%\Temp\cores\45.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -O "%rkdir%\Temp\cores\46.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -O "%rkdir%\Temp\cores\47.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -O "%rkdir%\Temp\cores\48.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -O "%rkdir%\Temp\cores\49.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -O "%rkdir%\Temp\cores\50.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -O "%rkdir%\Temp\cores\45.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -O "%rkdir%\Temp\cores\46.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -O "%rkdir%\Temp\cores\47.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -O "%rkdir%\Temp\cores\48.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -O "%rkdir%\Temp\cores\49.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -O "%rkdir%\Temp\cores\50.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -O "%rkdir%\Temp\cores\51.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -O "%rkdir%\Temp\cores\52.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -O "%rkdir%\Temp\cores\53.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -O "%rkdir%\Temp\cores\54.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gw_libretro.dll.zip -O "%rkdir%\Temp\cores\55.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -O "%rkdir%\Temp\cores\56.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -O "%rkdir%\Temp\cores\57.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/higan_sfc_balanced_libretro.dll.zip -O "%rkdir%\Temp\cores\58.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/higan_sfc_libretro.dll.zip -O "%rkdir%\Temp\cores\59.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/imageviewer_libretro.dll.zip -O "%rkdir%\Temp\cores\60.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -O "%rkdir%\Temp\cores\51.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -O "%rkdir%\Temp\cores\52.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -O "%rkdir%\Temp\cores\53.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/gw_libretro.dll.zip -O "%rkdir%\Temp\cores\54.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -O "%rkdir%\Temp\cores\55.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -O "%rkdir%\Temp\cores\56.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/higan_sfc_balanced_libretro.dll.zip -O "%rkdir%\Temp\cores\57.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/higan_sfc_libretro.dll.zip -O "%rkdir%\Temp\cores\58.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/imageviewer_libretro.dll.zip -O "%rkdir%\Temp\cores\59.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -O "%rkdir%\Temp\cores\60.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -O "%rkdir%\Temp\cores\61.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -O "%rkdir%\Temp\cores\62.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2000_libretro.dll.zip -O "%rkdir%\Temp\cores\63.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_libretro.dll.zip -O "%rkdir%\Temp\cores\64.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\65.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2010_libretro.dll.zip -O "%rkdir%\Temp\cores\66.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2015_libretro.dll.zip -O "%rkdir%\Temp\cores\67.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2016_libretro.dll.zip -O "%rkdir%\Temp\cores\68.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame_libretro.dll.zip -O "%rkdir%\Temp\cores\69.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -O "%rkdir%\Temp\cores\70.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -O "%rkdir%\Temp\cores\61.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2000_libretro.dll.zip -O "%rkdir%\Temp\cores\62.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_libretro.dll.zip -O "%rkdir%\Temp\cores\63.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\64.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2010_libretro.dll.zip -O "%rkdir%\Temp\cores\65.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2015_libretro.dll.zip -O "%rkdir%\Temp\cores\66.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2016_libretro.dll.zip -O "%rkdir%\Temp\cores\67.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame_libretro.dll.zip -O "%rkdir%\Temp\cores\68.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -O "%rkdir%\Temp\cores\69.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -O "%rkdir%\Temp\cores\70.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -O "%rkdir%\Temp\cores\71.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -O "%rkdir%\Temp\cores\72.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -O "%rkdir%\Temp\cores\73.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -O "%rkdir%\Temp\cores\74.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -O "%rkdir%\Temp\cores\75.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -O "%rkdir%\Temp\cores\76.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -O "%rkdir%\Temp\cores\77.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -O "%rkdir%\Temp\cores\78.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_snes_libretro.dll.zip -O "%rkdir%\Temp\cores\79.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -O "%rkdir%\Temp\cores\80.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -O "%rkdir%\Temp\cores\71.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -O "%rkdir%\Temp\cores\72.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -O "%rkdir%\Temp\cores\73.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -O "%rkdir%\Temp\cores\74.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -O "%rkdir%\Temp\cores\75.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -O "%rkdir%\Temp\cores\76.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -O "%rkdir%\Temp\cores\77.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_snes_libretro.dll.zip -O "%rkdir%\Temp\cores\78.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -O "%rkdir%\Temp\cores\79.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -O "%rkdir%\Temp\cores\80.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -O "%rkdir%\Temp\cores\81.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -O "%rkdir%\Temp\cores\82.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -O "%rkdir%\Temp\cores\83.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -O "%rkdir%\Temp\cores\84.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -O "%rkdir%\Temp\cores\85.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -O "%rkdir%\Temp\cores\86.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/meteor_libretro.dll.zip -O "%rkdir%\Temp\cores\87.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -O "%rkdir%\Temp\cores\88.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -O "%rkdir%\Temp\cores\89.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -O "%rkdir%\Temp\cores\90.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -O "%rkdir%\Temp\cores\81.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -O "%rkdir%\Temp\cores\82.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -O "%rkdir%\Temp\cores\83.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -O "%rkdir%\Temp\cores\84.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -O "%rkdir%\Temp\cores\85.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/meteor_libretro.dll.zip -O "%rkdir%\Temp\cores\86.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -O "%rkdir%\Temp\cores\87.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -O "%rkdir%\Temp\cores\88.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -O "%rkdir%\Temp\cores\89.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -O "%rkdir%\Temp\cores\90.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -O "%rkdir%\Temp\cores\91.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -O "%rkdir%\Temp\cores\92.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -O "%rkdir%\Temp\cores\93.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -O "%rkdir%\Temp\cores\94.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -O "%rkdir%\Temp\cores\95.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -O "%rkdir%\Temp\cores\96.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/openlara_libretro.dll.zip -O "%rkdir%\Temp\cores\97.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -O "%rkdir%\Temp\cores\98.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -O "%rkdir%\Temp\cores\99.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -O "%rkdir%\Temp\cores\100.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -O "%rkdir%\Temp\cores\91.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -O "%rkdir%\Temp\cores\92.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -O "%rkdir%\Temp\cores\93.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -O "%rkdir%\Temp\cores\94.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -O "%rkdir%\Temp\cores\95.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/openlara_libretro.dll.zip -O "%rkdir%\Temp\cores\96.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -O "%rkdir%\Temp\cores\97.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -O "%rkdir%\Temp\cores\98.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -O "%rkdir%\Temp\cores\99.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/play_libretro.dll.zip -O "%rkdir%\Temp\cores\100.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/play_libretro.dll.zip -O "%rkdir%\Temp\cores\101.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -O "%rkdir%\Temp\cores\102.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -O "%rkdir%\Temp\cores\103.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -O "%rkdir%\Temp\cores\104.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -O "%rkdir%\Temp\cores\105.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -O "%rkdir%\Temp\cores\106.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -O "%rkdir%\Temp\cores\107.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -O "%rkdir%\Temp\cores\108.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -O "%rkdir%\Temp\cores\109.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -O "%rkdir%\Temp\cores\110.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -O "%rkdir%\Temp\cores\101.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -O "%rkdir%\Temp\cores\102.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -O "%rkdir%\Temp\cores\103.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -O "%rkdir%\Temp\cores\104.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -O "%rkdir%\Temp\cores\105.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -O "%rkdir%\Temp\cores\106.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -O "%rkdir%\Temp\cores\107.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -O "%rkdir%\Temp\cores\108.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -O "%rkdir%\Temp\cores\109.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/redbook_libretro.dll.zip -O "%rkdir%\Temp\cores\110.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/redbook_libretro.dll.zip -O "%rkdir%\Temp\cores\111.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -O "%rkdir%\Temp\cores\112.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/remotejoy_libretro.dll.zip -O "%rkdir%\Temp\cores\113.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -O "%rkdir%\Temp\cores\114.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -O "%rkdir%\Temp\cores\115.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -O "%rkdir%\Temp\cores\116.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -O "%rkdir%\Temp\cores\117.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\118.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -O "%rkdir%\Temp\cores\119.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -O "%rkdir%\Temp\cores\120.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -O "%rkdir%\Temp\cores\111.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/remotejoy_libretro.dll.zip -O "%rkdir%\Temp\cores\112.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -O "%rkdir%\Temp\cores\113.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -O "%rkdir%\Temp\cores\114.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -O "%rkdir%\Temp\cores\115.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -O "%rkdir%\Temp\cores\116.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\117.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -O "%rkdir%\Temp\cores\118.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -O "%rkdir%\Temp\cores\119.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -O "%rkdir%\Temp\cores\120.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -O "%rkdir%\Temp\cores\121.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -O "%rkdir%\Temp\cores\122.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -O "%rkdir%\Temp\cores\123.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -O "%rkdir%\Temp\cores\124.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -O "%rkdir%\Temp\cores\125.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -O "%rkdir%\Temp\cores\126.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -O "%rkdir%\Temp\cores\127.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -O "%rkdir%\Temp\cores\128.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -O "%rkdir%\Temp\cores\129.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -O "%rkdir%\Temp\cores\121.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -O "%rkdir%\Temp\cores\122.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -O "%rkdir%\Temp\cores\123.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -O "%rkdir%\Temp\cores\124.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -O "%rkdir%\Temp\cores\125.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -O "%rkdir%\Temp\cores\126.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -O "%rkdir%\Temp\cores\127.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -O "%rkdir%\Temp\cores\128.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -O "%rkdir%\Temp\cores\129.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -O "%rkdir%\Temp\cores\131.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -O "%rkdir%\Temp\cores\132.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -O "%rkdir%\Temp\cores\133.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -O "%rkdir%\Temp\cores\134.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -O "%rkdir%\Temp\cores\135.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -O "%rkdir%\Temp\cores\136.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -O "%rkdir%\Temp\cores\137.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -O "%rkdir%\Temp\cores\138.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -O "%rkdir%\Temp\cores\139.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -O "%rkdir%\Temp\cores\140.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -O "%rkdir%\Temp\cores\131.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -O "%rkdir%\Temp\cores\132.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -O "%rkdir%\Temp\cores\133.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -O "%rkdir%\Temp\cores\134.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -O "%rkdir%\Temp\cores\135.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -O "%rkdir%\Temp\cores\136.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -O "%rkdir%\Temp\cores\137.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -O "%rkdir%\Temp\cores\138.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -O "%rkdir%\Temp\cores\139.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -O "%rkdir%\Temp\cores\140.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -O "%rkdir%\Temp\cores\141.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\142.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\143.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\141.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\142.zip"
 
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
@@ -6440,7 +6444,7 @@ goto completed
 cls
 echo ========================================================================
 echo =                                                                      =
-echo =     Downloading  143  cores  (nightly) for 32-bit RetroArch          =
+echo =     Downloading  142  cores  (nightly) for 32-bit RetroArch          =
 echo =                                                                      =
 echo =     This will take some time...                                      =
 echo =                                                                      =
@@ -6453,7 +6457,7 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/atari800_libretro.dll.zip -O "%rkdir%\Temp\cores\5.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/blastem_libretro.dll.zip -O "%rkdir%\Temp\cores\6.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bluemsx_libretro.dll.zip -O "%rkdir%\Temp\cores\7.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bnes_libretro.dll.zip -O "%rkdir%\Temp\cores\8.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bnes_hd_libretro.dll.zip -O "%rkdir%\Temp\cores\8.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_accuracy_libretro.dll.zip -O "%rkdir%\Temp\cores\9.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_balanced_libretro.dll.zip -O "%rkdir%\Temp\cores\10.zip"
 
@@ -6494,115 +6498,114 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/fceumm_libretro.dll.zip -O "%rkdir%\Temp\cores\42.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/ffmpeg_libretro.dll.zip -O "%rkdir%\Temp\cores\43.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/flycast_libretro.dll.zip -O "%rkdir%\Temp\cores\44.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/flycast_wince_libretro.dll.zip -O "%rkdir%\Temp\cores\45.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/fmsx_libretro.dll.zip -O "%rkdir%\Temp\cores\46.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/freeintv_libretro.dll.zip -O "%rkdir%\Temp\cores\47.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/fuse_libretro.dll.zip -O "%rkdir%\Temp\cores\48.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gambatte_libretro.dll.zip -O "%rkdir%\Temp\cores\49.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gearboy_libretro.dll.zip -O "%rkdir%\Temp\cores\50.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/fmsx_libretro.dll.zip -O "%rkdir%\Temp\cores\45.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/freeintv_libretro.dll.zip -O "%rkdir%\Temp\cores\46.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/fuse_libretro.dll.zip -O "%rkdir%\Temp\cores\47.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gambatte_libretro.dll.zip -O "%rkdir%\Temp\cores\48.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gearboy_libretro.dll.zip -O "%rkdir%\Temp\cores\49.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gearsystem_libretro.dll.zip -O "%rkdir%\Temp\cores\50.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gearsystem_libretro.dll.zip -O "%rkdir%\Temp\cores\51.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/genesis_plus_gx_libretro.dll.zip -O "%rkdir%\Temp\cores\52.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gme_libretro.dll.zip -O "%rkdir%\Temp\cores\53.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gpsp_libretro.dll.zip -O "%rkdir%\Temp\cores\54.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gw_libretro.dll.zip -O "%rkdir%\Temp\cores\55.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/handy_libretro.dll.zip -O "%rkdir%\Temp\cores\56.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/hatari_libretro.dll.zip -O "%rkdir%\Temp\cores\57.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/higan_sfc_balanced_libretro.dll.zip -O "%rkdir%\Temp\cores\58.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/higan_sfc_libretro.dll.zip -O "%rkdir%\Temp\cores\59.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/imageviewer_libretro.dll.zip -O "%rkdir%\Temp\cores\60.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/genesis_plus_gx_libretro.dll.zip -O "%rkdir%\Temp\cores\51.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gme_libretro.dll.zip -O "%rkdir%\Temp\cores\52.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gpsp_libretro.dll.zip -O "%rkdir%\Temp\cores\53.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/gw_libretro.dll.zip -O "%rkdir%\Temp\cores\54.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/handy_libretro.dll.zip -O "%rkdir%\Temp\cores\55.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/hatari_libretro.dll.zip -O "%rkdir%\Temp\cores\56.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/higan_sfc_balanced_libretro.dll.zip -O "%rkdir%\Temp\cores\57.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/higan_sfc_libretro.dll.zip -O "%rkdir%\Temp\cores\58.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/imageviewer_libretro.dll.zip -O "%rkdir%\Temp\cores\59.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/kronos_libretro.dll.zip -O "%rkdir%\Temp\cores\60.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/kronos_libretro.dll.zip -O "%rkdir%\Temp\cores\61.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/lutro_libretro.dll.zip -O "%rkdir%\Temp\cores\62.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2000_libretro.dll.zip -O "%rkdir%\Temp\cores\63.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2003_libretro.dll.zip -O "%rkdir%\Temp\cores\64.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2003_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\65.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2010_libretro.dll.zip -O "%rkdir%\Temp\cores\66.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2015_libretro.dll.zip -O "%rkdir%\Temp\cores\67.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2016_libretro.dll.zip -O "%rkdir%\Temp\cores\68.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame_libretro.dll.zip -O "%rkdir%\Temp\cores\69.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_gba_libretro.dll.zip -O "%rkdir%\Temp\cores\70.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/lutro_libretro.dll.zip -O "%rkdir%\Temp\cores\61.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2000_libretro.dll.zip -O "%rkdir%\Temp\cores\62.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2003_libretro.dll.zip -O "%rkdir%\Temp\cores\63.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2003_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\64.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2010_libretro.dll.zip -O "%rkdir%\Temp\cores\65.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2015_libretro.dll.zip -O "%rkdir%\Temp\cores\66.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame2016_libretro.dll.zip -O "%rkdir%\Temp\cores\67.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mame_libretro.dll.zip -O "%rkdir%\Temp\cores\68.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_gba_libretro.dll.zip -O "%rkdir%\Temp\cores\69.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_lynx_libretro.dll.zip -O "%rkdir%\Temp\cores\70.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_lynx_libretro.dll.zip -O "%rkdir%\Temp\cores\71.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_ngp_libretro.dll.zip -O "%rkdir%\Temp\cores\72.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_pce_fast_libretro.dll.zip -O "%rkdir%\Temp\cores\73.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_pce_libretro.dll.zip -O "%rkdir%\Temp\cores\74.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_pcfx_libretro.dll.zip -O "%rkdir%\Temp\cores\75.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_psx_hw_libretro.dll.zip -O "%rkdir%\Temp\cores\76.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_psx_libretro.dll.zip -O "%rkdir%\Temp\cores\77.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_saturn_libretro.dll.zip -O "%rkdir%\Temp\cores\78.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_snes_libretro.dll.zip -O "%rkdir%\Temp\cores\79.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_supergrafx_libretro.dll.zip -O "%rkdir%\Temp\cores\80.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_ngp_libretro.dll.zip -O "%rkdir%\Temp\cores\71.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_pce_fast_libretro.dll.zip -O "%rkdir%\Temp\cores\72.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_pce_libretro.dll.zip -O "%rkdir%\Temp\cores\73.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_pcfx_libretro.dll.zip -O "%rkdir%\Temp\cores\74.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_psx_hw_libretro.dll.zip -O "%rkdir%\Temp\cores\75.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_psx_libretro.dll.zip -O "%rkdir%\Temp\cores\76.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_saturn_libretro.dll.zip -O "%rkdir%\Temp\cores\77.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_snes_libretro.dll.zip -O "%rkdir%\Temp\cores\78.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_supergrafx_libretro.dll.zip -O "%rkdir%\Temp\cores\79.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_vb_libretro.dll.zip -O "%rkdir%\Temp\cores\80.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_vb_libretro.dll.zip -O "%rkdir%\Temp\cores\81.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_wswan_libretro.dll.zip -O "%rkdir%\Temp\cores\82.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/melonds_libretro.dll.zip -O "%rkdir%\Temp\cores\83.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mesen-s_libretro.dll.zip -O "%rkdir%\Temp\cores\84.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mesen_libretro.dll.zip -O "%rkdir%\Temp\cores\85.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mess2015_libretro.dll.zip -O "%rkdir%\Temp\cores\86.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/meteor_libretro.dll.zip -O "%rkdir%\Temp\cores\87.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mgba_libretro.dll.zip -O "%rkdir%\Temp\cores\88.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mrboom_libretro.dll.zip -O "%rkdir%\Temp\cores\89.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mu_libretro.dll.zip -O "%rkdir%\Temp\cores\90.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_wswan_libretro.dll.zip -O "%rkdir%\Temp\cores\81.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/melonds_libretro.dll.zip -O "%rkdir%\Temp\cores\82.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mesen-s_libretro.dll.zip -O "%rkdir%\Temp\cores\83.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mesen_libretro.dll.zip -O "%rkdir%\Temp\cores\84.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mess2015_libretro.dll.zip -O "%rkdir%\Temp\cores\85.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/meteor_libretro.dll.zip -O "%rkdir%\Temp\cores\86.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mgba_libretro.dll.zip -O "%rkdir%\Temp\cores\87.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mrboom_libretro.dll.zip -O "%rkdir%\Temp\cores\88.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mu_libretro.dll.zip -O "%rkdir%\Temp\cores\89.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mupen64plus_next_libretro.dll.zip -O "%rkdir%\Temp\cores\90.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/mupen64plus_next_libretro.dll.zip -O "%rkdir%\Temp\cores\91.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/nekop2_libretro.dll.zip -O "%rkdir%\Temp\cores\92.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/nestopia_libretro.dll.zip -O "%rkdir%\Temp\cores\93.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/np2kai_libretro.dll.zip -O "%rkdir%\Temp\cores\94.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/nxengine_libretro.dll.zip -O "%rkdir%\Temp\cores\95.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/o2em_libretro.dll.zip -O "%rkdir%\Temp\cores\96.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/openlara_libretro.dll.zip -O "%rkdir%\Temp\cores\97.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/parallel_n64_libretro.dll.zip -O "%rkdir%\Temp\cores\98.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pcsx_rearmed_libretro.dll.zip -O "%rkdir%\Temp\cores\99.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/picodrive_libretro.dll.zip -O "%rkdir%\Temp\cores\100.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/nekop2_libretro.dll.zip -O "%rkdir%\Temp\cores\91.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/nestopia_libretro.dll.zip -O "%rkdir%\Temp\cores\92.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/np2kai_libretro.dll.zip -O "%rkdir%\Temp\cores\93.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/nxengine_libretro.dll.zip -O "%rkdir%\Temp\cores\94.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/o2em_libretro.dll.zip -O "%rkdir%\Temp\cores\95.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/openlara_libretro.dll.zip -O "%rkdir%\Temp\cores\96.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/parallel_n64_libretro.dll.zip -O "%rkdir%\Temp\cores\97.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pcsx_rearmed_libretro.dll.zip -O "%rkdir%\Temp\cores\98.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/picodrive_libretro.dll.zip -O "%rkdir%\Temp\cores\99.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/play_libretro.dll.zip -O "%rkdir%\Temp\cores\100.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/play_libretro.dll.zip -O "%rkdir%\Temp\cores\101.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pocketcdg_libretro.dll.zip -O "%rkdir%\Temp\cores\102.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pokemini_libretro.dll.zip -O "%rkdir%\Temp\cores\103.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/ppsspp_libretro.dll.zip -O "%rkdir%\Temp\cores\104.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/prboom_libretro.dll.zip -O "%rkdir%\Temp\cores\105.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/prosystem_libretro.dll.zip -O "%rkdir%\Temp\cores\106.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/puae_libretro.dll.zip -O "%rkdir%\Temp\cores\107.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/px68k_libretro.dll.zip -O "%rkdir%\Temp\cores\108.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/quasi88_libretro.dll.zip -O "%rkdir%\Temp\cores\109.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/quicknes_libretro.dll.zip -O "%rkdir%\Temp\cores\110.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pocketcdg_libretro.dll.zip -O "%rkdir%\Temp\cores\101.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/pokemini_libretro.dll.zip -O "%rkdir%\Temp\cores\102.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/ppsspp_libretro.dll.zip -O "%rkdir%\Temp\cores\103.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/prboom_libretro.dll.zip -O "%rkdir%\Temp\cores\104.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/prosystem_libretro.dll.zip -O "%rkdir%\Temp\cores\105.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/puae_libretro.dll.zip -O "%rkdir%\Temp\cores\106.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/px68k_libretro.dll.zip -O "%rkdir%\Temp\cores\107.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/quasi88_libretro.dll.zip -O "%rkdir%\Temp\cores\108.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/quicknes_libretro.dll.zip -O "%rkdir%\Temp\cores\109.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/redbook_libretro.dll.zip -O "%rkdir%\Temp\cores\110.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/redbook_libretro.dll.zip -O "%rkdir%\Temp\cores\111.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/reminiscence_libretro.dll.zip -O "%rkdir%\Temp\cores\112.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/remotejoy_libretro.dll.zip -O "%rkdir%\Temp\cores\113.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/sameboy_libretro.dll.zip -O "%rkdir%\Temp\cores\114.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/scummvm_libretro.dll.zip -O "%rkdir%\Temp\cores\115.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2002_libretro.dll.zip -O "%rkdir%\Temp\cores\116.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_libretro.dll.zip -O "%rkdir%\Temp\cores\117.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\118.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2010_libretro.dll.zip -O "%rkdir%\Temp\cores\119.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x_libretro.dll.zip -O "%rkdir%\Temp\cores\120.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/reminiscence_libretro.dll.zip -O "%rkdir%\Temp\cores\111.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/remotejoy_libretro.dll.zip -O "%rkdir%\Temp\cores\112.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/sameboy_libretro.dll.zip -O "%rkdir%\Temp\cores\113.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/scummvm_libretro.dll.zip -O "%rkdir%\Temp\cores\114.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2002_libretro.dll.zip -O "%rkdir%\Temp\cores\115.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_libretro.dll.zip -O "%rkdir%\Temp\cores\116.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_plus_libretro.dll.zip -O "%rkdir%\Temp\cores\117.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2010_libretro.dll.zip -O "%rkdir%\Temp\cores\118.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x_libretro.dll.zip -O "%rkdir%\Temp\cores\119.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/squirreljme_libretro.dll.zip -O "%rkdir%\Temp\cores\120.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/squirreljme_libretro.dll.zip -O "%rkdir%\Temp\cores\121.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/stella2014_libretro.dll.zip -O "%rkdir%\Temp\cores\122.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/stella_libretro.dll.zip -O "%rkdir%\Temp\cores\123.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tgbdual_libretro.dll.zip -O "%rkdir%\Temp\cores\124.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/theodore_libretro.dll.zip -O "%rkdir%\Temp\cores\125.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/thepowdertoy_libretro.dll.zip -O "%rkdir%\Temp\cores\126.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tic80_libretro.dll.zip -O "%rkdir%\Temp\cores\127.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tyrquake_libretro.dll.zip -O "%rkdir%\Temp\cores\128.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/ume2015_libretro.dll.zip -O "%rkdir%\Temp\cores\129.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vba_next_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/stella2014_libretro.dll.zip -O "%rkdir%\Temp\cores\121.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/stella_libretro.dll.zip -O "%rkdir%\Temp\cores\122.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tgbdual_libretro.dll.zip -O "%rkdir%\Temp\cores\123.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/theodore_libretro.dll.zip -O "%rkdir%\Temp\cores\124.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/thepowdertoy_libretro.dll.zip -O "%rkdir%\Temp\cores\125.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tic80_libretro.dll.zip -O "%rkdir%\Temp\cores\126.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/tyrquake_libretro.dll.zip -O "%rkdir%\Temp\cores\127.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/ume2015_libretro.dll.zip -O "%rkdir%\Temp\cores\128.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vba_next_libretro.dll.zip -O "%rkdir%\Temp\cores\129.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vbam_libretro.dll.zip -O "%rkdir%\Temp\cores\130.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vbam_libretro.dll.zip -O "%rkdir%\Temp\cores\131.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vecx_libretro.dll.zip -O "%rkdir%\Temp\cores\132.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vemulator_libretro.dll.zip -O "%rkdir%\Temp\cores\133.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x64_libretro.dll.zip -O "%rkdir%\Temp\cores\134.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x64sc_libretro.dll.zip -O "%rkdir%\Temp\cores\135.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x128_libretro.dll.zip -O "%rkdir%\Temp\cores\136.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xpet_libretro.dll.zip -O "%rkdir%\Temp\cores\137.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xplus4_libretro.dll.zip -O "%rkdir%\Temp\cores\138.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xvic_libretro.dll.zip -O "%rkdir%\Temp\cores\139.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/virtualjaguar_libretro.dll.zip -O "%rkdir%\Temp\cores\140.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vecx_libretro.dll.zip -O "%rkdir%\Temp\cores\131.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vemulator_libretro.dll.zip -O "%rkdir%\Temp\cores\132.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x64_libretro.dll.zip -O "%rkdir%\Temp\cores\133.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x64sc_libretro.dll.zip -O "%rkdir%\Temp\cores\134.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x128_libretro.dll.zip -O "%rkdir%\Temp\cores\135.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xpet_libretro.dll.zip -O "%rkdir%\Temp\cores\136.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xplus4_libretro.dll.zip -O "%rkdir%\Temp\cores\137.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xvic_libretro.dll.zip -O "%rkdir%\Temp\cores\138.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/virtualjaguar_libretro.dll.zip -O "%rkdir%\Temp\cores\139.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/xrick_libretro.dll.zip -O "%rkdir%\Temp\cores\140.zip"
 
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/xrick_libretro.dll.zip -O "%rkdir%\Temp\cores\141.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\142.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\143.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\141.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\142.zip"
 
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
@@ -10225,6 +10228,186 @@ goto completed
 
 
 ::=================================================================================================================================================================================================================================================================================================================
+::        Rom Scraper Tools
+
+
+:ScraperSetupDefault
+
+if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
+		goto ScraperDL64Default
+	)
+if "%PROCESSOR_ARCHITECTURE%"=="x86" (
+		goto ScraperDL86Default
+	)
+	
+:ScraperDL86Default
+%rkdir%\Tools\Wget\wget.exe -q https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_386.zip -O "%rkdir%\Temp\scraperx86.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx86.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
+del %rkdir%\Temp\scraperx86.zip
+goto RecalToolsDefault
+
+
+:ScraperDL64Default
+%rkdir%\Tools\Wget\wget.exe -q https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_amd64.zip -O "%rkdir%\Temp\scraperx64.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx64.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
+del %rkdir%\Temp\scraperx64.zip
+goto RecalToolsDefault
+
+
+:RecalToolsDefault
+%rkdir%\Tools\Wget\wget.exe -q https://github.com/paradadf/recaltools/archive/master.zip -O "%rkdir%\Temp\recaltools.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\recaltools.zip" -o"%rkdir%\Tools" -aoa > nul
+del %rkdir%\Temp\recaltools.zip
+
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\arcade
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\computer
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\console
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\console-addon
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\console-keypad
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\console-optical
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\portable
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\specialty
+
+copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\arcade
+copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\computer
+copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\console
+copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\console-addon
+copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\console-keypad
+copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\console-optical
+copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\portable
+copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\specialty
+
+goto ScraperMenuDefault
+
+
+:ScraperMenuDefault
+
+cls
+echo ===========================================================================
+echo =                                                                         =
+echo =    Info on  Fastscraper Batch File                                      =
+echo =    -------------------------------                                      =
+echo =                                                                         =
+echo =    Fastscraper batch file from RecalTools set is for use with           =
+echo =    Sselph Scraper tool.  This is easy-to-use with editable              =
+echo =    options for to save game metadata in XML and media files.            =
+echo =                                                                         =
+echo =    Fastscraper and Scraper files are copied into each folder of         =
+echo =    system types in ROMS folder.                                         =
+Echo =                                                                         =
+echo =    Modify options in each Fastscraper batch file to your liking.        =
+echo =                                                                         =
+echo =    Double click on Fastscraper file and type in name of system          =
+echo =    folder that you want to scrape.  Other commands to type are          =
+echo =    all and cd                                                           =
+echo =                                                                         =
+echo =    May need to scrape several times to complete the metadata.           =
+echo =    Be sure to append existing gamelist after first-time scraping.       =
+echo =                                                                         =
+echo =                                                                         =
+echo ===========================================================================
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
+goto completed
+
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+::=================================================================================================================================================================================================================================================================================================================
+::        Rom Scraper Tools
+
+
+:ScraperSetupCustom
+
+if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
+		goto ScraperDL64Custom
+	)
+if "%PROCESSOR_ARCHITECTURE%"=="x86" (
+		goto ScraperDL86Custom
+	)
+	
+:ScraperDL86Custom
+%rkdir%\Tools\Wget\wget.exe -q https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_386.zip -O "%rkdir%\Temp\scraperx86.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx86.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
+del %rkdir%\Temp\scraperx86.zip
+goto RecalToolsCustom
+
+
+:ScraperDL64Custom
+%rkdir%\Tools\Wget\wget.exe -q https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_amd64.zip -O "%rkdir%\Temp\scraperx64.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx64.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
+del %rkdir%\Temp\scraperx64.zip
+goto RecalToolsCustom
+
+
+:RecalToolsCustom
+%rkdir%\Tools\Wget\wget.exe -q https://github.com/paradadf/recaltools/archive/master.zip -O "%rkdir%\Temp\recaltools.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\recaltools.zip" -o"%rkdir%\Tools" -aoa > nul
+del %rkdir%\Temp\recaltools.zip
+
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\arcade
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\computer
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\console
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\console-addon
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\console-keypad
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\console-optical
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\portable
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\specialty
+
+copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\arcade
+copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\computer
+copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\console
+copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\console-addon
+copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\console-keypad
+copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\console-optical
+copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\portable
+copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\specialty
+
+goto ScraperMenuCustom
+
+
+:ScraperMenuCustom
+
+cls
+echo ===========================================================================
+echo =                                                                         =
+echo =    Info on  Fastscraper Batch File                                      =
+echo =    -------------------------------                                      =
+echo =                                                                         =
+echo =    Fastscraper batch file from RecalTools set is for use with           =
+echo =    Sselph Scraper tool.  This is easy-to-use with editable              =
+echo =    options for to save game metadata in XML and media files.            =
+echo =                                                                         =
+echo =    Fastscraper and Scraper files are copied into each folder of         =
+echo =    system types in ROMS folder.                                         =
+Echo =                                                                         =
+echo =    Modify options in each Fastscraper batch file to your liking.        =
+echo =                                                                         =
+echo =    Double click on Fastscraper file and type in name of system          =
+echo =    folder that you want to scrape.  Other commands to type are          =
+echo =    all and cd                                                           =
+echo =                                                                         =
+echo =    May need to scrape several times to complete the metadata.           =
+echo =    Be sure to append existing gamelist after first-time scraping.       =
+echo =                                                                         =
+echo =                                                                         =
+echo ===========================================================================
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
+goto completed
+
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
 :tmpClean
@@ -10236,6 +10419,10 @@ IF EXIST %rkdir%\Temp\BrandNewCus goto DediAsk
 goto completed
 
 ::=================================================================================================================================================================================================================================================================================================================
+
+
+
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
