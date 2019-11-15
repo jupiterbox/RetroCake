@@ -299,7 +299,7 @@ goto menu
 :menu
 ::Main menu selection. Uses keys 1-9
 cls
-echo A fork of Flerp/RetroCake v1.4.5     Modified date: Nov 5, 2019
+echo A fork of Flerp/RetroCake v1.4.5     Modified date: Nov 12, 2019
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -1379,6 +1379,18 @@ echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\m
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>supergrafx^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>supergrafx^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>gx-4000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Amstrad GX-4000 - (Sep 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\gx-4000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .zip .cdt .cpc .dsk .7Z .ZIP .CDT .CPC .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\cap32_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\gx-4000\ gx4000 -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>gx-4000^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>gx-4000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -3018,6 +3030,18 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>gx-4000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Amstrad GX-4000 - (Sep 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\console\gx-4000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .zip .cdt .cpc .dsk .7Z .ZIP .CDT .CPC .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\cap32_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\gx-4000\ gx4000 -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>gx-4000^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>gx-4000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sfc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Super Famicom - Japan - (Nov 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\sfc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4648,6 +4672,18 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>gx-4000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Amstrad GX-4000 - (Sep 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\console\gx-4000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .zip .cdt .cpc .dsk .7Z .ZIP .CDT .CPC .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\cap32_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\gx-4000\ gx4000 -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>gx-4000^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>gx-4000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sfc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Super Famicom - Japan - (Nov 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\sfc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5952,6 +5988,7 @@ mkdir %rkdir%\ROMS\console\atari7800
 mkdir %rkdir%\ROMS\console\channelf
 mkdir %rkdir%\ROMS\console\famicom
 mkdir %rkdir%\ROMS\console\genesis
+mkdir %rkdir%\ROMS\console\gx-4000
 mkdir %rkdir%\ROMS\console\mark-iii
 mkdir %rkdir%\ROMS\console\mastersystem
 mkdir %rkdir%\ROMS\console\megadrive
@@ -6118,6 +6155,7 @@ mkdir %cusromdir%\ROMS\console\atari7800
 mkdir %cusromdir%\ROMS\console\channelf
 mkdir %cusromdir%\ROMS\console\famicom
 mkdir %cusromdir%\ROMS\console\genesis
+mkdir %cusromdir%\ROMS\console\gx-4000
 mkdir %cusromdir%\ROMS\console\mark-iii
 mkdir %cusromdir%\ROMS\console\mastersystem
 mkdir %cusromdir%\ROMS\console\megadrive
@@ -6336,7 +6374,7 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 cls
 echo ========================================================================
 echo =                                                                      =
-echo =     Downloading  144  cores  (nightly) for 64-bit RetroArch          =
+echo =     Downloading  146  cores  (nightly) for 64-bit RetroArch          =
 echo =                                                                      =
 echo =     This will take some time...                                      =
 echo =                                                                      =
@@ -6354,7 +6392,7 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_performance_libretro.dll.zip -O "%rkdir%\Temp\cores\10.zip"
 
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_cplusplus98_libretro.dll.zip -O "%rkdir%\Temp\cores\11.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bnes_libretro.dll.zip -O "%rkdir%\Temp\cores\12.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_libretro.dll.zip -O "%rkdir%\Temp\cores\12.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_accuracy_libretro.dll.zip -O "%rkdir%\Temp\cores\13.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_balanced_libretro.dll.zip -O "%rkdir%\Temp\cores\14.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_performance_libretro.dll.zip -O "%rkdir%\Temp\cores\15.zip"
@@ -6501,6 +6539,9 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\143.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\144.zip"
 
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/dhewm3_libretro.dll.zip -O "%rkdir%\Temp\cores\145.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_ce_libretro.dll.zip -O "%rkdir%\Temp\cores\146.zip"
+
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
 cls
@@ -6519,7 +6560,7 @@ goto completed
 cls
 echo ========================================================================
 echo =                                                                      =
-echo =     Downloading  144  cores  (nightly) for 32-bit RetroArch          =
+echo =     Downloading  146  cores  (nightly) for 32-bit RetroArch          =
 echo =                                                                      =
 echo =     This will take some time...                                      =
 echo =                                                                      =
@@ -6537,7 +6578,7 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes2014_performance_libretro.dll.zip -O "%rkdir%\Temp\cores\10.zip"
 
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_cplusplus98_libretro.dll.zip -O "%rkdir%\Temp\cores\11.zip"
-%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bnes_libretro.dll.zip -O "%rkdir%\Temp\cores\12.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_libretro.dll.zip -O "%rkdir%\Temp\cores\12.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_mercury_accuracy_libretro.dll.zip -O "%rkdir%\Temp\cores\13.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_mercury_balanced_libretro.dll.zip -O "%rkdir%\Temp\cores\14.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_mercury_performance_libretro.dll.zip -O "%rkdir%\Temp\cores\15.zip"
@@ -6683,6 +6724,9 @@ echo ========================================================================
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/xrick_libretro.dll.zip -O "%rkdir%\Temp\cores\142.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabasanshiro_libretro.dll.zip -O "%rkdir%\Temp\cores\143.zip"
 %rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/yabause_libretro.dll.zip -O "%rkdir%\Temp\cores\144.zip"
+
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/dhewm3_libretro.dll.zip -O "%rkdir%\Temp\cores\145.zip"
+%rkdir%\Tools\Wget\wget.exe -q --show-progress http://buildbot.libretro.com/nightly/windows/x86/latest/dosbox_svn_ce_libretro.dll.zip -O "%rkdir%\Temp\cores\146.zip"
 
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
