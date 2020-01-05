@@ -273,7 +273,7 @@ goto menu
 :menu
 ::Main menu selection. Uses keys 1-9
 cls
-echo A fork of Flerp/RetroCake v1.4.6     Modified date: Dec 30, 2019
+echo A fork of Flerp/RetroCake v1.4.6     Modified date: Jan 4, 2020
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -2363,11 +2363,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>genesis-mini^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Specialty.  Sega Genesis Mini - (Sep 2019)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\snes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\genesis-mini^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>genesis-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>genesis-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>turbografx-mini^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Konami TurboGrafx Mini - (Mar 2020)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\turbografx-mini^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .pce .ccd .cue .chd .iso .zip .7Z .PCE .CCD .CUE .CHD .ISO .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>turbografx-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>turbografx-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -4207,12 +4218,24 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>genesis-mini^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Specialty.  Sega Genesis Mini - (Sep 2019)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\specialty\snes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\specialty\genesis-mini^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>genesis-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>genesis-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>turbografx-mini^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Konami TurboGrafx Mini - (Mar 2020)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\specialty\turbografx-mini^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .pce .ccd .cue .chd .iso .zip .7Z .PCE .CCD .CUE .CHD .ISO .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>turbografx-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>turbografx-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6046,11 +6069,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>genesis-mini^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Specialty.  Sega Genesis Mini - (Sep 2019)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\specialty\snes-classic^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\specialty\genesis-mini^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>genesis-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>genesis-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>turbografx-mini^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Konami TurboGrafx Mini - (Mar 2020)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\specialty\turbografx-mini^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .pce .ccd .cue .chd .iso .zip .7Z .PCE .CCD .CUE .CHD .ISO .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>turbografx-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>turbografx-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -6651,9 +6685,10 @@ mkdir %rkdir%\ROMS\portable\wonderswancolor
 mkdir %rkdir%\ROMS\specialty\adventurevision
 mkdir %rkdir%\ROMS\specialty\gameandwatch
 mkdir %rkdir%\ROMS\specialty\genesis-mini
+mkdir %rkdir%\ROMS\specialty\msu1
 mkdir %rkdir%\ROMS\specialty\nes-classic
 mkdir %rkdir%\ROMS\specialty\snes-classic
-mkdir %rkdir%\ROMS\specialty\msu1
+mkdir %rkdir%\ROMS\specialty\turbografx-mini
 mkdir %rkdir%\ROMS\specialty\vectrex
 mkdir %rkdir%\ROMS\specialty\vectrex-parajve
 mkdir %rkdir%\ROMS\specialty\virtualboy
@@ -6845,9 +6880,10 @@ mkdir %cusromdir%\ROMS\portable\wonderswancolor
 mkdir %cusromdir%\ROMS\specialty\adventurevision
 mkdir %cusromdir%\ROMS\specialty\gameandwatch
 mkdir %cusromdir%\ROMS\specialty\genesis-mini
+mkdir %cusromdir%\ROMS\specialty\msu1
 mkdir %cusromdir%\ROMS\specialty\nes-classic
 mkdir %cusromdir%\ROMS\specialty\snes-classic
-mkdir %cusromdir%\ROMS\specialty\msu1
+mkdir %cusromdir%\ROMS\specialty\turbografx-mini
 mkdir %cusromdir%\ROMS\specialty\vectrex
 mkdir %cusromdir%\ROMS\specialty\vectrex-parajve
 mkdir %cusromdir%\ROMS\specialty\virtualboy
