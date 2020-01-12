@@ -273,7 +273,7 @@ goto menu
 :menu
 ::Main menu selection. Uses keys 1-9
 cls
-echo A fork of Flerp/RetroCake v1.4.6     Modified date: Jan 4, 2020
+echo A fork of Flerp/RetroCake v1.4.6     Modified date: Jan 12, 2020
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -6967,13 +6967,13 @@ if "%PROCESSOR_ARCHITECTURE%"=="x86" (
 	)
 
 :x64RA
-::Installs RetroArch 1.8.2 to RetroCake\RetroArch. Cleans up all downloaded files when done. 64 bit
+::Installs RetroArch 1.8.3 to RetroCake\RetroArch. Cleans up all downloaded files when done. 64 bit
 echo =================================================================
 echo =                                                               =
 echo =   Downloading RetroArch (64-bit). This will take some time    =
 echo =                                                               =
 echo =================================================================
-powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.8.2/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
+powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.8.3/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
 cls
@@ -6989,13 +6989,13 @@ goto UpdateRACores
 ::
 
 :x86RA
-::Installs RetroArch 1.8.2 to RetroCake\RetroArch. Cleans up all downloaded files when done. 32 bit
+::Installs RetroArch 1.8.3 to RetroCake\RetroArch. Cleans up all downloaded files when done. 32 bit
 echo =================================================================
 echo =                                                               =
 echo =   Downloading RetroArch (32-bit). This will take some time    =
 echo =                                                               =
 echo =================================================================
-powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.8.2/windows/x86/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x86.zip"
+powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.8.3/windows/x86/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x86.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x86.zip" -o"%rkdir%\RetroArch" -aoa > nul
 cls
@@ -7195,6 +7195,10 @@ powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nigh
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
 
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_gles2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_gles3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
+
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
 cls
@@ -7383,6 +7387,10 @@ powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nigh
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\143.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
+
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/flycast_gles2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mupen64plus_next_gles3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
 
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
@@ -9460,6 +9468,11 @@ set theme=gbz35-dark
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+set repo=RetroHursty69
+set theme=HyperSackBoy
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
 set repo=mattrixk
 set theme=io
 rmdir %theme% /S /Q
@@ -9526,7 +9539,12 @@ rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
 set repo=RetroHursty69
-set theme=Slick_Bluey
+set theme=Slick_Edge
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=Slick_Orange
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -9577,7 +9595,9 @@ rename ComicBook_SE-Wheelart comicbook_se-wheelart
 rename Cygnus cygnus
 rename SpaceOddity spaceoddity
 rename CosmicRise cosmicrise
-rename Slick_Bluey slick_bluey
+rename Slick_Edge slick_edge
+rename Slick_Orange slick_orange
+rename HyperSackBoy hypersackboy
 
 goto completed
 
@@ -9710,14 +9730,14 @@ echo =    4.) SWEET_TINKERBOARD                                                =
 echo =    5.) SWITCH-DARK                                                      =
 echo =    6.) TFT                                                              =
 echo =    7.) CosmicRise                                                       =
-echo =    8.) Slick_Bluey                                                      =
+echo =    8.) Slick_Edge                                                       =
 echo =                                                                         =
 echo =    9.) Return to Theme Manager                                          =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO ThemeManager
-IF ERRORLEVEL ==7 goto Slick_Bluey
+IF ERRORLEVEL ==7 goto Slick_Edge
 IF ERRORLEVEL ==6 goto CosmicRise
 IF ERRORLEVEL ==5 goto tft
 IF ERRORLEVEL ==4 goto switch-dark
@@ -9923,9 +9943,9 @@ set repo=RetroHursty69
 set theme=CosmicRise
 goto insttheme
 
-:Slick_Bluey
+:Slick_Edge
 set repo=RetroHursty69
-set theme=Slick_Bluey
+set theme=Slick_Edge
 goto insttheme
 
 
@@ -9941,7 +9961,9 @@ rename ComicBook_SE-Wheelart comicbook_se-wheelart
 rename Cygnus cygnus
 rename SpaceOddity spaceoddity
 rename CosmicRise cosmicrise
-rename Slick_Bluey slick_bluey
+rename Slick_Edge slick_edge
+rename Slick_Orange slick_orange
+rename HyperSackBoy hypersackboy
 
 goto IndThemes
 
