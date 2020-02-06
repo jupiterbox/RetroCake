@@ -273,7 +273,7 @@ goto menu
 :menu
 ::Main menu selection. Uses keys 1-9
 cls
-echo A fork of Flerp/RetroCake v1.4.6     Modified date: Jan 22, 2020
+echo A fork of Flerp/RetroCake v1.4.6     Modified date: Feb 5, 2020
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -910,48 +910,27 @@ echo oLink.Save >> "%rkdir%\Temp\CreateShortcut.vbs"
 cscript "%rkdir%\Temp\CreateShortcut.vbs"
 del "%rkdir%\Temp\CreateShortcut.vbs"
 
-::Cleans up Downlaoded zip
-del "%rkdir%\Temp\ES.zip"
-if EXIST "%rkdir%\EmulationStation\emulationstation.exe" goto ESNewSucceed
-goto ESNewFailed
-
-:ESNewFailed
-cls
-echo ====================================================
-echo =                                                  =
-echo =  Current Builds of EmulationStation are Failing  =
-echo =           Falling Back to Version 2.8.0          =
-echo =                                                  =
-echo ====================================================
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/Flerp/RetroCake/releases/download/ES_2.8.0/EmulationStation.zip','%rkdir%\Temp\ES.zip')
-ping 127.0.0.1 -n 3 > nul
-::Extracts to the RetroCake\Emulationstation directory
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ES.zip" -o"%rkdir%\EmulationStation" > nul
-cls
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-::Makes a shortcut on the desktop to Emulationstation called RetroCake (EmulationStation icon)
-echo Set oWS = WScript.CreateObject("WScript.Shell") > "%rkdir%\Temp\CreateShortcut.vbs"
-echo sLinkFile = "%USERPROFILE%\Desktop\RetroCake.lnk" >> "%rkdir%\Temp\CreateShortcut.vbs"
-echo Set oLink = oWS.CreateShortcut(sLinkFile) >> "%rkdir%\Temp\CreateShortcut.vbs"
-echo oLink.TargetPath = "%rkdir%\EmulationStation\emulationstation.exe" >> "%rkdir%\Temp\CreateShortcut.vbs"
-echo oLink.Save >> "%rkdir%\Temp\CreateShortcut.vbs"
-cscript "%rkdir%\Temp\CreateShortcut.vbs"
-del "%rkdir%\Temp\CreateShortcut.vbs"
+echo Set oWS = WScript.CreateObject("WScript.Shell") > "C:\RetroCake\Temp\CreateShortcut2.vbs"
+echo sLinkFile = "%USERPROFILE%\Desktop\RetroCake Windowed.lnk" >> "C:\RetroCake\Temp\CreateShortcut2.vbs"
+echo Set oLink = oWS.CreateShortcut(sLinkFile) >> "C:\RetroCake\Temp\CreateShortcut2.vbs"
+echo oLink.TargetPath = "C:\RetroCake\EmulationStation\emulationstation.exe" >> "C:\RetroCake\Temp\CreateShortcut2.vbs"
+echo oLink.Arguments = "--resolution 1280 720 --windowed" >> "C:\RetroCake\Temp\CreateShortcut2.vbs"
+echo oLink.Save >> "C:\RetroCake\Temp\CreateShortcut2.vbs"
+cscript "C:\RetroCake\Temp\CreateShortcut2.vbs"
+del "C:\RetroCake\Temp\CreateShortcut2.vbs"
 
 ::Cleans up Downlaoded zip
 del "%rkdir%\Temp\ES.zip"
 if EXIST "%rkdir%\EmulationStation\emulationstation.exe" goto ESNewSucceed
-goto ESInstallTotalFailure
+
 
 :ESNewSucceed
-::Installs default Carbon theme
+::Installs default Carbon theme (RetroPie)
 mkdir "%USERPROFILE%\.emulationstation\themes"
 cd /D "%USERPROFILE%\.emulationstation\themes"
 rmdir carbon /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/Flerp/es-theme-carbon.git %theme%
-ren es-theme-carbon carbon
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/RetroPie/es-theme-carbon.git %theme%
+ren es-theme-carbon Carbon
 
 ::Checks for temporary files created during automated installer selection
 IF EXIST %rkdir%\Temp\BrandNewBlank goto blankESCFG
@@ -7697,7 +7676,7 @@ goto completed
 cls
 echo ==================================================================================
 echo =                                                                                =
-Echo =  This option creates slightly modified RetroArch config file  (99%% default)    =
+Echo =  This option creates slightly modified RetroArch config file  (99%% default)   =
 echo =                                                                                =
 echo =       (For instance...)                                                        =
 echo =            -- Adds the Start+Select to open RetroArch menu in game             =
@@ -9623,11 +9602,11 @@ rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 rename CapcomColorSpin capcomcolorspin
 
-set repo=RetroPie
-set theme=carbon
+set repo=kelvinator3300
+set theme=mru5
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-rename carbon Carbon
+rename mru5 Mru5
 
 set repo=RetroPie
 set theme=carbon-nometa
@@ -9822,7 +9801,6 @@ set theme=tft
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-rename carbon Carbon
 rename CapcomColorSpin capcomcolorspin
 rename ComicBook_SE-Wheelart comicbook_se-wheelart
 rename Cygnus cygnus
@@ -9844,7 +9822,7 @@ echo =                               Page 1                                    =
 echo =    1.) ANGULAR                                                          =
 echo =    2.) BLURAY                                                           =
 echo =    3.) CAPCOMCOLORSPIN                                                  =
-echo =    4.) CARBON                                                           =
+echo =    4.) MRU5                                                             =
 echo =    5.) CARBON-NOMETA                                                    =
 echo =    6.) CIRCUIT                                                          =
 echo =    7.) COMICBOOK_SE-WHEELART                                            =
@@ -9859,7 +9837,7 @@ IF ERRORLEVEL ==8 goto core
 IF ERRORLEVEL ==7 goto ComicBook_SE-Wheelart 
 IF ERRORLEVEL ==6 goto circuit 
 IF ERRORLEVEL ==5 goto carbon-nometa 
-IF ERRORLEVEL ==4 goto carbon 
+IF ERRORLEVEL ==4 goto mru5 
 IF ERRORLEVEL ==3 goto CapcomColorSpin 
 IF ERRORLEVEL ==2 goto bluray 
 IF ERRORLEVEL ==1 goto angular 
@@ -9996,9 +9974,9 @@ set repo=RetroHursty69
 set theme=CapcomColorSpin
 goto insttheme
 
-:carbon
-set repo=RetroPie
-set theme=carbon
+:mru5
+set repo=kelvinator3300
+set theme=mru5
 goto insttheme
 
 :carbon-nometa
@@ -10188,7 +10166,8 @@ cd /D %USERPROFILE%\.emulationstation\themes
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-rename carbon Carbon
+rename mru5 Mru5
+rename carbon carbon-retropie
 rename CapcomColorSpin capcomcolorspin
 rename ComicBook_SE-Wheelart comicbook_se-wheelart
 rename Cygnus cygnus
@@ -10600,42 +10579,8 @@ goto completed
 
 ::=================================================================================================================================================================================================================================================================================================================
 
-
-
-:MAME
-::Installs  MAME  emulator  ( plays  Arcade / Console  games )
-
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto mame64
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto mame32
-	)
-
-:mame32
-cls
-
-echo ===========================================================
-echo =                                                         =
-echo =             DOWNLOADING LATEST MAME 32-bit              =
-echo =                                                         =
-echo ===========================================================
-
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/mamedev/mame/releases/download/mame0217/mame0217b_32bit.exe','%rkdir%\Temp\Mame32.exe')
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame32.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
-
-cls
-
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-
-ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\Mame32.zip
-if EXIST %rkdir%\Emulators\tmp.txt goto PCSX2
-goto completed
 	
-:mame64
+:MAME
 cls
 
 echo ===========================================================
@@ -10644,7 +10589,7 @@ echo =             DOWNLOADING LATEST MAME 64-bit              =
 echo =                                                         =
 echo ===========================================================
 
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/mamedev/mame/releases/download/mame0217/mame0217b_64bit.exe','%rkdir%\Temp\Mame64.exe')
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/mamedev/mame/releases/download/mame0218/mame0218b_64bit.exe','%rkdir%\Temp\Mame64.exe')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame64.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
@@ -10864,41 +10809,6 @@ goto completed
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
-
-
-:: Libretro website now have freechaf_libretro core for download.  This section is now disabled.  Shortly, will be removed.
-::FreeChaF
-:::Installs  FreeChaf_libretro.dll  core for RetroArch 
-
-::cls
-
-::echo ================================================================
-::echo =                                                              =
-::echo =   DOWNLOADING FreeChaF_libretro (Channel F RetroArch Core)   =
-::echo =                                                              =
-::echo ================================================================
-
-::powershell -command Start-BitsTransfer -Source "https://sourceforge.net/projects/freechaf/files/FreeChaF_2019-02-08.zip/download" -Destination "%rkdir%\Temp\FreeChaF.zip"
-::%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\FreeChaF.zip" -o"%rkdir%\Temp\FreeChaF-core" -aoa > nul
-::mkdir %rkdir%\RetroArch\cores
-::copy %rkdir%\Temp\FreeChaF-core\windows\freechaf_libretro.dll %rkdir%\RetroArch\cores
-::cls
-
-::echo ================================================
-::echo =        Cleaning up downloaded file(s)        =
-::echo ================================================
-
-::ping 127.0.0.1 -n 2 > nul
-::del %rkdir%\Temp\FreeChaF.zip
-::rmdir /s /q %rkdir%\Temp\FreeChaF-core
-::if EXIST %rkdir%\Emulators\tmp.txt goto 7zip-win
-::goto completed
-
-
-
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-
 
 
 :7zip-win
