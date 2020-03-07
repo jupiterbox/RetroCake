@@ -1,6 +1,6 @@
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::Welcome to the RetroCake script!::::::::::::::::::::::::::::::::::::::
-::I have commented as much as I think is needed, but if there is any confusion just message me through github!::
+::::::::::::::::::::::      Welcome to the RetroCake script for Windows 10 64-bit!    ::::::::::::::::::::::::::
+::    I have commented as much as I think is needed. Changes of this script are documented at Github site.    ::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 @echo off
 
@@ -52,7 +52,7 @@ IF ERRORLEVEL ==2 GOTO CusInstallY
 IF ERRORLEVEL ==1 GOTO CusInstallN
 
 :CusInstallY
-::Pronpts to enter the custom installation directory.
+::Prompts to enter the custom installation directory.
 cls
 
 set /p rkdir="Enter Custom RetroCake Install Path (default C:\RetroCake): "
@@ -104,12 +104,18 @@ goto install7z
 cls
 echo =================================================================
 echo =                                                               =
-echo =                      SETTING UP 7ZA...                        =
+echo =               SETTING UP latest versions of                   =
+echo =                                                               =
+echo =             7-Zip for Win x64  and  7za tools                 =
 echo =                                                               =
 echo =================================================================
 mkdir %rkdir%\Tools\7za
-::Pulls 7za and unzips via powershell. (All future unzipping is done with 7za, as it is faster and cleaner.
-powershell -command (New-Object Net.WebClient).DownloadFile('http://www.7-zip.org/a/7za920.zip','%rkdir%\Tools\7za\7za.zip');(new-object -com shell.application).namespace('%rkdir%\Tools\7za').CopyHere((new-object -com shell.application).namespace('%rkdir%\Tools\7za\7za.zip').Items(),16)
+::Pull latest version of 7-Zip for Win x64 and 7ZA tools.
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://www.7-zip.org/a/7z1900-x64.exe','%rkdir%\Temp\7z1900-x64.exe')
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://www.7-zip.org/a/7z1900-extra.7z','%rkdir%\Temp\7z1900-extra.7z')
+%rkdir%\Temp\7z1900-x64.exe /S
+"C:/Program Files/7-Zip/7z.exe" x %rkdir%\Temp\7z1900-extra.7z -o%rkdir%\Tools\7za
+
 cls
 echo ================================================
 echo =        Cleaning up downloaded file(s)        =
@@ -117,81 +123,38 @@ echo ================================================
 ::Waits for the zip to be fully closed
 ping 127.0.0.1 -n 2 >nul
 ::Deletes downloaded zip
-del %rkdir%\Tools\7za\7za.zip
+del %rkdir%\Temp\7z1900-x64.exe
+del %rkdir%\Temp\7z1900-extra.7z
 IF EXIST %rkdir%\Tools\7za\7za.exe goto SGitCheck
 goto 7zerror
 
 :SGitCheck
 ::Checks if git is installed (Used for various functions in the bat file)
 IF EXIST %rkdir%\Tools\git\bin\git.exe goto VCREDISTCheck
-goto sGitArchCheck
 
-:sGitArchCheck
-::Checks if installation is x86 or x86_64
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto sgit64
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto sgit32
-	)
-
-:sgit32
-::Installs git the same way as 7za
-cls
-echo =================================================================
-echo =                                                               =
-echo =                      SETTING UP GIT...  (32-bit)              =
-echo =                                                               =
-echo =================================================================
-::powershell -command Start-BitsTransfer -Source https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/PortableGit-2.22.0-32-bit.7z.exe -Destination "%rkdir%\Temp\git.zip"
-mkdir %rkdir%\Tools\git
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/git-for-windows/git/releases/download/v2.24.0.windows.2/PortableGit-2.24.0.2-32-bit.7z.exe','%rkdir%\Temp\Git.7z')
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Git.7z" -o"%rkdir%\Tools\git" -aoa > nul
-cls
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-ping 127.0.0.1 -n 3 > nul
-del "%rkdir%\Temp\Git.7z"
-IF EXIST %rkdir%\Tools\git\bin\git.exe goto VCREDISTCheck
-goto GITerror
-
-:sgit64
-::Installs git the same way as 7za
+::Installs latest version of Git tools
 cls
 echo =================================================================
 echo =                                                               =
 echo =                      SETTING UP GIT...  (64-bit)              =
 echo =                                                               =
 echo =================================================================
-::powershell -command Start-BitsTransfer -Source https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/PortableGit-2.22.0-64-bit.7z.exe -Destination "%rkdir%\Temp\git.zip"
 mkdir %rkdir%\Tools\Git
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/git-for-windows/git/releases/download/v2.24.0.windows.2/PortableGit-2.24.0.2-64-bit.7z.exe','%rkdir%\Temp\Git.7z')
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Git.7z" -o"%rkdir%\Tools\git" -aoa > nul
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/git-for-windows/git/releases/download/v2.25.1.windows.1/PortableGit-2.25.1-64-bit.7z.exe','%rkdir%\Temp\Git.7z.exe')
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Git.7z.exe" -o"%rkdir%\Tools\git" -aoa > nul
 cls
 echo ================================================
 echo =        Cleaning up downloaded file(s)        =
 echo ================================================
 ping 127.0.0.1 -n 3 > nul
-del "%rkdir%\Temp\Git.7z"
+del "%rkdir%\Temp\Git.7z.exe"
 IF EXIST %rkdir%\Tools\git\bin\git.exe goto VCREDISTCheck
 goto GITerror
 
 :VCREDISTCheck
 ::Checks if RetroCake has installed the Visual Studio Redistributables
 IF EXIST "%rkdir%\Tools\VC" goto DirectXSetupCheck
-goto VCRedistArchCheck
 
-:VCRedistArchCheck
-cls
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto VCRedistInstall64
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto VCRedistInstall32
-	)
-	
-:VCRedistInstall64
 cls
 echo =================================================================
 echo =                                                               =
@@ -221,27 +184,6 @@ del "%rkdir%\Temp\VC_Redist_2010_32.exe"
 del "%rkdir%\Temp\VC_Redist_2010_64.exe"
 goto DirectXSetupCheck
 
-:VCRedistInstall32
-cls
-echo =================================================================
-echo =                                                               =
-echo =               SETTING UP VC REDIST   (32-bit)                 =
-echo =                                                               =
-echo =================================================================
-powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe -Destination "%rkdir%\Temp\VC_Redist_2015_32.exe"
-powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe -Destination "%rkdir%\Temp\VC_Redist_2010_32.exe"
-%rkdir%\Temp\VC_Redist_2015_32.exe /install /quiet
-%rkdir%\Temp\VC_Redist_2010_32.exe /install /quiet
-echo VCRedistInstalled > "%rkdir%\Tools\VC"
-cls
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-ping 127.0.0.1 -n 3 > nul
-del "%rkdir%\Temp\VC_Redist_2015_32.exe"
-del "%rkdir%\Temp\VC_Redist_2010_32.exe"
-goto DirectXSetupCheck
-
 :DirectXSetupCheck
 IF EXIST "%rkdir%\Tools\DX" goto menu
 goto DirectXSetup
@@ -264,16 +206,14 @@ ping 127.0.0.1 -n 3 > nul
 del "%rkdir%\Temp\dxwebsetup.exe"
 goto menu
 
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
 :menu
-::Main menu selection. Uses keys 1-9
+::Main menu selection.
 cls
-echo A fork of Flerp/RetroCake v1.4.6     Modified date: Feb 5, 2020
+echo A fork of Flerp/RetroCake v1.4.6     Modified date: March 6, 2020
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -284,25 +224,25 @@ echo =    2.) MANAGE EMULATIONSTATION                                          =
 echo =                                                                         =
 echo =    3.) MANAGE RETROARCH                                                 =
 echo =                                                                         =
-echo =    4.) MANAGE ADDITIONAL EMULATORS                                      =
+echo =    4.) MANAGE EMULATORS                                                 =
 echo =                                                                         =
 echo =    5.) MANAGE ROM DIRECTORIES AND SCRAPER                               =
 echo =                                                                         =
 echo =    6.) MANAGE DEDICATED EMUBOX SETTINGS                                 =
 echo =                                                                         =
-echo =    7.) SYSTEM CLEANUP                                                   =
+echo =    7.) UPDATE RETROCAKE SCRIPT                                          =
 echo =                                                                         =
-echo =    8.) UPDATE RETROCAKE SCRIPT                                          =
+echo =    8.) HOW TO CLEANUP AND/OR BACKUP                                     =
 echo =                                                                         =
 echo ===========================================================================
 echo =                                                                         =
-echo =    9.)  EXIT  RETROCAKE SCRIPT                                          =
+echo =    8.)  EXIT  RETROCAKE SCRIPT                                          =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
 IF ERRORLEVEL ==9 GOTO ExitRetroCake
-IF ERRORLEVEL ==8 GOTO RetroCakeUpdate
-IF ERRORLEVEL ==7 GOTO SysClean
+IF ERRORLEVEL ==8 GOTO HowToCleanupBackup
+IF ERRORLEVEL ==7 GOTO RetroCakeUpdate
 IF ERRORLEVEL ==6 GOTO DediMenu
 IF ERRORLEVEL ==5 GOTO RomMenu
 IF ERRORLEVEL ==4 GOTO EmuFolderCheck
@@ -376,16 +316,15 @@ echo =    2.) INSTALL/UPDATE CORES FOR RETROARCH  -- NIGHTLY BUILD (LATEST)    =
 echo =                                                                         =
 echo =    3.) INSTALL/UPDATE NIGHTLY BUILD OF RETROARCH  (LATEST)              =
 echo =                                                                         =
-echo =    4.) GENERATE SLIGHTLY MODIFIED RETROARCH.CFG                         =
 echo =                                                                         =
 echo =                                                                         =
 echo =                                                                         =
-echo =    5.) RETURN TO MAIN MENU                                              =
+echo =                                                                         =
+echo =    4.) RETURN TO MAIN MENU                                              =
 echo =                                                                         =
 echo ===========================================================================
-CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
-IF ERRORLEVEL ==5 GOTO menu
-IF ERRORLEVEL ==4 GOTO racfg
+CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
+IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO UpdateRAn
 IF ERRORLEVEL ==2 GOTO UpdateRACores
 IF ERRORLEVEL ==1 GOTO UpdateRA
@@ -423,121 +362,57 @@ IF ERRORLEVEL ==1 GOTO DefaultRomFolders
 :EmuFolderCheck
 ::Checks if the Emulator Folder is created. Creates if not.
 cls 
-IF EXIST %rkdir%\Emulators\ goto AdditionalEmu
+IF EXIST %rkdir%\Emulators\ goto SetOfEmulators
 mkdir %rkdir%\Emulators
-goto AdditionalEmu
+goto SetOfEmulators
 
-:AdditionalEmu
-::Menu for managing additional emulators (Non RetroArch ones)
+:SetOfEmulators
+::Menu for managing set of emulators (Non RetroArch ones)
 cls
 echo ===========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL ALL ADDITIONAL EMULATORS                                 =
+echo =    1.) INSTALL SET OF EMULATORS                                         =
 echo =                                                                         =
-echo =    2.) INSTALL ATARI ST EMULATOR (Hatari)                               =
-echo =                                                                         =
-echo =    3.) INSTALL BBC MICRO EMULATOR (BeebEm)                              =
-echo =                                                                         =
-echo =    4.) INSTALL COCO\DRAGON32 EMULATOR (XRoar)                           =
-echo =                                                                         =
-echo =    5.) INSTALL LASERDISK GAME EMULATOR (Daphne)                         =
-echo =                                                                         =
-echo =    6.) INSTALL INTELLIVISION EMULATOR (jzIntv)                          =
-echo =                                                                         =
-echo =    7.) INSTALL PS2 EMULATOR (PCSX2)                                     =
-echo =                                                                         =
-echo =    8.) INSTALL DEMUL EMULATOR (Dreamcast/Naomi/Hikaru/Atomiswave)       =
+echo =    2.) UPDATE  SET OF EMULATORS                                         =
 echo =                                                                         =
 echo =                                                                         =
-echo =    9.) Page 2                                                           =
+echo =    3.) RETURN TO MAIN MENU                                              =
 echo =                                                                         =
 echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO EmuPage2
-IF ERRORLEVEL ==8 GOTO Demul
-IF ERRORLEVEL ==7 GOTO PCSX2
-IF ERRORLEVEL ==6 GOTO jzIntv
-IF ERRORLEVEL ==5 GOTO Daphne
-IF ERRORLEVEL ==4 GOTO XRoar
-IF ERRORLEVEL ==3 GOTO BeebEm
-IF ERRORLEVEL ==2 GOTO Hatari
+CHOICE /N /C:123 /M "Enter Corresponding Menu choice (1, 2, 3)"
+IF ERRORLEVEL ==3 GOTO menu
+IF ERRORLEVEL ==2 GOTO UpdateAllEmu
 IF ERRORLEVEL ==1 GOTO InstallAllEmu
 
-:EmuPage2
-::Additional Emulators continued.
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) INSTALL APPLE II EMULATOR (AppleWin)                             =
-echo =                                                                         =
-Echo =    2.) INSTALL COMMODORE 64 EMULATOR (WinVICE)                          =
-echo =                                                                         =
-Echo =    3.) INSTALL Wii U EMULATOR (Cemu)                                    =
-echo =                                                                         =
-Echo =    4.) INSTALL ColecoVision (ColEm)                                     =
-echo =                                                                         =
-Echo =    5.) INSTALL  MSX / SG-1000 / Colecovision  EMULATOR  (BlueMSX)       =
-echo =                                                                         =
-Echo =    6.) INSTALL TI-99/4A EMULATOR (Classic99)                            =
-echo =                                                                         =
-Echo =    7.) INSTALL AdvanceMAME EMULATOR                                     =
-echo =                                                                         =
-Echo =    8.) INSTALL MAME EMULATOR                                            =
-echo =                                                                         =
-echo =                                                                         =
-echo =    9.) Page 3                                                           =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO EmuPage3
-IF ERRORLEVEL ==8 GOTO MAME
-IF ERRORLEVEL ==7 GOTO AdvanceMAME
-IF ERRORLEVEL ==6 GOTO Classic99
-IF ERRORLEVEL ==5 GOTO BlueMSX
-IF ERRORLEVEL ==4 GOTO ColecoEmu
-IF ERRORLEVEL ==3 GOTO CemuEmu
-IF ERRORLEVEL ==2 GOTO VICE
-IF ERRORLEVEL ==1 GOTO AppleWin
-
-:EmuPage3
-::Additional Emulators continued.
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) INSTALL AMIGA / CD32 / CDTV EMULATOR (FS-UAE)                    =
-echo =                                                                         =
-Echo =    2.) INSTALL  Playstation Portable  emulator (ppsspp)                 =
-echo =                                                                         =
-Echo =    3.) INSTALL CHANNEL F CORE FOR RETROARCH (freechaf_libretro)         =
-echo =                                                                         =
-echo =    4.) MANUAL INSTALL XBOX EMULATOR (Cxbx-Reloaded)                     =
-echo =                                                                         =
-Echo =    5.) MANUAL INSTALL PLAYSTATION 3 EMULATOR (RPCS3)                    =
-echo =                                                                         =
-echo =    6.) MANUAL INSTALL XBOX 360 EMULATOR (Xenia)                         =
-echo =                                                                         =
-echo =    7.) MANUAL INSTALL Dolphin - Development  (GameCube / Wii)           =
-echo =                                                                         =
-echo =    8.) MANUAL INSTALL Citra - Nightly  (3DS)                            =
-echo =                                                                         =
-echo =                                                                         =
-echo =    9.) RETURN TO MAIN MENU                                              =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO menu
-IF ERRORLEVEL ==8 GOTO Citra
-IF ERRORLEVEL ==7 GOTO Dolphin-Dev
-IF ERRORLEVEL ==6 GOTO xenia
-IF ERRORLEVEL ==5 GOTO RPCS3
-IF ERRORLEVEL ==4 GOTO Cxbx-Reloaded
-IF ERRORLEVEL ==3 GOTO FreeChaF
-IF ERRORLEVEL ==2 GOTO PPSSPP
-IF ERRORLEVEL ==1 GOTO FS-UAE
 
 :InstallAllEmu
 ::Secondary Emulator Folder check. May not be needed
-IF EXIST %rkdir%\Emulators\ goto StartAllEmu
+mkdir %rkdir%\Emulators
+goto StartAllEmu
+
+:UpdateAllEmu
+cls
+echo ===========================================================================
+echo =                                                                         =
+echo =                BACKUP and REFRESH / UPDATE EMULATORS                    =
+echo =                                                                         =
+echo =                                                                         =
+echo =    This will move 'Emulators' folder into 'RetroCake\Temp'  folder      =
+echo =                                                                         =
+echo =    Then, a fresh and/or updated set of emulators will be downloaded     =
+echo =    into new 'Emulators' folder.                                         =
+echo =                                                                         =
+echo =    'Emulators-Backup_date_time' folder in Temp folder gives you the     =
+echo =     opportunity to move your configured files from their emulator       =
+echo =     folders back in their places in new 'Emulators' folder.             =
+echo =                                                                         =
+echo =     When you're done with moving files, please empty Temp folder        =
+echo =     for to free up disk space.                                          =
+echo =                                                                         =
+echo ===========================================================================
+echo .
+pause
+move %rkdir%\Emulators %rkdir%\Temp\Emulators-Backup_%gooddayte%_%goodthyme%
 mkdir %rkdir%\Emulators
 goto StartAllEmu
 
@@ -546,9 +421,7 @@ goto StartAllEmu
 Echo This file is temporary. You should never see it > %rkdir%\Emulators\tmp.txt
 goto AdvanceMAME
 
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -578,9 +451,8 @@ del %rkdir%\Temp\BrandNewDef /S /Q
 del %rkdir%\Temp\BrandNewCus /S /Q
 goto completed
 
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
+
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -814,9 +686,8 @@ cls
 del %rkdir%\Temp\FullDedi.txt /s /q
 goto completed
 
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
+
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -930,7 +801,7 @@ mkdir "%USERPROFILE%\.emulationstation\themes"
 cd /D "%USERPROFILE%\.emulationstation\themes"
 rmdir carbon /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/RetroPie/es-theme-carbon.git %theme%
-ren es-theme-carbon Carbon
+ren es-theme-carbon Carbon-Retropie
 
 ::Checks for temporary files created during automated installer selection
 IF EXIST %rkdir%\Temp\BrandNewBlank goto blankESCFG
@@ -938,9 +809,8 @@ IF EXIST %rkdir%\Temp\BrandNewDef goto defaultESCFG
 IF EXIST %rkdir%\Temp\BrandNewCus goto customESCFG
 goto completed
 
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
+
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -972,7 +842,7 @@ IF ERRORLEVEL ==1 GOTO blankESCFG
 ::Creates an es_systems.cfg without ROM directories incase you need/want something special (Not recommended as it's kinda poop to enter all the stuff manually.
 
 ::Backs up current es_systems.cfg
-%rkdir%\Tools\7za\7za.exe a "%USERPROFILE%\es_systems_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\es_systems.cfg"
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_systems_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 ::Deletes old es_systems.cfg
 del "%USERPROFILE%\.emulationstation\es_systems.cfg" /q
@@ -6751,9 +6621,8 @@ cls
 notepad %USERPROFILE%\.emulationstation\es_systems.cfg
 goto ManESCFG
 
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
+
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -7152,26 +7021,18 @@ start %cusromdir%
 IF EXIST %rkdir%\Temp\BrandNewCus goto updateRA
 goto completed
 
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
+
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
 :updateRA
-::RetroArch Updater. Archtecture check (x86 or x6_64
+::RetroArch Updater.
 cls
 mkdir "%rkdir%\Temp\cores"
 cls
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto x64RA
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto x86RA
-	)
 
-:x64RA
-::Installs RetroArch 1.8.4 to RetroCake\RetroArch. Cleans up all downloaded files when done. 64 bit
+::Installs RetroArch 1.8.4  (64-bit) to RetroCake\RetroArch. Cleans up all downloaded files when done.
 echo =================================================================
 echo =                                                               =
 echo =   Downloading RetroArch (64-bit). This will take some time    =
@@ -7188,32 +7049,6 @@ ping 127.0.0.1 -n 4 >nul
 del "%rkdir%\Temp\RetroArch_x64.zip" /q
 goto UpdateRACores
 
-::
-:: 'goto RACFG'  was changed to  'goto UpdateRACores'  for RetroArch to create the default retroarch.cfg file by itself.  This is my preference.
-::
-
-:x86RA
-::Installs RetroArch 1.8.4 to RetroCake\RetroArch. Cleans up all downloaded files when done. 32 bit
-echo =================================================================
-echo =                                                               =
-echo =   Downloading RetroArch (32-bit). This will take some time    =
-echo =                                                               =
-echo =================================================================
-powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.8.4/windows/x86/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x86.zip"
-
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x86.zip" -o"%rkdir%\RetroArch" -aoa > nul
-cls
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-ping 127.0.0.1 -n 4 >nul
-del "%rkdir%\Temp\RetroArch_x86.zip" /q
-goto UpdateRACores
-
-::
-:: 'goto RACFG'  was changed to  'goto UpdateRACores'  for RetroArch to create the default retroarch.cfg file by itself.  This is my preference.
-::
-
 ::=================================================================================================================================================================================================================================================================================================================
 
 
@@ -7222,18 +7057,13 @@ goto UpdateRACores
 cls
 mkdir "%rkdir%\Temp\cores"
 cls
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto x64core
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto x86core
-	)
+
 :x64core
 ::Install RetroArch cores -- 64 bit
 cls
 echo ========================================================================
 echo =                                                                      =
-echo =     Downloading  140+  cores  (nightly) for 64-bit RetroArch         =
+echo =     Downloading  150+  cores  (nightly) for 64-bit RetroArch         =
 echo =                                                                      =
 echo =     This will take some time...                                      =
 echo =                                                                      =
@@ -7246,363 +7076,170 @@ powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nigh
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/atari800_libretro.dll.zip -Destination "%rkdir%\Temp\cores\5.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/blastem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\6.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bluemsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\7.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\8.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\9.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\10.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/boom3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\8.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/boom3_xp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\9.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\10.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_cplusplus98_libretro.dll.zip -Destination "%rkdir%\Temp\cores\11.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\12.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\13.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\14.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\15.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cannonball_libretro.dll.zip -Destination "%rkdir%\Temp\cores\16.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cap32_libretro.dll.zip -Destination "%rkdir%\Temp\cores\17.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/chailove_libretro.dll.zip -Destination "%rkdir%\Temp\cores\18.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_canary_libretro.dll.zip -Destination "%rkdir%\Temp\cores\19.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_libretro.dll.zip -Destination "%rkdir%\Temp\cores\20.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\11.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\12.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_cplusplus98_libretro.dll.zip -Destination "%rkdir%\Temp\cores\13.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_hd_beta_libretro.dll.zip -Destination "%rkdir%\Temp\cores\14.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\15.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\16.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\17.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\18.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cannonball_libretro.dll.zip -Destination "%rkdir%\Temp\cores\19.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cap32_libretro.dll.zip -Destination "%rkdir%\Temp\cores\20.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/craft_libretro.dll.zip -Destination "%rkdir%\Temp\cores\21.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/crocods_libretro.dll.zip -Destination "%rkdir%\Temp\cores\22.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/daphne_libretro.dll.zip -Destination "%rkdir%\Temp\cores\23.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\24.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume_libretro.dll.zip -Destination "%rkdir%\Temp\cores\25.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dhewm3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\26.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dhewm3_xp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\27.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dinothawr_libretro.dll.zip -Destination "%rkdir%\Temp\cores\28.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dolphin_libretro.dll.zip -Destination "%rkdir%\Temp\cores\29.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_ce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\30.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/chailove_libretro.dll.zip -Destination "%rkdir%\Temp\cores\21.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_canary_libretro.dll.zip -Destination "%rkdir%\Temp\cores\22.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_libretro.dll.zip -Destination "%rkdir%\Temp\cores\23.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/craft_libretro.dll.zip -Destination "%rkdir%\Temp\cores\24.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/crocods_libretro.dll.zip -Destination "%rkdir%\Temp\cores\25.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/daphne_libretro.dll.zip -Destination "%rkdir%\Temp\cores\26.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\27.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume_libretro.dll.zip -Destination "%rkdir%\Temp\cores\28.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dhewm3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\29.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dhewm3_xp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\30.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\31.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/easyrpg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\32.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/emux_chip8_libretro.dll.zip -Destination "%rkdir%\Temp\cores\33.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/emux_gb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\34.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/emux_nes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\35.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/emux_sms_libretro.dll.zip -Destination "%rkdir%\Temp\cores\36.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\37.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\38.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_libretro.dll.zip -Destination "%rkdir%\Temp\cores\39.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_neogeo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\40.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dinothawr_libretro.dll.zip -Destination "%rkdir%\Temp\cores\31.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dolphin_libretro.dll.zip -Destination "%rkdir%\Temp\cores\32.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_ce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\33.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\34.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/easyrpg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\35.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ecwolf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\36.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/emux_chip8_libretro.dll.zip -Destination "%rkdir%\Temp\cores\37.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/emux_gb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\38.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/emux_nes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\39.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/emux_sms_libretro.dll.zip -Destination "%rkdir%\Temp\cores\40.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbneo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\41.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fceumm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\42.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ffmpeg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\43.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\44.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\45.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -Destination "%rkdir%\Temp\cores\46.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -Destination "%rkdir%\Temp\cores\47.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -Destination "%rkdir%\Temp\cores\48.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\49.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\50.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\41.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\42.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_libretro.dll.zip -Destination "%rkdir%\Temp\cores\43.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_neogeo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\44.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbneo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\45.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fceumm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\46.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ffmpeg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\47.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_gles2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\48.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\49.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\50.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\51.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\52.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\53.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\54.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\55.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -Destination "%rkdir%\Temp\cores\56.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/higan_sfc_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\57.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/higan_sfc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\58.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/imageviewer_libretro.dll.zip -Destination "%rkdir%\Temp\cores\59.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -Destination "%rkdir%\Temp\cores\60.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freechaf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\51.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -Destination "%rkdir%\Temp\cores\52.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -Destination "%rkdir%\Temp\cores\53.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -Destination "%rkdir%\Temp\cores\54.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\55.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\56.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\57.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\58.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\59.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\60.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\61.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2000_libretro.dll.zip -Destination "%rkdir%\Temp\cores\62.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_libretro.dll.zip -Destination "%rkdir%\Temp\cores\63.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\64.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\65.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\66.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2016_libretro.dll.zip -Destination "%rkdir%\Temp\cores\67.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame_libretro.dll.zip -Destination "%rkdir%\Temp\cores\68.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\69.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\70.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\61.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -Destination "%rkdir%\Temp\cores\62.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/higan_sfc_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\63.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/higan_sfc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\64.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/imageviewer_libretro.dll.zip -Destination "%rkdir%\Temp\cores\65.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -Destination "%rkdir%\Temp\cores\66.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\67.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2000_libretro.dll.zip -Destination "%rkdir%\Temp\cores\68.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_libretro.dll.zip -Destination "%rkdir%\Temp\cores\69.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\70.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\71.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\72.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\73.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\74.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\75.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\76.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\77.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_snes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\78.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\79.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\80.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\71.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\72.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2016_libretro.dll.zip -Destination "%rkdir%\Temp\cores\73.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame_libretro.dll.zip -Destination "%rkdir%\Temp\cores\74.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\75.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\76.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\77.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\78.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\79.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\80.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -Destination "%rkdir%\Temp\cores\81.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -Destination "%rkdir%\Temp\cores\82.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -Destination "%rkdir%\Temp\cores\83.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -Destination "%rkdir%\Temp\cores\84.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\85.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\86.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\87.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -Destination "%rkdir%\Temp\cores\88.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\89.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\90.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\81.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\82.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\83.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_snes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\84.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\85.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\86.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -Destination "%rkdir%\Temp\cores\87.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -Destination "%rkdir%\Temp\cores\88.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -Destination "%rkdir%\Temp\cores\89.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -Destination "%rkdir%\Temp\cores\90.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/neocd_libretro.dll.zip -Destination "%rkdir%\Temp\cores\91.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -Destination "%rkdir%\Temp\cores\92.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -Destination "%rkdir%\Temp\cores\93.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\94.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -Destination "%rkdir%\Temp\cores\95.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/openlara_libretro.dll.zip -Destination "%rkdir%\Temp\cores\96.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\97.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -Destination "%rkdir%\Temp\cores\98.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -Destination "%rkdir%\Temp\cores\99.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/play_libretro.dll.zip -Destination "%rkdir%\Temp\cores\100.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\91.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\92.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\93.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -Destination "%rkdir%\Temp\cores\94.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_gles3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\95.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\96.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\97.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/neocd_libretro.dll.zip -Destination "%rkdir%\Temp\cores\98.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -Destination "%rkdir%\Temp\cores\99.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -Destination "%rkdir%\Temp\cores\100.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\101.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -Destination "%rkdir%\Temp\cores\102.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\103.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\104.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\105.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -Destination "%rkdir%\Temp\cores\106.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -Destination "%rkdir%\Temp\cores\107.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -Destination "%rkdir%\Temp\cores\108.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\109.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/redbook_libretro.dll.zip -Destination "%rkdir%\Temp\cores\110.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\101.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -Destination "%rkdir%\Temp\cores\102.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/openlara_libretro.dll.zip -Destination "%rkdir%\Temp\cores\103.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/opera_libretro.dll.zip -Destination "%rkdir%\Temp\cores\104.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\105.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -Destination "%rkdir%\Temp\cores\106.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -Destination "%rkdir%\Temp\cores\107.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/play_libretro.dll.zip -Destination "%rkdir%\Temp\cores\108.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\109.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -Destination "%rkdir%\Temp\cores\110.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -Destination "%rkdir%\Temp\cores\111.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/remotejoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\112.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\113.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\114.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -Destination "%rkdir%\Temp\cores\115.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -Destination "%rkdir%\Temp\cores\116.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\117.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\118.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -Destination "%rkdir%\Temp\cores\119.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\120.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\111.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\112.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\113.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -Destination "%rkdir%\Temp\cores\114.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -Destination "%rkdir%\Temp\cores\115.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -Destination "%rkdir%\Temp\cores\116.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\117.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\118.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/redbook_libretro.dll.zip -Destination "%rkdir%\Temp\cores\119.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -Destination "%rkdir%\Temp\cores\120.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -Destination "%rkdir%\Temp\cores\121.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -Destination "%rkdir%\Temp\cores\122.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -Destination "%rkdir%\Temp\cores\123.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -Destination "%rkdir%\Temp\cores\124.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\125.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -Destination "%rkdir%\Temp\cores\126.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -Destination "%rkdir%\Temp\cores\127.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\128.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\129.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -Destination "%rkdir%\Temp\cores\130.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/remotejoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\121.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\122.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\123.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/smsplus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\124.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -Destination "%rkdir%\Temp\cores\125.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -Destination "%rkdir%\Temp\cores\126.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\127.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\128.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -Destination "%rkdir%\Temp\cores\129.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\130.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\131.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\132.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\133.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\134.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -Destination "%rkdir%\Temp\cores\135.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -Destination "%rkdir%\Temp\cores\136.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -Destination "%rkdir%\Temp\cores\137.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -Destination "%rkdir%\Temp\cores\138.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -Destination "%rkdir%\Temp\cores\139.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\140.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -Destination "%rkdir%\Temp\cores\131.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -Destination "%rkdir%\Temp\cores\132.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -Destination "%rkdir%\Temp\cores\133.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -Destination "%rkdir%\Temp\cores\134.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\135.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -Destination "%rkdir%\Temp\cores\136.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -Destination "%rkdir%\Temp\cores\137.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\138.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\139.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -Destination "%rkdir%\Temp\cores\140.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\141.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitavoyager_libretro.dll.zip -Destination "%rkdir%\Temp\cores\142.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\143.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\141.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\142.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\143.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -Destination "%rkdir%\Temp\cores\149.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\150.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/boom3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/boom3_xp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_hd_beta_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_gles2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\149.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freechaf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\150.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\151.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/smsplus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\152.zip"
-
-mkdir %rkdir%\RetroArch\cores
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
-cls
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-ping 127.0.0.1 -n 4 >nul
-rmdir "%rkdir%\Temp\cores" /s /q
-IF EXIST %rkdir%\Temp\BrandNewBlank goto InstallAllEmu
-IF EXIST %rkdir%\Temp\BrandNewDef goto InstallAllEmu
-IF EXIST %rkdir%\Temp\BrandNewCus goto InstallAllEmu
-goto completed
-
-:x86core
-::Install RetroArch cores -- 32 bit version
-cls
-echo ========================================================================
-echo =                                                                      =
-echo =     Downloading  140+  cores  (nightly) for 32-bit RetroArch         =
-echo =                                                                      =
-echo =         NOTE:  Not all cores are available for 32-bit. This          =
-echo =                batch script would show error for not finding         =
-echo =                cores due to wrong URLs. It's because this list       = 
-echo =                of URLs addresses were copied from 64-bit's list.     =
-echo =                                                                      =
-echo =     This will take some time...                                      =
-echo =                                                                      =
-echo ========================================================================
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/3dengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\1.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/4do_libretro.dll.zip -Destination "%rkdir%\Temp\cores\2.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/81_libretro.dll.zip -Destination "%rkdir%\Temp\cores\3.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/2048_libretro.dll.zip -Destination "%rkdir%\Temp\cores\4.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/atari800_libretro.dll.zip -Destination "%rkdir%\Temp\cores\5.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/blastem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\6.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bluemsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\7.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes2014_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\8.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes2014_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\9.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes2014_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\10.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_cplusplus98_libretro.dll.zip -Destination "%rkdir%\Temp\cores\11.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\12.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_mercury_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\13.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_mercury_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\14.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_mercury_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\15.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/cannonball_libretro.dll.zip -Destination "%rkdir%\Temp\cores\16.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/cap32_libretro.dll.zip -Destination "%rkdir%\Temp\cores\17.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/chailove_libretro.dll.zip -Destination "%rkdir%\Temp\cores\18.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/citra_canary_libretro.dll.zip -Destination "%rkdir%\Temp\cores\19.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/citra_libretro.dll.zip -Destination "%rkdir%\Temp\cores\20.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/craft_libretro.dll.zip -Destination "%rkdir%\Temp\cores\21.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/crocods_libretro.dll.zip -Destination "%rkdir%\Temp\cores\22.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/daphne_libretro.dll.zip -Destination "%rkdir%\Temp\cores\23.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/desmume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\24.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/desmume_libretro.dll.zip -Destination "%rkdir%\Temp\cores\25.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/dhewm3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\26.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/dhewm3_xp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\27.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/dinothawr_libretro.dll.zip -Destination "%rkdir%\Temp\cores\28.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/dolphin_libretro.dll.zip -Destination "%rkdir%\Temp\cores\29.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/dosbox_svn_ce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\30.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/dosbox_svn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\31.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/easyrpg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\32.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/emux_chip8_libretro.dll.zip -Destination "%rkdir%\Temp\cores\33.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/emux_gb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\34.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/emux_nes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\35.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/emux_sms_libretro.dll.zip -Destination "%rkdir%\Temp\cores\36.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/fbalpha2012_cps1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\37.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/fbalpha2012_cps2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\38.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/fbalpha2012_libretro.dll.zip -Destination "%rkdir%\Temp\cores\39.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/fbalpha2012_neogeo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\40.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/fbneo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\41.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/fceumm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\42.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/ffmpeg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\43.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/flycast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\44.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/fmsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\45.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/freeintv_libretro.dll.zip -Destination "%rkdir%\Temp\cores\46.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/fuse_libretro.dll.zip -Destination "%rkdir%\Temp\cores\47.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/gambatte_libretro.dll.zip -Destination "%rkdir%\Temp\cores\48.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/gearboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\49.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/gearsystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\50.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/genesis_plus_gx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\51.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/gme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\52.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/gpsp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\53.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/gw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\54.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/handy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\55.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/hatari_libretro.dll.zip -Destination "%rkdir%\Temp\cores\56.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/higan_sfc_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\57.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/higan_sfc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\58.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/imageviewer_libretro.dll.zip -Destination "%rkdir%\Temp\cores\59.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/kronos_libretro.dll.zip -Destination "%rkdir%\Temp\cores\60.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/lutro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\61.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mame2000_libretro.dll.zip -Destination "%rkdir%\Temp\cores\62.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mame2003_libretro.dll.zip -Destination "%rkdir%\Temp\cores\63.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mame2003_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\64.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mame2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\65.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mame2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\66.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mame2016_libretro.dll.zip -Destination "%rkdir%\Temp\cores\67.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mame_libretro.dll.zip -Destination "%rkdir%\Temp\cores\68.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_gba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\69.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_lynx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\70.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_ngp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\71.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_pce_fast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\72.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_pce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\73.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_pcfx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\74.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_psx_hw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\75.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_psx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\76.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_saturn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\77.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_snes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\78.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_supergrafx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\79.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_vb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\80.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mednafen_wswan_libretro.dll.zip -Destination "%rkdir%\Temp\cores\81.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/melonds_libretro.dll.zip -Destination "%rkdir%\Temp\cores\82.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mesen-s_libretro.dll.zip -Destination "%rkdir%\Temp\cores\83.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mesen_libretro.dll.zip -Destination "%rkdir%\Temp\cores\84.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mess2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\85.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mgba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\86.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mrboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\87.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mu_libretro.dll.zip -Destination "%rkdir%\Temp\cores\88.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/mupen64plus_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\89.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/nekop2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\90.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/neocd_libretro.dll.zip -Destination "%rkdir%\Temp\cores\91.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/nestopia_libretro.dll.zip -Destination "%rkdir%\Temp\cores\92.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/np2kai_libretro.dll.zip -Destination "%rkdir%\Temp\cores\93.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/nxengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\94.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/o2em_libretro.dll.zip -Destination "%rkdir%\Temp\cores\95.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/openlara_libretro.dll.zip -Destination "%rkdir%\Temp\cores\96.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/parallel_n64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\97.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/pcsx_rearmed_libretro.dll.zip -Destination "%rkdir%\Temp\cores\98.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/picodrive_libretro.dll.zip -Destination "%rkdir%\Temp\cores\99.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/play_libretro.dll.zip -Destination "%rkdir%\Temp\cores\100.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/pocketcdg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\101.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/pokemini_libretro.dll.zip -Destination "%rkdir%\Temp\cores\102.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/ppsspp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\103.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/prboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\104.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/prosystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\105.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/puae_libretro.dll.zip -Destination "%rkdir%\Temp\cores\106.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/px68k_libretro.dll.zip -Destination "%rkdir%\Temp\cores\107.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/quasi88_libretro.dll.zip -Destination "%rkdir%\Temp\cores\108.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/quicknes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\109.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/redbook_libretro.dll.zip -Destination "%rkdir%\Temp\cores\110.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/reminiscence_libretro.dll.zip -Destination "%rkdir%\Temp\cores\111.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/remotejoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\112.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/sameboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\113.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/scummvm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\114.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2002_libretro.dll.zip -Destination "%rkdir%\Temp\cores\115.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_libretro.dll.zip -Destination "%rkdir%\Temp\cores\116.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2005_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\117.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\118.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/snes9x_libretro.dll.zip -Destination "%rkdir%\Temp\cores\119.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/squirreljme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\120.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/stella2014_libretro.dll.zip -Destination "%rkdir%\Temp\cores\121.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/stella_libretro.dll.zip -Destination "%rkdir%\Temp\cores\122.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/tgbdual_libretro.dll.zip -Destination "%rkdir%\Temp\cores\123.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/theodore_libretro.dll.zip -Destination "%rkdir%\Temp\cores\124.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/thepowdertoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\125.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/tic80_libretro.dll.zip -Destination "%rkdir%\Temp\cores\126.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/tyrquake_libretro.dll.zip -Destination "%rkdir%\Temp\cores\127.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/ume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\128.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vba_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\129.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vbam_libretro.dll.zip -Destination "%rkdir%\Temp\cores\130.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vecx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\131.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vemulator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\132.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\133.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x64sc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\134.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vice_x128_libretro.dll.zip -Destination "%rkdir%\Temp\cores\135.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xpet_libretro.dll.zip -Destination "%rkdir%\Temp\cores\136.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xplus4_libretro.dll.zip -Destination "%rkdir%\Temp\cores\137.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vice_xvic_libretro.dll.zip -Destination "%rkdir%\Temp\cores\138.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/virtualjaguar_libretro.dll.zip -Destination "%rkdir%\Temp\cores\139.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vitaquake2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\140.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vitaquake3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\141.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/vitavoyager_libretro.dll.zip -Destination "%rkdir%\Temp\cores\142.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\143.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/boom3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/boom3_xp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/bsnes_hd_beta_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/flycast_gles2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\149.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/freechaf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\150.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\151.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86/latest/smsplus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\152.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\151.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitavoyager_libretro.dll.zip -Destination "%rkdir%\Temp\cores\152.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/x1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\153.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\154.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\155.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\156.zip"
 
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
@@ -7616,25 +7253,16 @@ IF EXIST %rkdir%\Temp\BrandNewBlank goto InstallAllEmu
 IF EXIST %rkdir%\Temp\BrandNewDef goto InstallAllEmu
 IF EXIST %rkdir%\Temp\BrandNewCus goto InstallAllEmu
 goto completed
-
 
 ::=================================================================================================================================================================================================================================================================================================================
 
 
 :updateRAn
 cls
-cls
 mkdir "%rkdir%\Temp\cores"
 cls
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto x64RAn
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto x86RAn
-	)
 
-:x64RAn
-::Installs RetroArch to RetroCake\RetroArch. Cleans up all downloaded files when done. x64 version of latest nightly
+::Installs nightly RetroArch (64-bit) to RetroCake\RetroArch.
 
 echo =======================================================================
 echo =                                                                     =
@@ -7651,1895 +7279,7 @@ ping 127.0.0.1 -n 4 >nul
 del "%rkdir%\Temp\RetroArch_x64.zip" /q
 goto completed
 
-:x86RAn
-::Installs RetroArch to RetroCake\RetroArch. Cleans up all downloaded files when done. 32 bit version of the latest nightly
-echo =======================================================================
-echo =                                                                     =
-echo =  Downloading nightly RetroArch (32-bit). This will take some time   =
-echo =                                                                     =
-echo =======================================================================
-powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/nightly/windows/x86/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x86.zip"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x86.zip" -o"%rkdir%\RetroArch" -aoa > nul
-cls
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-ping 127.0.0.1 -n 4 >nul
-del "%rkdir%\Temp\RetroArch_x86.zip" /q
-goto completed
 
-::=================================================================================================================================================================================================================================================================================================================
-
-:RACFG
-::Generates a retroarch config file. 99% default. Adds the start+select opening of the retroarch menu in game. RetroPie accomplishes this by using custom mapping with RetroPad, but I found this to be simpler.
-
-cls
-echo ==================================================================================
-echo =                                                                                =
-Echo =  This option creates slightly modified RetroArch config file  (99%% default)   =
-echo =                                                                                =
-echo =       (For instance...)                                                        =
-echo =            -- Adds the Start+Select to open RetroArch menu in game             =
-echo =            -- Displays frames counter (framecount_show = "true")               =
-echo =                                                                                =
-echo =   Create config file ?                                                         =
-echo =                                                                                =
-echo =      Y - YES                                                                   =
-echo =                                                                                =
-echo =      N - NO/CANCEL  - RetroArch will create default config file at first run   =
-echo =                                                                                =
-echo ==================================================================================
-CHOICE /N /C:YN /M "Enter Y  or  N"
-IF ERRORLEVEL ==2 GOTO RAMenu
-IF ERRORLEVEL ==1 GOTO CreateRACfg
-
-:CreateRACfg
-echo config_save_on_exit = "true"> %rkdir%\RetroArch\retroarch.cfg
-echo core_updater_buildbot_url = "http://buildbot.libretro.com/nightly/windows/x86_64/latest/">> %rkdir%\RetroArch\retroarch.cfg
-echo core_updater_buildbot_assets_url = "http://buildbot.libretro.com/assets/">> %rkdir%\RetroArch\retroarch.cfg
-echo libretro_directory = ":\cores">> %rkdir%\RetroArch\retroarch.cfg
-echo libretro_info_path = ":\info">> %rkdir%\RetroArch\retroarch.cfg
-echo content_database_path = ":\database\rdb">> %rkdir%\RetroArch\retroarch.cfg
-echo cheat_database_path = ":\cheats">> %rkdir%\RetroArch\retroarch.cfg
-echo content_history_path = ":\content_history.lpl">> %rkdir%\RetroArch\retroarch.cfg
-echo content_favorites_path = ":\content_favorites.lpl">> %rkdir%\RetroArch\retroarch.cfg
-echo content_music_history_path = ":\content_music_history.lpl">> %rkdir%\RetroArch\retroarch.cfg
-echo content_video_history_path = ":\content_video_history.lpl">> %rkdir%\RetroArch\retroarch.cfg
-echo content_image_history_path = ":\content_image_history.lpl">> %rkdir%\RetroArch\retroarch.cfg
-echo cursor_directory = ":\database\cursors">> %rkdir%\RetroArch\retroarch.cfg
-echo screenshot_directory = ":\screenshots">> %rkdir%\RetroArch\retroarch.cfg
-echo system_directory = ":\system">> %rkdir%\RetroArch\retroarch.cfg
-echo input_remapping_directory = ":\config\remaps">> %rkdir%\RetroArch\retroarch.cfg
-echo video_shader_dir = ":\shaders">> %rkdir%\RetroArch\retroarch.cfg
-echo video_filter_dir = ":\filters\video">> %rkdir%\RetroArch\retroarch.cfg
-echo core_assets_directory = ":\downloads">> %rkdir%\RetroArch\retroarch.cfg
-echo assets_directory = ":\assets">> %rkdir%\RetroArch\retroarch.cfg
-echo dynamic_wallpapers_directory = ":\assets\wallpapers">> %rkdir%\RetroArch\retroarch.cfg
-echo thumbnails_directory = ":\thumbnails">> %rkdir%\RetroArch\retroarch.cfg
-echo playlist_directory = ":\playlists">> %rkdir%\RetroArch\retroarch.cfg
-echo joypad_autoconfig_dir = ":\autoconfig">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_filter_dir = ":\filters\audio">> %rkdir%\RetroArch\retroarch.cfg
-echo savefile_directory = ":\saves">> %rkdir%\RetroArch\retroarch.cfg
-echo savestate_directory = ":\states">> %rkdir%\RetroArch\retroarch.cfg
-echo rgui_browser_directory = "default">> %rkdir%\RetroArch\retroarch.cfg
-echo rgui_config_directory = ":\config">> %rkdir%\RetroArch\retroarch.cfg
-echo overlay_directory = ":\overlays">> %rkdir%\RetroArch\retroarch.cfg
-echo screenshot_directory = ":\screenshots">> %rkdir%\RetroArch\retroarch.cfg
-echo video_driver = "gl">> %rkdir%\RetroArch\retroarch.cfg
-echo record_driver = "ffmpeg">> %rkdir%\RetroArch\retroarch.cfg
-echo camera_driver = "null">> %rkdir%\RetroArch\retroarch.cfg
-echo wifi_driver = "null">> %rkdir%\RetroArch\retroarch.cfg
-echo location_driver = "null">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_driver = "xmb">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_driver = "xaudio">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_resampler = "sinc">> %rkdir%\RetroArch\retroarch.cfg
-echo input_driver = "dinput">> %rkdir%\RetroArch\retroarch.cfg
-echo input_joypad_driver = "xinput">> %rkdir%\RetroArch\retroarch.cfg
-echo video_aspect_ratio = "-1.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo video_scale = "3.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo video_refresh_rate = "60.000027">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_rate_control_delta = "0.005000">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_max_timing_skew = "0.050000">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_volume = "0.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_mixer_volume = "0.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_opacity = "0.700000">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_scale = "1.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_wallpaper_opacity = "0.300000">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_framebuffer_opacity = "0.900000">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_footer_opacity = "1.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_header_opacity = "1.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo video_message_pos_x = "0.050000">> %rkdir%\RetroArch\retroarch.cfg
-echo video_message_pos_y = "0.050000">> %rkdir%\RetroArch\retroarch.cfg
-echo video_font_size = "32.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo fastforward_ratio = "0.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo slowmotion_ratio = "3.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo input_axis_threshold = "0.500000">> %rkdir%\RetroArch\retroarch.cfg
-echo state_slot = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_check_frames = "30">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_wasapi_sh_buffer_length = "-16">> %rkdir%\RetroArch\retroarch.cfg
-echo input_bind_timeout = "5">> %rkdir%\RetroArch\retroarch.cfg
-echo input_turbo_period = "6">> %rkdir%\RetroArch\retroarch.cfg
-echo input_duty_cycle = "3">> %rkdir%\RetroArch\retroarch.cfg
-echo input_max_users = "5">> %rkdir%\RetroArch\retroarch.cfg
-echo input_menu_toggle_gamepad_combo = "4">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_latency = "64">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_block_frames = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo rewind_granularity = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo autosave_interval = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo libretro_log_level = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo keyboard_gamepad_mapping_type = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_poll_type_behavior = "2">> %rkdir%\RetroArch\retroarch.cfg
-echo video_monitor_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo video_fullscreen_x = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo video_fullscreen_y = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo video_window_x = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo video_window_y = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo network_cmd_port = "55355">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_base_port = "55400">> %rkdir%\RetroArch\retroarch.cfg
-echo dpi_override_value = "200">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_thumbnails = "3">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_alpha_factor = "75">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_scale_factor = "100">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_theme = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_menu_color_theme = "4">> %rkdir%\RetroArch\retroarch.cfg
-echo materialui_menu_color_theme = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_shader_pipeline = "2">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_out_rate = "48000">> %rkdir%\RetroArch\retroarch.cfg
-echo custom_viewport_width = "960">> %rkdir%\RetroArch\retroarch.cfg
-echo custom_viewport_height = "720">> %rkdir%\RetroArch\retroarch.cfg
-echo custom_viewport_x = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo custom_viewport_y = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo content_history_size = "100">> %rkdir%\RetroArch\retroarch.cfg
-echo video_hard_sync_frames = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo video_frame_delay = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo video_max_swapchain_images = "3">> %rkdir%\RetroArch\retroarch.cfg
-echo video_swap_interval = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo video_rotation = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo aspect_ratio_index = "21">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_ip_port = "55435">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_input_latency_frames_min = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_input_latency_frames_range = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo user_language = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo bundle_assets_extract_version_current = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo bundle_assets_extract_last_version = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_show_physical_inputs_port = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p1 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_joypad_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p1 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p2 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_joypad_index = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p2 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p3 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_joypad_index = "2">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p3 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p4 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_joypad_index = "3">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p4 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p5 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_joypad_index = "4">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p5 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p6 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_joypad_index = "5">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p6 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p7 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_joypad_index = "6">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p7 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p8 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_joypad_index = "7">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p8 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p9 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_joypad_index = "8">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p9 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p10 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_joypad_index = "9">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p10 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p11 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_joypad_index = "10">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p11 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p12 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_joypad_index = "11">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p12 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p13 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_joypad_index = "12">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p13 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p14 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_joypad_index = "13">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p14 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p15 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_joypad_index = "14">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p15 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_device_p16 = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_joypad_index = "15">> %rkdir%\RetroArch\retroarch.cfg
-echo input_libretro_device_p16 = "1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_analog_dpad_mode = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_mouse_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo ui_companion_start_on_boot = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo ui_companion_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_gpu_record = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo input_remap_binds_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo all_users_control_menu = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_swap_ok_cancel_buttons = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_public_announce = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_start_as_spectator = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_allow_slaves = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_require_slaves = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_stateless_mode = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_client_swap_input = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_use_mitm_server = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo input_descriptor_label_show = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo input_descriptor_hide_unbound = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo load_dummy_on_core_shutdown = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo check_firmware_before_loading = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo builtin_mediaplayer_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo builtin_imageviewer_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo fps_show = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo ui_menubar_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo suspend_screensaver_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo rewind_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_sync = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_shader_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_aspect_ratio_auto = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_allow_rotate = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_windowed_fullscreen = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_crop_overscan = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_scale_integer = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_smooth = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_force_aspect = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_threaded = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_shared_context = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo auto_screenshot_filename = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_force_srgb_disable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_fullscreen = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo bundle_assets_extract_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_vsync = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_hard_sync = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_black_frame_insertion = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_disable_composition = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo pause_nonactive = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_gpu_screenshot = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_post_filter_record = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo keyboard_gamepad_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo core_set_supports_no_game_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_mute_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_mixer_mute_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo location_allow = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_font_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo core_updater_auto_extract_archive = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo camera_allow = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_unified_controls = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo threaded_data_runloop_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_throttle_framerate = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_linear_filter = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_horizontal_animation = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo dpi_override_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_pause_libretro = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_mouse_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_pointer_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_timedate_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_battery_level_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_core_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_dynamic_wallpaper_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo materialui_icons_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_shadows_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_show_settings = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_show_favorites = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_show_images = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_show_music = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_online_updater = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_core_updater = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_show_video = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_show_netplay = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_show_history = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_show_add = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo filter_by_current_core = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo rgui_show_start_screen = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_navigation_wraparound_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_navigation_browser_filter_supported_extensions_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_advanced_settings = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo cheevos_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo cheevos_test_unofficial = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo cheevos_hardcore_mode_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo cheevos_verbose_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_enable_autopreferred = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_show_physical_inputs = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_hide_in_menu = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo network_cmd_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo stdin_cmd_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_nat_traversal = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo block_sram_overwrite = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo savestate_auto_index = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo savestate_auto_save = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo savestate_auto_load = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo savestate_thumbnail_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo history_list_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo playlist_entry_remove = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo game_specific_options = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo auto_overrides_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo auto_remaps_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo auto_shaders_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo sort_savefiles_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo sort_savestates_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo show_hidden_files = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo input_autodetect_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_rate_control = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_wasapi_exclusive_mode = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_wasapi_float_format = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo savestates_in_content_dir = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo savefiles_in_content_dir = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo systemfiles_in_content_dir = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo screenshots_in_content_dir = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo custom_bgm_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p1 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p2 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p3 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p4 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p5 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p6 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p7 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p8 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p9 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p10 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p11 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p12 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p13 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p14 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p15 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo network_remote_enable_user_p16 = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo log_verbosity = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo perfcnt_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo video_message_color = "ffffff">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_entry_normal_color = "ffffffff">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_entry_hover_color = "ff64ff64">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_title_color = "ff64ff64">> %rkdir%\RetroArch\retroarch.cfg
-echo gamma_correction = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo flicker_filter_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo soft_filter_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo soft_filter_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo current_resolution_id = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo flicker_filter_index = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_b = "z">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_y = "a">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_select = "rshift">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_start = "enter">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_up = "up">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_down = "down">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_left = "left">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_right = "right">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_a = "x">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_x = "s">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l = "q">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r = "w">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player1_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_toggle_fast_forward = "space">> %rkdir%\RetroArch\retroarch.cfg
-echo input_toggle_fast_forward_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_toggle_fast_forward_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_hold_fast_forward = "l">> %rkdir%\RetroArch\retroarch.cfg
-echo input_hold_fast_forward_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_hold_fast_forward_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_load_state = "f4">> %rkdir%\RetroArch\retroarch.cfg
-echo input_load_state_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_load_state_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_save_state = "f2">> %rkdir%\RetroArch\retroarch.cfg
-echo input_save_state_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_save_state_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_toggle_fullscreen = "f">> %rkdir%\RetroArch\retroarch.cfg
-echo input_toggle_fullscreen_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_toggle_fullscreen_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_exit_emulator = "escape">> %rkdir%\RetroArch\retroarch.cfg
-echo input_exit_emulator_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_exit_emulator_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_state_slot_increase = "f7">> %rkdir%\RetroArch\retroarch.cfg
-echo input_state_slot_increase_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_state_slot_increase_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_state_slot_decrease = "f6">> %rkdir%\RetroArch\retroarch.cfg
-echo input_state_slot_decrease_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_state_slot_decrease_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_rewind = "r">> %rkdir%\RetroArch\retroarch.cfg
-echo input_rewind_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_rewind_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_movie_record_toggle = "o">> %rkdir%\RetroArch\retroarch.cfg
-echo input_movie_record_toggle_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_movie_record_toggle_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_pause_toggle = "p">> %rkdir%\RetroArch\retroarch.cfg
-echo input_pause_toggle_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_pause_toggle_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_frame_advance = "k">> %rkdir%\RetroArch\retroarch.cfg
-echo input_frame_advance_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_frame_advance_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_reset = "h">> %rkdir%\RetroArch\retroarch.cfg
-echo input_reset_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_reset_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_shader_next = "m">> %rkdir%\RetroArch\retroarch.cfg
-echo input_shader_next_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_shader_next_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_shader_prev = "n">> %rkdir%\RetroArch\retroarch.cfg
-echo input_shader_prev_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_shader_prev_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_cheat_index_plus = "y">> %rkdir%\RetroArch\retroarch.cfg
-echo input_cheat_index_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_cheat_index_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_cheat_index_minus = "t">> %rkdir%\RetroArch\retroarch.cfg
-echo input_cheat_index_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_cheat_index_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_cheat_toggle = "u">> %rkdir%\RetroArch\retroarch.cfg
-echo input_cheat_toggle_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_cheat_toggle_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_screenshot = "f8">> %rkdir%\RetroArch\retroarch.cfg
-echo input_screenshot_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_screenshot_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_audio_mute = "f9">> %rkdir%\RetroArch\retroarch.cfg
-echo input_audio_mute_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_audio_mute_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_osk_toggle = "f12">> %rkdir%\RetroArch\retroarch.cfg
-echo input_osk_toggle_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_osk_toggle_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_netplay_flip_players_1_2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_netplay_flip_players_1_2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_netplay_flip_players_1_2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_netplay_game_watch = "i">> %rkdir%\RetroArch\retroarch.cfg
-echo input_netplay_game_watch_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_netplay_game_watch_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_slowmotion = "e">> %rkdir%\RetroArch\retroarch.cfg
-echo input_slowmotion_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_slowmotion_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_enable_hotkey = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_enable_hotkey_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_enable_hotkey_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_volume_up = "add">> %rkdir%\RetroArch\retroarch.cfg
-echo input_volume_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_volume_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_volume_down = "subtract">> %rkdir%\RetroArch\retroarch.cfg
-echo input_volume_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_volume_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_next = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_next_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay_next_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_disk_eject_toggle = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_disk_eject_toggle_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_disk_eject_toggle_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_disk_next = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_disk_next_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_disk_next_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_disk_prev = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_disk_prev_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_disk_prev_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_grab_mouse_toggle = "f11">> %rkdir%\RetroArch\retroarch.cfg
-echo input_grab_mouse_toggle_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_grab_mouse_toggle_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_game_focus_toggle = "scroll_lock">> %rkdir%\RetroArch\retroarch.cfg
-echo input_game_focus_toggle_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_game_focus_toggle_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_menu_toggle = "f1">> %rkdir%\RetroArch\retroarch.cfg
-echo input_menu_toggle_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_menu_toggle_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player2_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player3_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player4_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player5_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player6_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player7_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player8_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player9_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player10_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player11_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player12_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player13_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player14_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player15_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_b = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_b_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_b_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_y = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_y_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_y_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_select = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_select_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_select_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_start = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_start_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_start_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_up = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_up_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_up_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_down = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_down_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_down_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_left = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_left_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_left_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_right = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_right_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_right_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_a = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_a_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_a_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_x = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_x_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_x_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r2 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r2_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r2_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r3 = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r3_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r3_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_l_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_x_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_x_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_x_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_x_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_x_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_x_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_y_plus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_y_plus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_y_plus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_y_minus = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_y_minus_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_r_y_minus_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_turbo = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_turbo_btn = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo input_player16_turbo_axis = "nul">> %rkdir%\RetroArch\retroarch.cfg
-echo video_msg_bgcolor_opacity = "1.000000">> %rkdir%\RetroArch\retroarch.cfg
-echo keymapper_port = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo video_msg_bgcolor_red = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo video_msg_bgcolor_green = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo video_msg_bgcolor_blue = "0">> %rkdir%\RetroArch\retroarch.cfg
-echo framecount_show = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_take_screenshot = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_save_load_state = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_undo_save_load_state = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_add_to_favorites = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_options = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_controls = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_cheats = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_shaders = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_save_core_overrides = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_save_game_overrides = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo quick_menu_show_information = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo kiosk_mode_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_load_core = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_load_content = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_information = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_configurations = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_help = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_quit_retroarch = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_show_reboot = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo keymapper_enable = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo playlist_entry_rename = "true">> %rkdir%\RetroArch\retroarch.cfg
-echo video_msg_bgcolor_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo cheevos_leaderboards_enable = "false">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_font = "">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_show_settings_password = "">> %rkdir%\RetroArch\retroarch.cfg
-echo kiosk_mode_password = "">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_nickname = "">> %rkdir%\RetroArch\retroarch.cfg
-echo video_filter = "">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_dsp_plugin = "">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_ip_address = "">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_password = "">> %rkdir%\RetroArch\retroarch.cfg
-echo netplay_spectate_password = "">> %rkdir%\RetroArch\retroarch.cfg
-echo core_options_path = "">> %rkdir%\RetroArch\retroarch.cfg
-echo video_shader = "">> %rkdir%\RetroArch\retroarch.cfg
-echo menu_wallpaper = "">> %rkdir%\RetroArch\retroarch.cfg
-echo input_overlay = "">> %rkdir%\RetroArch\retroarch.cfg
-echo video_font_path = "">> %rkdir%\RetroArch\retroarch.cfg
-echo content_history_dir = "">> %rkdir%\RetroArch\retroarch.cfg
-echo cache_directory = "">> %rkdir%\RetroArch\retroarch.cfg
-echo resampler_directory = "">> %rkdir%\RetroArch\retroarch.cfg
-echo recording_output_directory = "">> %rkdir%\RetroArch\retroarch.cfg
-echo recording_config_directory = "">> %rkdir%\RetroArch\retroarch.cfg
-echo xmb_font = "">> %rkdir%\RetroArch\retroarch.cfg
-echo playlist_names = "">> %rkdir%\RetroArch\retroarch.cfg
-echo playlist_cores = "">> %rkdir%\RetroArch\retroarch.cfg
-echo audio_device = "">> %rkdir%\RetroArch\retroarch.cfg
-echo camera_device = "">> %rkdir%\RetroArch\retroarch.cfg
-echo video_context_driver = "">> %rkdir%\RetroArch\retroarch.cfg
-echo input_keyboard_layout = "">> %rkdir%\RetroArch\retroarch.cfg
-echo bundle_assets_src_path = "">> %rkdir%\RetroArch\retroarch.cfg
-echo bundle_assets_dst_path = "">> %rkdir%\RetroArch\retroarch.cfg
-echo bundle_assets_dst_path_subdir = "">> %rkdir%\RetroArch\retroarch.cfg
-goto RAMenu
-
-::
-::  goto updatecores  was changed to  goto RAMenu
-::
-
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-
-:SysClean
-::Menu for cleaning stuff. Mostly just for me when debugging stuff and I need to uninstall and reinstall multiple times.
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) REMOVE ALL RETROCAKE FILES                                       =
-echo =                                                                         =
-echo =    2.) REMOVE EMULATIONSTATION AND PREFERENCES                          =
-echo =                                                                         =
-echo =    3.) REMOVE RETROARCH AND PREFERENCES                                 =
-echo =                                                                         =
-echo =    4.) REMOVE ADDITIONAL EMULATORS AND PREFERENCES                      =
-echo =                                                                         =
-echo =    5.) REMOVE RETROCAKE TOOLS (GIT AND 7ZA)                             =
-echo =                                                                         =
-echo =                                                                         =
-echo =    6.) EXIT                                                             =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:1234567 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7)"
-IF ERRORLEVEL ==6 GOTO menu
-IF ERRORLEVEL ==5 GOTO CleanTools
-IF ERRORLEVEL ==4 GOTO CleanEmu
-IF ERRORLEVEL ==3 GOTO CleanRA
-IF ERRORLEVEL ==2 GOTO CleanES
-IF ERRORLEVEL ==1 GOTO CleanAll
-
-:CleanAll
-::Prompts confirmation before wiping out all files.
-cls
-
-set /P c=Are you sure you want to delete ALL RetroCake Files (Tries to move roms from RetroCake\ROMS to C:\users\(username)\ROMS, but backup roms just to be safe[Y/N]?
-if /I "%c%" EQU "Y" goto delall
-if /I "%c%" EQU "N" goto menu
-
-:delall
-::Deletes any and all files used or created by RetroCake. Moves any ROMS found in the RetroCake directory to C:\ROMS as to not wipe out your collection. does not remove ROMS in custom directories.
-cls
-echo =====================================================
-echo =                                                   =
-Echo = DELETING ALL RETROARCH AND EMULATIONSTATION FILES =
-echo =                                                   =
-echo =====================================================
-cd /D C:\
-IF EXIST "%rkdir%\ROMS\" move "%rkdir%\ROMS" "%USERPROFILE%\ROMS"
-del "%USERPROFILE%\Desktop\RetroCake.lnk"
-del "%APPDATA%\RetroCake\CusInstallDir.txt"
-rmdir "%rkdir%" /s /q
-rmdir "%USERPROFILE%\.emulationstation" /s /q
-goto CleanAllExit
-
-:CleanES
-::Prompts for the deletion of all EmulationStation and related files
-cls
-
-set /P c=Are you sure you want to delete ALL EmulationStation Files (Includes Settings)[Y/N]?
-if /I "%c%" EQU "Y" goto delES
-if /I "%c%" EQU "N" goto menu
-
-:delES
-::Deletes all emulationstation files.
-cls
-echo =====================================================
-echo =                                                   =
-Echo =          DELETING EMULATIONSTATION FILES          =
-echo =                                                   =
-echo =====================================================
-del "%USERPROFILE%\Desktop\RetroCake.lnk"
-rmdir %rkdir%\EmulationStation /s /q
-rmdir "%USERPROFILE%\.emulationstation" /s /q
-goto CleanAllExit
-
-:CleanRA
-::Prompts for the deletion of all RetroArch and related files
-cls
-
-set /P c=Are you sure you want to delete ALL RetroArch Files (Includes Settings)[Y/N]?
-if /I "%c%" EQU "Y" goto delRA
-if /I "%c%" EQU "N" goto menu
-
-:delRA
-::Deletes all RetroArch and related files
-cls
-echo =====================================================
-echo =                                                   =
-Echo =             DELETING RETROARCH FILES              =
-echo =                                                   =
-echo =====================================================
-rmdir %rkdir%\RetroArch /s /q
-goto CleanAllExit
-
-:CleanEmu
-::Prompts for the deletion of all additional emulators and related files
-cls
-
-set /P c=Are you sure you want to delete ALL Additional Emulators (Includes Settings)[Y/N]?
-if /I "%c%" EQU "Y" goto delEmu
-if /I "%c%" EQU "N" goto menu
-
-:delEmu
-::Deletes all additional emulators.
-cls
-echo =====================================================
-echo =                                                   =
-Echo =        DELETING ADDITIONAL EMULATORS FILES        =
-echo =                                                   =
-echo =====================================================
-rmdir %rkdir%\Emulators /s /q
-goto CleanAllExit
-
-:CleanTools
-::Prompts for the deletion of RetroCake's support tools (7za, git, etc)
-cls
-
-set /P c=Are you sure you want to delete ALL RetroCake tools (Includes Settings)[Y/N]?
-if /I "%c%" EQU "Y" goto delTools
-if /I "%c%" EQU "N" goto menu
-
-:delTools
-::Deletes all tools used by RetroCake (Relaunching the batch file will redownload and install them.
-cls
-echo =====================================================
-echo =                                                   =
-Echo =             DELETING RETROCAKE TOOLS              =
-echo =                                                   =
-echo =====================================================
-rmdir %rkdir%\Tools /s /q
-goto CleanAllExit
-
-
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -9548,9 +7288,9 @@ goto CleanAllExit
 cls
 echo ===========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL/UPDATE A SET OF  40  EMULATIONSTATION THEMES             =
+echo =    1.) UPDATE THE DEFAULT THEME - CARBON (RetroPie version)             =
 echo =                                                                         =
-echo =    2.) INSTALL/UPDATE INDIVIDUAL ES THEMES                              =
+echo =    2.) ADD OR UPDATE  9  EMULATIONSTATION THEMES                        =
 echo =                                                                         =
 echo =    3.) VIEW THEME GALLERY  (RetroPie's website)                         =
 echo =                                                                         =
@@ -9560,8 +7300,8 @@ echo ===========================================================================
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO ThemeGallery
-IF ERRORLEVEL ==2 GOTO IndThemes
-IF ERRORLEVEL ==1 GOTO SelectThemes
+IF ERRORLEVEL ==2 GOTO SetOfThemes
+IF ERRORLEVEL ==1 GOTO UpdateCarbonTheme
 
 :ThemeGallery
 cls
@@ -9579,134 +7319,30 @@ echo =                                                                         =
 pause
 start microsoft-edge:https://github.com/RetroPie/RetroPie-Setup/wiki/Themes#theme-gallery
 pause
-goto menu
+goto ThemeManager
 
 
-:SelectThemes
+:UpdateCarbonTheme
+::Backup Carbon-Retropie theme then install the updated version
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_Carbon_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Carbon-Retropie"
+rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Carbon-Retropie"
+cd /D "%USERPROFILE%\.emulationstation\themes"
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/RetroPie/es-theme-carbon.git %theme%
+ren es-theme-carbon Carbon-Retropie
+goto ThemeManager
+
+
+:SetOfThemes
 ::Using git to download a selection of themes
 cd /D "%USERPROFILE%\.emulationstation\themes"
 
-set repo=lilbud
-set theme=angular
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=bluray
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=CapcomColorSpin
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-rename CapcomColorSpin capcomcolorspin
-
-set repo=kelvinator3300
-set theme=mru5
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-rename mru5 Mru5
-
-set repo=RetroPie
-set theme=carbon-nometa
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=circuit
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
 set repo=TMNTturtleguy
 set theme=ComicBook_SE-Wheelart
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-rename ComicBook_SE-Wheelart comicbook_se-wheelart
 
 set repo=RetroHursty69
 set theme=CosmicRise
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=mattrixk
-set theme=core
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=ChoccyHobNob
-set theme=Cygnus
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-rename Cygnus cygnus
-
-set repo=RetroHursty69
-set theme=darkswitch
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=AmadhiX
-set theme=eudora
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=AmadhiX
-set theme=eudora-bigshot
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=lilbud
-set theme=flat
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=rxbrad
-set theme=freeplay
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=G-rila
-set theme=fundamental
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=dmmarti
-set theme=gamehat
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=rxbrad
-set theme=gbz35-dark
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=HyperSackBoy
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=mattrixk
-set theme=io
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=marco
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=lilbud
-set theme=material
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=meshy
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=mattrixk
-set theme=metapixel
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
@@ -9715,473 +7351,46 @@ set theme=minimal
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=RetroPie
-set theme=nbba
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=anthonycaccese
-set theme=picade
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=ehettervik
-set theme=pixel
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=ehettervik
-set theme=pixel-metadata
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=lipebello
-set theme=retrorama
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=retroroid
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=nickearl
-set theme=retrowave
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=Slick_Edge
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=Slick_Orange
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=ruckage
-set theme=snes-mini
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=lipebello
-set theme=SpaceOddity
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-rename SpaceOddity spaceoddity
-
-set repo=mrharias
-set theme=superdisplay
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=supersweet
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=swatch
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=RetroHursty69
-set theme=sweet_tinkerboard
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=lilbud
-set theme=switch-dark
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-set repo=anthonycaccese
-set theme=tft
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
-rename CapcomColorSpin capcomcolorspin
-rename ComicBook_SE-Wheelart comicbook_se-wheelart
-rename Cygnus cygnus
-rename SpaceOddity spaceoddity
-rename CosmicRise cosmicrise
-rename Slick_Edge slick_edge
-rename Slick_Orange slick_orange
-rename HyperSackBoy hypersackboy
-
-goto completed
-
-
-:IndThemes
-::Menus for installing individual themes for EmulationStation.
-:page1
-cls
-echo ===========================================================================
-echo =                               Page 1                                    =
-echo =    1.) ANGULAR                                                          =
-echo =    2.) BLURAY                                                           =
-echo =    3.) CAPCOMCOLORSPIN                                                  =
-echo =    4.) MRU5                                                             =
-echo =    5.) CARBON-NOMETA                                                    =
-echo =    6.) CIRCUIT                                                          =
-echo =    7.) COMICBOOK_SE-WHEELART                                            =
-echo =    8.) CORE  (fewer but easy to add more systems)                       =
-echo =                                                                         =
-echo =    9.) Page 2                                                           =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO page2
-IF ERRORLEVEL ==8 goto core 
-IF ERRORLEVEL ==7 goto ComicBook_SE-Wheelart 
-IF ERRORLEVEL ==6 goto circuit 
-IF ERRORLEVEL ==5 goto carbon-nometa 
-IF ERRORLEVEL ==4 goto mru5 
-IF ERRORLEVEL ==3 goto CapcomColorSpin 
-IF ERRORLEVEL ==2 goto bluray 
-IF ERRORLEVEL ==1 goto angular 
-
-:page2
-cls
-echo ===========================================================================
-echo =                               Page 2                                    =
-echo =    1.) CYGNUS                                                           =
-echo =    2.) DARKSWITCH                                                       =
-echo =    3.) EUDORA                                                           =
-echo =    4.) EUDORA-BIGSHOT                                                   =
-echo =    5.) FLAT                                                             =
-echo =    6.) FREEPLAY                                                         =
-echo =    7.) FUNDAMENTAL                                                      =
-echo =    8.) GAMEHAT                                                          =
-echo =                                                                         =
-echo =    9.) Page 3                                                           =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO page3
-IF ERRORLEVEL ==8 goto gamehat
-IF ERRORLEVEL ==7 goto fundamental
-IF ERRORLEVEL ==6 goto freeplay
-IF ERRORLEVEL ==5 goto flat
-IF ERRORLEVEL ==4 goto eudora-bigshot
-IF ERRORLEVEL ==3 goto eudora
-IF ERRORLEVEL ==2 goto DarkSwitch 
-IF ERRORLEVEL ==1 goto cygnus
-
-
-
-:page3
-cls
-echo ===========================================================================
-echo =                               Page 3                                    =
-echo =    1.) GBZ35-DARK                                                       =
-echo =    2.) IO                                                               =
-echo =    3.) MARCO                                                            =
-echo =    4.) MATERIAL                                                         =
-echo =    5.) MESHY                                                            =
-echo =    6.) METAPIXEL                                                        =
-echo =    7.) MINIMAL                                                          =
-echo =    8.) NBBA                                                             =
-echo =                                                                         =
-echo =    9.) Page 4                                                           =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO page4
-IF ERRORLEVEL ==8 goto nbba
-IF ERRORLEVEL ==7 goto minimal
-IF ERRORLEVEL ==6 goto metapixel
-IF ERRORLEVEL ==5 goto meshy
-IF ERRORLEVEL ==4 goto material
-IF ERRORLEVEL ==3 goto marco
-IF ERRORLEVEL ==2 goto io 
-IF ERRORLEVEL ==1 goto gbz35-dark
-
-
-
-
-:page4
-cls
-echo ===========================================================================
-echo =                               Page 4                                    =
-echo =    1.) PICADE                                                           =
-echo =    2.) PIXEL                                                            =
-echo =    3.) PIXEL-METADATA                                                   =
-echo =    4.) RETRORAMA                                                        =
-echo =    5.) RETROROID                                                        =
-echo =    6.) RETROWAVE                                                        =
-echo =    7.) SNES-MINI                                                        =
-echo =    8.) SPACEODDITY                                                      =
-echo =                                                                         =
-echo =    9.) Page 5                                                           =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO page5
-IF ERRORLEVEL ==8 goto SpaceOddity
-IF ERRORLEVEL ==7 goto snes-mini
-IF ERRORLEVEL ==6 goto retrowave
-IF ERRORLEVEL ==5 goto retroroid
-IF ERRORLEVEL ==4 goto retrorama
-IF ERRORLEVEL ==3 goto pixel-metadata
-IF ERRORLEVEL ==2 goto pixel 
-IF ERRORLEVEL ==1 goto picade
-
-
-
-:page5
-cls
-echo ===========================================================================
-echo =                               Page 5                                    =
-echo =    1.) SUPERDISPLAY                                                     =
-echo =    2.) SUPERSWEET                                                       =
-echo =    3.) SWATCH                                                           =
-echo =    4.) SWEET_TINKERBOARD                                                =
-echo =    5.) SWITCH-DARK                                                      =
-echo =    6.) TFT                                                              =
-echo =    7.) CosmicRise                                                       =
-echo =    8.) Slick_Edge                                                       =
-echo =                                                                         =
-echo =    9.) Return to Theme Manager                                          =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO ThemeManager
-IF ERRORLEVEL ==7 goto Slick_Edge
-IF ERRORLEVEL ==6 goto CosmicRise
-IF ERRORLEVEL ==5 goto tft
-IF ERRORLEVEL ==4 goto switch-dark
-IF ERRORLEVEL ==3 goto sweet_tinkerboard
-IF ERRORLEVEL ==2 goto supersweet
-IF ERRORLEVEL ==1 goto superdisplay
-
-
-::Sets a variable for each theme individually. Then moves to cloning from github.
-
-:angular
-set repo=lilbud
-set theme=angular
-goto insttheme
-
-:bluray
-set repo=RetroHursty69
-set theme=bluray
-goto insttheme
-
-:CapcomColorSpin
-set repo=RetroHursty69
-set theme=CapcomColorSpin
-goto insttheme
-
-:mru5
 set repo=kelvinator3300
 set theme=mru5
-goto insttheme
-
-:carbon-nometa
-set repo=RetroPie
-set theme=carbon-nometa
-goto insttheme
-
-:circuit
-set repo=RetroHursty69
-set theme=circuit
-goto insttheme
-
-:ComicBook_SE-Wheelart
-set repo=TMNTturtleguy
-set theme=ComicBook_SE-Wheelart
-goto insttheme
-
-:coretheme
-set repo=mattrixk
-set theme=core
-goto insttheme
-
-:cygnus
-set repo=ChoccyHobNob
-set theme=cygnus
-goto insttheme
-
-:DarkSwitch
-set repo=RetroHursty69
-set theme=darkswitch
-goto insttheme
-
-:eudora
-set repo=AmadhiX
-set theme=eudora
-goto insttheme
-
-:eudora-bigshot
-set repo=AmadhiX
-set theme=eudora-bigshot
-goto insttheme
-
-:flat
-set repo=lilbud
-set theme=flat
-goto insttheme
-
-:freeplay
-set repo=rxbrad
-set theme=freeplay
-goto insttheme
-
-:fundamental
-set repo=G-rila
-set theme=fundamental
-goto insttheme
-
-:gamehat
-set repo=dmmarti
-set theme=gamehat
-goto insttheme
-
-:gbz35-dark
-set repo=rxbrad
-set theme=gbz35-dark
-goto insttheme
-
-:io
-set repo=mattrixk
-set theme=io
-goto insttheme
-
-:marco
-set repo=RetroHursty69
-set theme=marco
-goto insttheme
-
-:material
-set repo=lilbud
-set theme=material
-goto insttheme
-
-:meshy
-set repo=RetroHursty69
-set theme=meshy
-goto insttheme
-
-:metapixel
-set repo=mattrixk
-set theme=metapixel
-goto insttheme
-
-:minimal
-set repo=lilbud
-set theme=minimal
-goto insttheme
-
-:nbba
-set repo=RetroPie
-set theme=nbba
-goto insttheme
-
-:picade
-set repo=anthonycaccese
-set theme=picade
-goto insttheme
-
-:pixel
-set repo=ehettervik
-set theme=pixel
-goto insttheme
-
-:pixel-metadata
-set repo=ehettervik
-set theme=pixel-metadata
-goto insttheme
-
-:retrorama
-set repo=lipebello
-set theme=retrorama
-goto insttheme
-
-:retroroid
-set repo=RetroHursty69
-set theme=retroroid
-goto insttheme
-
-:retrowave
-set repo=nickearl
-set theme=retrowave
-goto insttheme
-
-:snes-mini
-set repo=ruckage
-set theme=snes-mini
-goto insttheme
-
-:SpaceOddity
-set repo=lipebello
-set theme=SpaceOddity
-goto insttheme
-
-:superdisplay
-set repo=mrharias
-set theme=superdisplay
-goto insttheme
-
-:supersweet
-set repo=RetroHursty69
-set theme=supersweet
-goto insttheme
-
-:swatch
-set repo=RetroHursty69
-set theme=swatch
-goto insttheme
-
-:sweet_tinkerboard
-set repo=RetroHursty69
-set theme=sweet_tinkerboard
-goto insttheme
-
-:switch-dark
-set repo=lilbud
-set theme=switch-dark
-goto insttheme
-
-:tft
-set repo=anthonycaccese
-set theme=tft
-goto insttheme
-
-:CosmicBlue
-set repo=RetroHursty69
-set theme=CosmicRise
-goto insttheme
-
-:Slick_Edge
-set repo=RetroHursty69
-set theme=Slick_Edge
-goto insttheme
-
-
-:insttheme
-::Uses the variable set in the selection for git cloning.
-cd /D %USERPROFILE%\.emulationstation\themes
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-rename mru5 Mru5
-rename carbon carbon-retropie
-rename CapcomColorSpin capcomcolorspin
+set repo=ehettervik
+set theme=pixel-metadata
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=Slick_Edge
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=lipebello
+set theme=SpaceOddity
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=RetroHursty69
+set theme=supersweet
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
+set repo=lilbud
+set theme=switch-dark
+rmdir %theme% /S /Q
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+
 rename ComicBook_SE-Wheelart comicbook_se-wheelart
-rename Cygnus cygnus
-rename SpaceOddity spaceoddity
 rename CosmicRise cosmicrise
+rename mru5 Mru5
+rename SpaceOddity spaceoddity
 rename Slick_Edge slick_edge
-rename Slick_Orange slick_orange
-rename HyperSackBoy hypersackboy
 
-goto IndThemes
+goto ThemeManager
 
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
+
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -10191,7 +7400,7 @@ goto IndThemes
 ::
 
 :AdvanceMAME
-::Installs  AdvanceMAME  emulator  ( MAME with improved video support )
+::Installs  AdvanceMAME  emulator.  Used this for Vector-based games as they look better with this last version.
 
 cls
 
@@ -10236,7 +7445,7 @@ echo =                     DOWNLOADING APPLEWIN                      =
 echo =                                                               =
 echo =================================================================
 
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/AppleWin/AppleWin/releases/download/v1.29.8.0/AppleWin1.29.8.0.zip','%rkdir%\Temp\AppleWin.zip')
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/AppleWin/AppleWin/releases/download/v1.29.10.0/AppleWin1.29.10.0.zip','%rkdir%\Temp\AppleWin.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\AppleWin.zip" -o"%rkdir%\Emulators\AppleWin" -aoa > nul
 cls
 
@@ -10405,6 +7614,9 @@ goto completed
 
 :Demul
 ::Installs  DEMUL emulator  (Dreamcast/Naomi/Hikaru/Atomiswave)
+::Using this emulator for a few of games that don't work with RetroArch cores-- Flycast, MAME, FBneo
+::Planet Harriers video game is one of them.
+
 cls
 
 echo =================================================================
@@ -10437,7 +7649,7 @@ goto completed
 
 
 :FS-UAE
-::Installs  FS-UAE  emulator  ( Amiga, Amiga CD32 )
+::Installs  FS-UAE  emulator  ( Amiga, Amiga CD32 ).  Use this for files ending with .LHA extension
 
 cls
 
@@ -10471,48 +7683,6 @@ goto completed
 
 :Hatari
 ::Installs  Hatari  emulator  ( Atari ST / STE / TT / Falcon )
-
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto hatari64
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto hatari32
-	)
-
-:hatari32
-cls
-
-echo ===========================================================
-echo =                                                         =
-echo =                DOWNLOADING HATARI 32-bit                =
-echo =                                                         =
-echo =        Note:  Version 2.1.0 has proper IPF support      =
-echo =                                                         =
-echo =   If latest version properly supports IPF, then use it  =
-echo =                                                         =
-echo ===========================================================
-
-powershell -command Start-BitsTransfer -Source http://download.tuxfamily.org/hatari/2.1.0/hatari-2.1.0_windows.zip -Destination "%rkdir%\Temp\Hatari32.zip"
-powershell -command Start-BitsTransfer -Source http://download.tuxfamily.org/hatari/2.2.1/hatari-2.2.1_windows.zip -Destination "%rkdir%\Temp\Hatari32Latest.zip"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Hatari32.zip" -o"%rkdir%\Emulators" -aoa > nul
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Hatari32Latest.zip" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\hatari-2.1.0_windows Hatari
-ren %rkdir%\Emulators\hatari-2.2.1_windows Hatari-latest
-
-cls
-
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-
-
-ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\Hatari32.zip
-del %rkdir%\Temp\Hatari32Latest.zip
-if EXIST %rkdir%\Emulators\tmp.txt goto jzIntv
-goto completed
-	
-:hatari64
 cls
 
 echo ===========================================================
@@ -10551,7 +7721,7 @@ goto completed
 
 
 :jzIntv
-::Installs  jzIntv  emulator  ( Intellivision )
+::Installs  jzIntv  emulator  ( Intellivision ).  Use this for IntelliVoice and ECS games (Entertainment Computer System)
 cls
 
 echo =================================================================
@@ -10589,7 +7759,7 @@ echo =             DOWNLOADING LATEST MAME 64-bit              =
 echo =                                                         =
 echo ===========================================================
 
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/mamedev/mame/releases/download/mame0218/mame0218b_64bit.exe','%rkdir%\Temp\Mame64.exe')
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/mamedev/mame/releases/download/mame0219/mame0219b_64bit.exe','%rkdir%\Temp\Mame64.exe')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame64.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
@@ -10676,40 +7846,6 @@ goto completed
 
 :VICE
 ::Installs  VICE  emulator  ( Commodore 64 )
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto VICE64
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto VICE32
-	)
-
-:VICE32
-cls
-
-echo =========================================================
-echo =                                                       =
-echo =               DOWNLOADING VICE  32-bit                =
-echo =                                                       =
-echo =========================================================
-
-:: official site... http://vice-emu.sourceforge.net/windows.html
-
-powershell -command Start-BitsTransfer -Source https://iweb.dl.sourceforge.net/project/vice-emu/releases/binaries/windows/WinVICE-3.1-x86.7z -Destination "%rkdir%\Temp\Vice32-old.7z"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Vice32-old.7z" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\WinVICE-3.1-x86 Vice-old
-
-cls
-
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-
-ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\VICE32-old.7z
-if EXIST %rkdir%\Emulators\tmp.txt goto XRoar
-goto completed
-
-:VICE64
 cls
 
 echo =========================================================
@@ -10750,39 +7886,6 @@ goto completed
 
 :XRoar
 ::Installs  Xroar  emulator  (CoCo, Dragon32, Tandy Color )
-
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto xroar64
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto xroar32
-	)
-
-:xroar32
-cls
-
-echo =============================================================
-echo =                                                           =
-echo =                DOWNLOADING XROAR  32-bit                  =
-echo =                                                           =
-echo =============================================================
-
-powershell -command Start-BitsTransfer -Source http://www.6809.org.uk/xroar/dl/0.35/xroar-0.35.2-w32.zip -Destination "%rkdir%\Temp\XRoar32.zip"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\XRoar32.zip" -o"%rkdir%\Emulators" -aoa > nul
-ren %rkdir%\Emulators\xroar-0.35.2-w32 Xroar
-
-cls
-
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-
-ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\XRoar32.zip
-if EXIST %rkdir%\Emulators\tmp.txt goto FreeChaF
-goto completed
-
-:xroar64
 cls
 
 echo =============================================================
@@ -10803,316 +7906,21 @@ echo ================================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\XRoar64.zip
-if EXIST %rkdir%\Emulators\tmp.txt goto 7zip-win
-goto completed
-
-
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-
-
-:7zip-win
-::Manual install for  7-zip for Windows  
-
-cls
-
-echo ================================================
-echo =                                              =
-echo =      MANUAL  Download  and  Install  of      =
-echo =                                              =
-echo =              7-zip for Windows               =
-echo =                                              =
-echo =     ( for to uncompress .7z, .rar, etc. )    =
-echo =                                              =
-echo ================================================
-echo =
-echo = 
-echo =   This will open 7-zip's website in 
-echo =   MS Edge web browser.
-echo =
-echo =     - If  NEED  7-zip for Windows, then
-echo =       then download and install the latest
-echo =       version.
-echo = 
-echo =     - If  NOT NEED  7-zip for Windows, then
-echo =       close MS Edge web browser and press
-echo =       Space key once again to continue.
-echo =
-echo =
-
-pause
-
-start microsoft-edge:https://www.7-zip.org/
-
-pause
-
-if EXIST %rkdir%\Emulators\tmp.txt goto Cxbx-Reloaded
-goto completed
-
-
-
-::=================================================================================================================================================================================================================================================================================================================
-
-
-
-:Cxbx-Reloaded
-::Manual install for  Cxbx-Reloaded  emulator  ( XBOX ) 
-
-start %rkdir%\Emulators
-mkdir %rkdir%\Emulators\Cxbx-Reloaded
-
-
-cls
-
-echo ================================================
-echo =                                              =
-echo =      MANUAL  Download  and  Install  of      =
-echo =                                              =
-echo =        Cxbx-Reloaded (XBOX Emulator)         =
-echo =                                              =
-echo ================================================
-echo =
-echo =   Some websites require some interactivity
-echo =   in web browser in order to obtain proper file
-echo = 
-echo =   This will open Cxbx-Reloaded's GitHub site in 
-echo =   MS Edge web browser.
-echo =
-echo =     - Look for the link "Latest Development Build"
-echo =       and click on that to download the zipped file.
-echo = 
-echo =     - Extract contents of this file into this directory
-echo = 
-echo =       'C:\RetroCake\Emulators\Cxbx-Reloaded'
-echo =
-echo =
-echo =
-
-pause
-
-start microsoft-edge:https://github.com/Cxbx-Reloaded/Cxbx-Reloaded
-
-pause
-
-if EXIST %rkdir%\Emulators\tmp.txt goto RPCS3
-goto completed
-
-
-
-
-
-
-::=================================================================================================================================================================================================================================================================================================================
-
-
-
-:RPCS3
-::Manual install for  RPCS3  emulator  ( Playstation 3 ) 
-
-:: official site...  https://rpcs3.net/
-
-start %rkdir%\Emulators
-mkdir %rkdir%\Emulators\Rpcs3
-
-
-cls
-
-echo ================================================
-echo =                                              =
-echo =      MANUAL  Download  and  Install  of      =
-echo =                                              =
-echo =        RPCS3  (Playstation 3 Emulator)       =
-echo =                                              =
-echo ================================================
-echo =
-echo =   Some websites require some interactivity
-echo =   in web browser in order to obtain proper file
-echo = 
-echo =   This will open RPCS3's website in 
-echo =   MS Edge web browser.
-echo =
-echo =     - Look for the latest build for Windows and
-echo =       click on that link to download the zipped file.
-echo = 
-echo =     - Extract contents of this file into this directory
-echo = 
-echo =       'C:\RetroCake\Emulators\Rpcs3'
-echo =
-echo =
-echo =
-
-pause
-
-start microsoft-edge:https://rpcs3.net/download
-
-pause
-
-if EXIST %rkdir%\Emulators\tmp.txt goto xenia
-goto completed
-
-
-
-
-::=================================================================================================================================================================================================================================================================================================================
-
-
-
-  
-:xenia
-::Manual install for  xenia  emulator  ( XBOX 360 ) 
-
-start %rkdir%\Emulators
-mkdir %rkdir%\Emulators\Xenia
-
-cls
-
-echo ================================================
-echo =                                              =
-echo =      MANUAL  Download  and  Install  of      =
-echo =                                              =
-echo =         Xenia  ( XBOX 360 Emulator )         =
-echo =                                              =
-echo ================================================
-echo =
-echo =   Some websites require some interactivity
-echo =   in web browser in order to obtain proper file
-echo = 
-echo =   This will open Xenia's project site in 
-echo =   MS Edge web browser.
-echo =
-echo =     - Click on link "Download" on left side
-echo = 
-echo =     - Download this file (link)...
-echo = 
-echo =          - master (Direct3D 12 or Vulkan on Windows 10, Vulkan on Windows 8)
-echo = 
-echo =     - Extract contents of this file into this directory
-echo = 
-echo =       'C:\RetroCake\Emulators\Xenia'
-echo =
-echo =
-echo =
-
-pause
-
-start microsoft-edge:https://xenia.jp
-
-pause
-
-if EXIST %rkdir%\Emulators\tmp.txt goto Citra
-goto completed
-
-
-
-::=================================================================================================================================================================================================================================================================================================================
-
-
-
-:Citra
-::Manual install for  Citra (Nightly)  emulator  ( 3DS )
-
-start %rkdir%\Emulators
-mkdir %rkdir%\Emulators\Citra
-
-cls
-
-echo ================================================
-echo =                                              =
-echo =      MANUAL  Download  and  Install  of      =
-echo =                                              =
-echo =        Citra (Nightly)  (3DS Emulator)       =
-echo =                                              =
-echo ================================================
-echo =
-echo =   Some websites require some interactivity
-echo =   in web browser in order to obtain proper file
-echo = 
-echo =   This will open Citra's GitHub site in 
-echo =   MS Edge web browser.
-echo =
-echo =     - Look for the latest build number for
-echo =       Windows, such as  citra-windows-mingw-xxxxx.7z
-echo =       and click on that link to download the zipped file
-echo = 
-echo =     - Extract contents inside  "nightly-mingw"  folder
-echo =       of this zipped file into this directory
-echo = 
-echo =       'C:\RetroCake\Emulators\Citra'
-echo =
-echo =
-echo =
-
-pause
-
-start microsoft-edge:https://github.com/citra-emu/citra-nightly/releases
-
-pause
-
-if EXIST %rkdir%\Emulators\tmp.txt goto Dolphin-Dev
-goto completed
-
-
-
-
-::=================================================================================================================================================================================================================================================================================================================
-
-
-
-:Dolphin-Dev
-::Manual install for  Dolphin (Development) emulator  ( GameCube / Wii )
-
-start %rkdir%\Emulators
-mkdir %rkdir%\Emulators\Dolphin-dev
-
-
-cls
-
-echo ================================================
-echo =                                              =
-echo =      MANUAL  Download  and  Install  of      =
-echo =                                              =
-echo =     Dolphin Development  (GameCube / Wii)    =
-echo =                                              =
-echo ================================================
-echo =
-echo =   Some websites require some interactivity
-echo =   in web browser in order to obtain proper file
-echo = 
-echo =   This will open Dolphin's website in 
-echo =   MS Edge web browser.
-echo =
-echo =     - Look for the latest build for Windows and
-echo =       click on that link to download the zipped file.
-echo = 
-echo =     - Extract contents inside  "Dolphin-x64"  folder
-echo =       of this zipped file into this directory
-echo = 
-echo =       'C:\RetroCake\Emulators\Dolphin-dev'
-echo =
-echo =
-echo =
-
-pause
-
-start microsoft-edge:https://dolphin-emu.org/download/
-
-pause
-
 if EXIST %rkdir%\Emulators\tmp.txt goto CemuEmu
 goto completed
 
 
-
-
 ::=================================================================================================================================================================================================================================================================================================================
+::=================================================================================================================================================================================================================================================================================================================
+
 
 
 :CemuEmu
 ::Manual install for  Cemu emulator  ( Wii U )
 
-start %rkdir%\Emulators
 mkdir %rkdir%\Emulators\Cemu
-
+echo Put Cemu files in this directory > %rkdir%\Emulators\Cemu\"_  Put  Cemu  contents  in  here  _.txt"
+start %rkdir%\Emulators\Cemu
 
 cls
 
@@ -11140,7 +7948,9 @@ echo =       of this zipped file into this directory
 echo = 
 echo =       'C:\RetroCake\Emulators\Cemu'
 echo =
-echo =
+echo =   
+echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
+echo =          Use other version that is free of malware  OR  skip this.
 echo =
 
 pause
@@ -11149,7 +7959,7 @@ start microsoft-edge:http://cemu.info/
 
 pause
 
-if EXIST %rkdir%\Emulators\tmp.txt goto Yuzu-Dev
+if EXIST %rkdir%\Emulators\tmp.txt goto CitraEmu
 goto completed
 
 
@@ -11157,12 +7967,113 @@ goto completed
 ::=================================================================================================================================================================================================================================================================================================================
 
 
+:CitraEmu
+::Manual install for  Citra (Nightly)  emulator  ( 3DS )
 
-:Yuzu-Dev
-::Manual install for  Switch (Development) emulator  ( Switch )
+mkdir %rkdir%\Emulators\Citra
+echo Put Citra files in this directory > %rkdir%\Emulators\Citra\"_  Put  Citra  contents  in  here  _.txt"
+start %rkdir%\Emulators\Citra
 
-start %rkdir%\Emulators
-mkdir %rkdir%\Emulators\Yuzu
+cls
+
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =        Citra (Nightly)  (3DS Emulator)       =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to obtain proper file
+echo = 
+echo =   This will open Citra's GitHub site in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Look for the latest build number for
+echo =       Windows, such as  citra-windows-mingw-xxxxx.7z
+echo =       and click on that link to download the zipped file
+echo = 
+echo =     - Extract contents inside  "nightly-mingw"  folder
+echo =       of this zipped file into this directory
+echo = 
+echo =       'C:\RetroCake\Emulators\Citra'
+echo =
+echo =   
+echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
+echo =          Use other version that is free of malware  OR  skip this.
+echo = 
+
+pause
+
+start microsoft-edge:https://github.com/citra-emu/citra-nightly/releases
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto Cxbx-ReloadedEmu
+goto completed
+
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+
+:Cxbx-ReloadedEmu
+::Manual install for  Cxbx-Reloaded  emulator  ( XBOX ) 
+
+mkdir %rkdir%\Emulators\Cxbx-Reloaded
+echo Put Cxbx-Reloaded files in this directory > %rkdir%\Emulators\Cxbx-Reloaded\"_  Put  Cxbx-Reloaded  contents  in  here  _.txt"
+start %rkdir%\Emulators\Cxbx-Reloaded
+
+cls
+
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =        Cxbx-Reloaded (XBOX Emulator)         =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to obtain proper file
+echo = 
+echo =   This will open Cxbx-Reloaded's GitHub site in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Look for the link "Latest Development Build"
+echo =       and click on that to download the zipped file.
+echo = 
+echo =     - Extract contents of this file into this directory
+echo = 
+echo =       'C:\RetroCake\Emulators\Cxbx-Reloaded'
+echo =
+echo =   
+echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
+echo =          Use other version that is free of malware  OR  skip this.
+echo = 
+
+pause
+
+start microsoft-edge:https://github.com/Cxbx-Reloaded/Cxbx-Reloaded
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto Dolphin-devEmu
+goto completed
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+
+:Dolphin-devEmu
+::Manual install for  Dolphin (Development) emulator  ( GameCube / Wii )
+
+mkdir %rkdir%\Emulators\Dolphin-dev
+echo Put Dolphin development files in this directory > %rkdir%\Emulators\Dolphin-dev\"_  Put  Dolphin-dev  contents  in  here  _.txt"
+start %rkdir%\Emulators\Dolphin-dev
 
 
 cls
@@ -11171,48 +8082,48 @@ echo ================================================
 echo =                                              =
 echo =      MANUAL  Download  and  Install  of      =
 echo =                                              =
-echo =         Yuzu Development  (Switch)           =
+echo =     Dolphin Development  (GameCube / Wii)    =
 echo =                                              =
 echo ================================================
 echo =
 echo =   Some websites require some interactivity
 echo =   in web browser in order to obtain proper file
 echo = 
-echo =   This will open Yuzu's website in 
+echo =   This will open Dolphin's website in 
 echo =   MS Edge web browser.
 echo =
-echo =     - Look for the latest build number for
-echo =       Windows, such as  yuzu-windows-mingw-xxxxx.7z
-echo =       and click on that link to download the zipped file
+echo =     - Look for the latest build for Windows and
+echo =       click on that link to download the zipped file.
 echo = 
-echo =     - Extract contents inside  "nightly-mingw"  folder
+echo =     - Extract contents inside  "Dolphin-x64"  folder
 echo =       of this zipped file into this directory
 echo = 
-echo =       'C:\RetroCake\Emulators\Yuzu'
+echo =       'C:\RetroCake\Emulators\Dolphin-dev'
 echo =
-echo =
+echo =   
+echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
+echo =          Use other version that is free of malware  OR  skip this.
 echo =
 
 pause
 
-start microsoft-edge:https://github.com/yuzu-emu/yuzu-nightly/releases
+start microsoft-edge:https://dolphin-emu.org/download/
 
 pause
 
-if EXIST %rkdir%\Emulators\tmp.txt goto Pcsx2-Dev
+if EXIST %rkdir%\Emulators\tmp.txt goto Pcsx2-devEmu
 goto completed
 
 
 ::=================================================================================================================================================================================================================================================================================================================
 
 
-
-:Pcsx2-Dev
+:Pcsx2-devEmu
 ::Manual install for  Playstation 2 (Development) emulator  ( PS2 )
 
-start %rkdir%\Emulators
-mkdir %rkdir%\Emulators\PCSX2-dev
-
+mkdir %rkdir%\Emulators\Pcsx2-dev
+echo Put Pcsx2-dev files in this directory > %rkdir%\Emulators\Pcsx2-dev\"_  Put  Pcsx2-dev  contents  in  here  _.txt"
+start %rkdir%\Emulators\Pcsx2-dev
 
 cls
 
@@ -11244,7 +8155,9 @@ echo =       of this zipped file into this directory
 echo = 
 echo =       'C:\RetroCake\Emulators\PCSX2-dev'
 echo =
-echo =
+echo =   
+echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
+echo =          Use other version that is free of malware  OR  skip this.
 echo =
 
 pause
@@ -11253,32 +8166,169 @@ start microsoft-edge:https://pcsx2.net/download/development/dev-windows.html
 
 pause
 
-if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
+if EXIST %rkdir%\Emulators\tmp.txt goto Rpcs3Emu
+goto completed
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+:Rpcs3Emu
+::Manual install for  RPCS3  emulator  ( Playstation 3 ) 
+
+:: official site...  https://rpcs3.net/
+
+mkdir %rkdir%\Emulators\Rpcs3
+echo Put Rpcs3 files in this directory > %rkdir%\Emulators\Rpcs3\"_  Put  Rpcs3  contents  in  here  _.txt"
+start %rkdir%\Emulators\Rpcs3
+
+cls
+
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =        RPCS3  (Playstation 3 Emulator)       =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to obtain proper file
+echo = 
+echo =   This will open RPCS3's website in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Look for the latest build for Windows and
+echo =       click on that link to download the zipped file.
+echo = 
+echo =     - Extract contents of this file into this directory
+echo = 
+echo =       'C:\RetroCake\Emulators\Rpcs3'
+echo =
+echo =   
+echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
+echo =          Use other version that is free of malware  OR  skip this.
+echo = 
+
+pause
+
+start microsoft-edge:https://rpcs3.net/download
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto XeniaEmu
+goto completed
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+ 
+:XeniaEmu
+::Manual install for  xenia  emulator  ( XBOX 360 ) 
+
+mkdir %rkdir%\Emulators\Xenia
+echo Put Xenia files in this directory > %rkdir%\Emulators\Xenia\"_  Put  Xenia  contents  in  here  _.txt"
+start %rkdir%\Emulators\Xenia
+
+cls
+
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =         Xenia  ( XBOX 360 Emulator )         =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to obtain proper file
+echo = 
+echo =   This will open Xenia's project site in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Click on link "Download" on left side
+echo = 
+echo =     - Download this file (link)...
+echo = 
+echo =          - master (Direct3D 12 or Vulkan on Windows 10, Vulkan on Windows 8)
+echo = 
+echo =     - Extract contents of this file into this directory
+echo = 
+echo =       'C:\RetroCake\Emulators\Xenia'
+echo =
+echo =   
+echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
+echo =          Use other version that is free of malware  OR  skip this.
+echo = 
+
+pause
+
+start microsoft-edge:https://xenia.jp
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto YuzuEmu
 goto completed
 
 
 
 ::=================================================================================================================================================================================================================================================================================================================
+
+
+:YuzuEmu
+::Manual install for  Switch (Development) emulator  ( Switch )
+
+mkdir %rkdir%\Emulators\Yuzu
+echo Put Yuzu files in this directory > %rkdir%\Emulators\Yuzu\"_  Put  Yuzu  contents  in  here  _.txt"
+start %rkdir%\Emulators\Yuzu
+
+
+cls
+
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =         Yuzu Development  (Switch)           =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to obtain proper file
+echo = 
+echo =   This will open Yuzu's website in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Look for the latest build number for
+echo =       Windows, such as  yuzu-windows-msvc-xxxxx .7z / .zip
+echo =       and click on that link to download the zipped file
+echo = 
+echo =     - Extract contents inside  "yuzu-windows-msvc"  folder
+echo =       of this zipped file into this directory
+echo = 
+echo =       'C:\RetroCake\Emulators\Yuzu'
+echo =
+echo =   
+echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
+echo =          Use other version that is free of malware  OR  skip this.
+echo =
+
+pause
+
+start microsoft-edge:https://github.com/yuzu-emu/yuzu-mainline/releases
+
+pause
+
+if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
+goto completed
+
+
+::=================================================================================================================================================================================================================================================================================================================
+::=================================================================================================================================================================================================================================================================================================================
+
+
 ::        Rom Scraper Tools
 
-
 :ScraperSetupDefault
-
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto ScraperDL64Default
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto ScraperDL86Default
-	)
-	
-:ScraperDL86Default
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_386.zip','%rkdir%\Temp\scraperx86.zip')
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx86.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
-del %rkdir%\Temp\scraperx86.zip
-goto RecalToolsDefault
-
-
-:ScraperDL64Default
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_amd64.zip','%rkdir%\Temp\scraperx64.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx64.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
 del %rkdir%\Temp\scraperx64.zip
@@ -11296,6 +8346,7 @@ copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\co
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\console-addon
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\console-keypad
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\console-optical
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\port
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\portable
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %rkdir%\ROMS\specialty
 
@@ -11305,6 +8356,7 @@ copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\console
 copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\console-addon
 copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\console-keypad
 copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\console-optical
+copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\port
 copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\portable
 copy %rkdir%\Tools\scraper\scraper.exe %rkdir%\ROMS\specialty
 
@@ -11353,22 +8405,6 @@ goto completed
 
 
 :ScraperSetupCustom
-
-if "%PROCESSOR_ARCHITECTURE%"=="AMD64" (
-		goto ScraperDL64Custom
-	)
-if "%PROCESSOR_ARCHITECTURE%"=="x86" (
-		goto ScraperDL86Custom
-	)
-	
-:ScraperDL86Custom
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_386.zip','%rkdir%\Temp\scraperx86.zip')
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx86.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
-del %rkdir%\Temp\scraperx86.zip
-goto RecalToolsCustom
-
-
-:ScraperDL64Custom
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_amd64.zip','%rkdir%\Temp\scraperx64.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx64.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
 del %rkdir%\Temp\scraperx64.zip
@@ -11386,6 +8422,7 @@ copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROM
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\console-addon
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\console-keypad
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\console-optical
+copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\port
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\portable
 copy %rkdir%\Tools\recaltools-master\fastscraper\fastscraper.bat %cusromdir%\ROMS\specialty
 
@@ -11395,6 +8432,7 @@ copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\console
 copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\console-addon
 copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\console-keypad
 copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\console-optical
+copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\port
 copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\portable
 copy %rkdir%\Tools\scraper\scraper.exe %cusromdir%\ROMS\specialty
 
@@ -11437,6 +8475,37 @@ goto completed
 
 
 ::=================================================================================================================================================================================================================================================================================================================
+::=================================================================================================================================================================================================================================================================================================================
+
+:HowToCleanupBackup
+cls
+echo ===========================================================================
+echo =                                                                         =
+echo =    How to clean up and/or backup contents                               =
+echo =    -------------------------------                                      =
+echo =                                                                         =
+echo =    Most of RetroCake contents, including ROMS are inside                =
+echo =    (drive letter):\RetroCake folder                                     =
+echo =                                                                         =
+echo =    To backup ROMS, just move ROMS folder to another storage             =
+echo =    location.                                                            =
+Echo =                                                                         =
+echo =    If you did put system BIOS in RetroArch's System folder, then        =
+echo =    move that System folder to another storage location.                 =
+echo =                                                                         =
+echo =    If you did configure and/or add some files in each emulator folder   =
+echo =    inside 'Emulators' folder, then you need to back them up.            =
+echo =                                                                         =
+echo =    Just remove RetroCake folder when you're done with it.               =
+echo =                                                                         =
+echo =    Themes and ES_Systems.cfg are inside '.emulationstation' folder      =
+echo =    in user profile folder.  Just back them up as necessary.             =
+echo =                                                                         =
+echo ===========================================================================
+pause
+goto menu
+
+
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
@@ -11450,15 +8519,8 @@ IF EXIST %rkdir%\Temp\BrandNewCus goto DediAsk
 goto completed
 
 ::=================================================================================================================================================================================================================================================================================================================
+::=================================================================================================================================================================================================================================================================================================================
 
-
-
-
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
 
 ::Informational Echoes
 
@@ -11470,19 +8532,6 @@ echo =                                           =
 echo =          SOMETHING WENT WRONG D:          =
 echo =                                           =
 echo =============================================
-echo      Press any key to return to main menu
-pause >nul
-goto menu
-
-:ESInstallTotalFailure
-cls
-echo =====================================================
-echo =                                                   =
-echo = Unable to install any version of Emulationstation =
-echo = Please create an issue on github with your OS,    =
-echo =        64/32 bit, and script version.             =
-echo =                                                   =
-echo =====================================================
 echo      Press any key to return to main menu
 pause >nul
 goto menu
@@ -11581,8 +8630,11 @@ exit
 cls
 echo =============================================
 echo =                                           =
-echo =            7Z DOWNLOAD FAILED             =
-echo =      YELL AT FLERP TO UPDATE THE URL      =
+echo =    7z tools download / install failed!    =
+echo =                                           =
+echo =        Check and update the URL or        =
+echo =                                           =
+echo =       filename in this batch script       =
 echo =                                           =
 echo =============================================
 echo            Press Any Key to Exit
@@ -11596,8 +8648,11 @@ exit
 cls
 echo =============================================
 echo =                                           =
-echo =           GIT DOWNLOAD FAILED             =
-echo =      YELL AT FLERP TO UPDATE THE URL      =
+echo =       Git download / install failed!      =
+echo =                                           =
+echo =        Check and update the URL or        =
+echo =                                           =
+echo =       filename in this batch script       =
 echo =                                           =
 echo =============================================
 echo            Press Any Key to Exit
@@ -11607,11 +8662,11 @@ exit
 ::=================================================================================================================================================================================================================================================================================================================
 
 :AdminFail
-::Yells at you for not running as admin. Shame on you.
+::Yells at you for not running as admin. :-D
 cls
 echo =============================================
 echo =                                           =
-echo =           RUN AS ADMINISTRATOR            =
+echo =        Please run as Administrator        =
 echo =                                           =
 echo =============================================
 echo            Press Any Key to Exit
