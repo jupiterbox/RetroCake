@@ -263,12 +263,12 @@ exit
 ::Menu for automated full installers (Emulationstation + RetroArch + Config Generation + ROM Directory Setup)
 cls
 echo =================================================================================
-echo =                                                                               =
-Echo =    1.) FULL SETUP WITHOUT ROM DIRECTORIES (NEED TO EDIT ES_SYSTEMS.CFG)
+echo =                                                                               
+echo =    1.) FULL SETUP WITH DEFAULT ROM DIRECTORIES (%rkdir%\ROMS\SYSTEMNAME)
 echo = 
-echo =    2.) FULL SETUP WITH DEFAULT ROM DIRECTORIES (%rkdir%\ROMS\SYSTEMNAME)
+echo =    2.) FULL SETUP WITH CUSTOM ROM DIRECTORIES                                 =
 echo = 
-echo =    3.) FULL SETUP WITH CUSTOM ROM DIRECTORIES
+echo =    3.) FULL SETUP WITHOUT ROM DIRECTORIES (NEED TO EDIT ES_SYSTEMS.CFG)
 echo = 
 echo =                                                                               =
 echo =    4.) RETURN TO MAIN MENU                                                    =
@@ -276,9 +276,9 @@ echo =                                                                          
 echo =================================================================================
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
-IF ERRORLEVEL ==3 GOTO BrandNewCus
-IF ERRORLEVEL ==2 GOTO BrandNewDef
-IF ERRORLEVEL ==1 GOTO BrandNewBlank
+IF ERRORLEVEL ==3 GOTO BrandNewBlank
+IF ERRORLEVEL ==2 GOTO BrandNewCus
+IF ERRORLEVEL ==1 GOTO BrandNewDef
 
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -746,7 +746,7 @@ if /I "%c%" EQU "N" goto cancelled
 
 :updateES
 ::Backs up old installation
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Backup\ES_Backup_%gooddayte%_%goodthyme%.zip" "%rkdir%\EmulationStation\"
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\ES_Backup_%gooddayte%_%goodthyme%.zip" "%rkdir%\EmulationStation\"
 
 
 ::Removes old emulationstation files
@@ -2769,7 +2769,7 @@ goto completed
 ::Creates an es_systems.cfg using the default ROM directory RetroCake\Roms
 
 ::Backs up current es_systems.cfg
-%rkdir%\Tools\7za\7za.exe a "%USERPROFILE%\es_systems_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\es_systems.cfg"
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_systems_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 ::Deletes old es_systems.cfg
 del "%USERPROFILE%\.emulationstation\es_systems.cfg" /q
