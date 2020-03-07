@@ -236,7 +236,7 @@ echo =    8.) HOW TO CLEANUP AND/OR BACKUP                                     =
 echo =                                                                         =
 echo ===========================================================================
 echo =                                                                         =
-echo =    8.)  EXIT  RETROCAKE SCRIPT                                          =
+echo =    9.)  EXIT  RETROCAKE SCRIPT                                          =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
