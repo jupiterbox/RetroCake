@@ -213,7 +213,7 @@ goto menu
 :menu
 ::Main menu selection.
 cls
-echo A fork of Flerp/RetroCake v1.4.6     Modified date: March 6, 2020
+echo A fork of Flerp/RetroCake v1.4.6     Modified date: March 23, 2020
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -310,7 +310,7 @@ IF ERRORLEVEL ==1 GOTO StartESVerCheck
 cls
 echo ===========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL RETROARCH 1.8.4                                          =
+Echo =    1.) INSTALL RETROARCH 1.8.5                                          =
 echo =                                                                         =
 echo =    2.) INSTALL/UPDATE CORES FOR RETROARCH  -- NIGHTLY BUILD (LATEST)    =
 echo =                                                                         =
@@ -7030,15 +7030,16 @@ goto completed
 ::RetroArch Updater.
 cls
 mkdir "%rkdir%\Temp\cores"
+move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_%gooddayte%_%goodthyme%"
 cls
 
-::Installs RetroArch 1.8.4  (64-bit) to RetroCake\RetroArch. Cleans up all downloaded files when done.
+::Installs RetroArch 1.8.5  (64-bit) to RetroCake\RetroArch. Cleans up all downloaded files when done.
 echo =================================================================
 echo =                                                               =
 echo =   Downloading RetroArch (64-bit). This will take some time    =
 echo =                                                               =
 echo =================================================================
-powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.8.4/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
+powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.8.5/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
 cls
@@ -7260,6 +7261,7 @@ goto completed
 :updateRAn
 cls
 mkdir "%rkdir%\Temp\cores"
+move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_%gooddayte%_%goodthyme%"
 cls
 
 ::Installs nightly RetroArch (64-bit) to RetroCake\RetroArch.
