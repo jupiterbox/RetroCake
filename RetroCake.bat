@@ -7030,7 +7030,7 @@ goto completed
 ::RetroArch Updater.
 cls
 mkdir "%rkdir%\Temp\cores"
-move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_%gooddayte%_%goodthyme%"
+move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_Backup_%gooddayte%_%goodthyme%"
 cls
 
 ::Installs RetroArch 1.8.5  (64-bit) to RetroCake\RetroArch. Cleans up all downloaded files when done.
@@ -7261,7 +7261,7 @@ goto completed
 :updateRAn
 cls
 mkdir "%rkdir%\Temp\cores"
-move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_%gooddayte%_%goodthyme%"
+move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_Backup_%gooddayte%_%goodthyme%"
 cls
 
 ::Installs nightly RetroArch (64-bit) to RetroCake\RetroArch.
