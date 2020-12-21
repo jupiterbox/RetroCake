@@ -213,7 +213,7 @@ goto menu
 :menu
 ::Main menu selection.
 cls
-echo   A fork of Flerp/RetroCake                  Modified date: Dec 20, 2020
+echo   A fork of Flerp/RetroCake                  Modified date: Dec 21, 2020
 echo ===========================================================================
 echo =                                                                         =
 Echo =    1.) AUTOMATED INSTALLERS                                             =
@@ -855,16 +855,15 @@ echo .
 echo .
 echo ========================================================
 echo =    Downloading two versions of Carbon themes from    =
-echo =    RetroPie  and  fabricecaruso sites...             =
+echo =    RetroPie  and  kelvinator3300  sites...           =
 echo ========================================================
 rmdir "%USERPROFILE%\.emulationstation\themes" /S /Q
 mkdir "%USERPROFILE%\.emulationstation\themes"
 cd /D "%USERPROFILE%\.emulationstation\themes"
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/RetroPie/es-theme-carbon.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/RetroPie/es-theme-carbon.git
 ren es-theme-carbon Carbon-Retropie
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/fabricecaruso/es-theme-carbon.git %theme%
-ren es-theme-carbon Carbon-Fabrice
-
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/kelvinator3300/es-theme-mru5.git
+ren es-theme-mru5 Mru5
 
 ::Checks for temporary files created during automated installer selection
 IF EXIST %rkdir%\Temp\BrandNewBlank goto blankESCFG
@@ -7445,13 +7444,13 @@ goto completed
 cls
 echo ===========================================================================
 echo =                                                                         =
-echo =    1.) UPDATE THE DEFAULT THEME - CARBON (RetroPie version)             =
+echo =    1.) Update Carbon and Mur5 themes                                    =
 echo =                                                                         =
-echo =    2.) ADD OR UPDATE  10  ADDITIONAL EMULATIONSTATION THEMES            =
+echo =    2.) Get or update 9 additional themes                                =
 echo =                                                                         =
-echo =    3.) VIEW THEME GALLERY  (RetroPie's website)                         =
+echo =    3.) View themes gallery  (RetroPie's website)                        =
 echo =                                                                         =
-echo =    4.) EXIT THEME MANAGER                                               =
+echo =    4.) Exit Theme Manager                                               =
 echo =                                                                         =
 echo ===========================================================================
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
@@ -7480,16 +7479,16 @@ goto ThemeManager
 
 
 :UpdateCarbonTheme
-::Backup Carbon-Retropie theme then install the updated version
+::Backup Carbon-Retropie and Mru5 themes then install the updated version
 %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_Carbon-Retropie_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Carbon-Retropie"
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_Carbon-Fabrice_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Carbon-Fabrice"
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_Mru5_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Mru5"
 rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Carbon-Retropie"
-rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Carbon-Fabrice"
+rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Mru5"
 cd /D "%USERPROFILE%\.emulationstation\themes"
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/RetroPie/es-theme-carbon.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/RetroPie/es-theme-carbon.git
+%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/kelvinator3300/es-theme-mru5.git
 ren es-theme-carbon Carbon-Retropie
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/fabricecaruso/es-theme-carbon.git %theme%
-ren es-theme-carbon Carbon-Fabrice
+ren es-theme-mru5 Mru5
 goto ThemeManager
 
 
@@ -7497,51 +7496,55 @@ goto ThemeManager
 ::Using git to download a selection of themes
 cd /D "%USERPROFILE%\.emulationstation\themes"
 
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_ComicBook_SE-Wheelart_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\comicbook_se-wheelart"
 set repo=TMNTturtleguy
 set theme=ComicBook_SE-Wheelart
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_CosmicRise_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\cosmicrise"
 set repo=RetroHursty69
 set theme=CosmicRise
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_minimal_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\minimal"
 set repo=lilbud
 set theme=minimal
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
-set repo=kelvinator3300
-set theme=mru5
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
-
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_pixel-metadata_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\pixel-metadata"
 set repo=ehettervik
 set theme=pixel-metadata
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_Slick_CityLights_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Slick_CityLights"
 set repo=RetroHursty69
 set theme=Slick_CityLights
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_SpaceOddity_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\spaceoddity"
 set repo=lipebello
 set theme=SpaceOddity
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_supersweet_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\supersweet"
 set repo=RetroHursty69
 set theme=supersweet
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_switch-dark_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\switch-dark"
 set repo=lilbud
 set theme=switch-dark
 rmdir %theme% /S /Q
 %rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
 
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_ZeldaSpin_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\zeldaspin"
 set repo=RetroHursty69
 set theme=ZeldaSpin
 rmdir %theme% /S /Q
@@ -7549,7 +7552,6 @@ rmdir %theme% /S /Q
 
 rename ComicBook_SE-Wheelart comicbook_se-wheelart
 rename CosmicRise cosmicrise
-rename mru5 Mru5
 rename SpaceOddity spaceoddity
 rename ZeldaSpin zeldaspin
 
