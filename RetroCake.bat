@@ -4,7 +4,7 @@
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 @echo off
 
-::Checks if the batch file was run as admin. If not it yells at you and will exit.
+::Checks if the batch file was run as admin. If not, then it informs you to run this with admin right.
 :check_Permissions
     net session >nul 2>&1
     if %errorLevel% == 0 (
@@ -37,7 +37,7 @@ goto CheckRetroCake
 ::Prompts to install in a custom directory or default C:\RetroCake.
 cls
 
-echo =================================================================
+echo  ===============================================================
 echo =                                                               =
 echo =    Install RetroCake in which directory...                    =
 echo =                                                               =
@@ -45,7 +45,7 @@ echo =       1  =  Default directory  ( C:\RetroCake )               =
 echo =                                                               =
 echo =       2  =  Custom directory   ( Preferred folder name )      =
 echo =                                                               =
-echo =================================================================
+echo  ===============================================================
 echo .
 CHOICE /N /C:12 /M ".. Your choice (1 or 2)"
 IF ERRORLEVEL ==2 GOTO CusInstallY
@@ -101,14 +101,24 @@ goto install7z
 
 :install7z
 ::Installs 7z with pretty information.
-cls
-echo =================================================================
+clsecho .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =               SETTING UP latest versions of                   =
+echo =               Setting up latest versions of                   =
 echo =                                                               =
 echo =             7-Zip for Win x64  and  7za tools                 =
 echo =                                                               =
-echo =================================================================
+echo  ===============================================================
 mkdir %rkdir%\Tools\7za
 ::Pull latest version of 7-Zip for Win x64 and 7ZA tools.
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://www.7-zip.org/a/7z1900-x64.exe','%rkdir%\Temp\7z1900-x64.exe')
@@ -117,9 +127,9 @@ powershell -command (New-Object System.Net.WebClient).DownloadFile('https://www.
 "C:/Program Files/7-Zip/7z.exe" x %rkdir%\Temp\7z1900-extra.7z -o%rkdir%\Tools\7za
 
 cls
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 ::Waits for the zip to be fully closed
 ping 127.0.0.1 -n 2 >nul
 ::Deletes downloaded zip
@@ -134,18 +144,29 @@ IF EXIST %rkdir%\Tools\git\bin\git.exe goto VCREDISTCheck
 
 ::Installs latest version of Git tools
 cls
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =                      SETTING UP GIT...  (64-bit)              =
+echo =            Setting up  Git for Windows...  (64-bit)           =
 echo =                                                               =
-echo =================================================================
+echo  ===============================================================
 mkdir %rkdir%\Tools\Git
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/git-for-windows/git/releases/download/v2.29.2.windows.3/PortableGit-2.29.2.3-64-bit.7z.exe','%rkdir%\Temp\Git.7z.exe')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Git.7z.exe" -o"%rkdir%\Tools\git" -aoa > nul
 cls
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 ping 127.0.0.1 -n 3 > nul
 del "%rkdir%\Temp\Git.7z.exe"
 IF EXIST %rkdir%\Tools\git\bin\git.exe goto VCREDISTCheck
@@ -156,11 +177,24 @@ goto GITerror
 IF EXIST "%rkdir%\Tools\VC" goto DirectXSetupCheck
 
 cls
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =            SETTING UP VC REDIST   (64 and 32 bit)             =
+echo =    Setting up Visual C++ Redistributables  (64 and 32 bit)    =
 echo =                                                               =
-echo =================================================================
+echo =               please wait...                                  =
+echo =                                                               =
+echo  ===============================================================
 powershell -command Start-BitsTransfer -Source https://download.visualstudio.microsoft.com/download/pr/11100230/15ccb3f02745c7b206ad10373cbca89b/VC_redist.x64.exe -Destination "%rkdir%\Temp\VC_Redist_2017.exe"
 powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe -Destination "%rkdir%\Temp\VC_Redist_2015_64.exe"
 powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe -Destination "%rkdir%\Temp\VC_Redist_2015_32.exe"
@@ -173,9 +207,9 @@ powershell -command Start-BitsTransfer -Source https://download.microsoft.com/do
 %rkdir%\Temp\VC_Redist_2010_64.exe /install /quiet
 echo VCRedistInstalled > "%rkdir%\Tools\VC"
 cls
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 ping 127.0.0.1 -n 3 > nul
 del "%rkdir%\Temp\VC_Redist_2017.exe"
 del "%rkdir%\Temp\VC_Redist_2015_64.exe"
@@ -190,18 +224,31 @@ goto DirectXSetup
 
 :DirectXSetup
 cls
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =                     SETTING UP DIRECT X                       =
+echo =          Setting up Direct X End-User Runtime                 =
 echo =                                                               =
-echo =================================================================
+echo =               please wait...                                  =
+echo =                                                               =
+echo  ===============================================================
 powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe  -Destination "%rkdir%\Temp\dxwebsetup.exe"
 %rkdir%\Temp\dxwebsetup.exe /Q
 echo DXInstalled > "%rkdir%\Tools\DX"
 cls
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 ping 127.0.0.1 -n 3 > nul
 del "%rkdir%\Temp\dxwebsetup.exe"
 goto menu
@@ -213,37 +260,35 @@ goto menu
 :menu
 ::Main menu selection.
 cls
-echo   A fork of Flerp/RetroCake                  Modified date: Dec 21, 2020
-echo ===========================================================================
+echo   A fork of Flerp/RetroCake                  Modified date: Dec 30, 2020
+echo  =========================================================================
 echo =                                                                         =
-Echo =    1.) AUTOMATED INSTALLERS                                             =
-echo =                                                                         =
-echo ===========================================================================
-echo =                                                                         =
-echo =    2.) MANAGE EMULATIONSTATION                                          =
-echo =                                                                         =
-echo =    3.) MANAGE RETROARCH                                                 =
-echo =                                                                         =
-echo =    4.) MANAGE EMULATORS                                                 =
-echo =                                                                         =
-echo =    5.) MANAGE ROM DIRECTORIES AND SCRAPER                               =
-echo =                                                                         =
-echo =    6.) MANAGE DEDICATED EMUBOX SETTINGS                                 =
-echo =                                                                         =
-echo =    7.) UPDATE RETROCAKE SCRIPT                                          =
-echo =                                                                         =
-echo =    8.) HOW TO CLEANUP AND/OR BACKUP                                     =
+Echo =    1.) Automated Installers                                             =
 echo =                                                                         =
 echo ===========================================================================
 echo =                                                                         =
-echo =    9.)  EXIT  RETROCAKE SCRIPT                                          =
+echo =    2.) Manage EmulationStation                                          =
+echo =                                                                         =
+echo =    3.) Manage RetroArch                                                 =
+echo =                                                                         =
+echo =    4.) Manage Emulators                                                 =
+echo =                                                                         =
+echo =    5.) Manage ROM directories and scraper                               =
+echo =                                                                         =
+echo =    6.) Update RetroCake script                                          =
+echo =                                                                         =
+echo =    7.) How to cleanup and/or backup                                     =
+echo =                                                                         =
 echo =                                                                         =
 echo ===========================================================================
-CHOICE /N /C:123456789 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8, 9)"
-IF ERRORLEVEL ==9 GOTO ExitRetroCake
-IF ERRORLEVEL ==8 GOTO HowToCleanupBackup
-IF ERRORLEVEL ==7 GOTO RetroCakeUpdate
-IF ERRORLEVEL ==6 GOTO DediMenu
+echo =                                                                         =
+echo =    8.)  Exit  this RetroCake script                                     =
+echo =                                                                         =
+echo  =========================================================================
+CHOICE /N /C:12345678 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8)"
+IF ERRORLEVEL ==8 GOTO ExitRetroCake
+IF ERRORLEVEL ==7 GOTO HowToCleanupBackup
+IF ERRORLEVEL ==6 GOTO RetroCakeUpdate
 IF ERRORLEVEL ==5 GOTO RomMenu
 IF ERRORLEVEL ==4 GOTO EmuFolderCheck
 IF ERRORLEVEL ==3 GOTO RAMenu
@@ -262,18 +307,18 @@ exit
 :automated
 ::Menu for automated full installers (Emulationstation + RetroArch + Config Generation + ROM Directory Setup)
 cls
-echo =================================================================================
+echo  ====================================================================================
 echo =                                                                               
-echo =    1.) FULL SETUP WITH DEFAULT ROM DIRECTORIES (%rkdir%\ROMS\SYSTEMNAME)
+echo =    1.) Full setup with  Default  ROM directories (%rkdir%\ROMS\category-name\system-name)
 echo = 
-echo =    2.) FULL SETUP WITH CUSTOM ROM DIRECTORIES                                 =
+echo =    2.) Full setup with  Custom  ROM directories                                    =
 echo = 
-echo =    3.) FULL SETUP WITHOUT ROM DIRECTORIES (NEED TO EDIT ES_SYSTEMS.CFG)
+echo =    3.) Full setup without ROM directories  (need to edit  es_systems.cfg  file)
 echo = 
-echo =                                                                               =
-echo =    4.) RETURN TO MAIN MENU                                                    =
-echo =                                                                               =
-echo =================================================================================
+echo =                                                                                    =
+echo =    4.) Return to main menu                                                         =
+echo =                                                                                    =
+echo  ====================================================================================
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO BrandNewBlank
@@ -285,18 +330,18 @@ IF ERRORLEVEL ==1 GOTO BrandNewDef
 :ESMenu
 ::Menu for Managing Emulationstation updates, config, and themes.
 cls
-echo ===========================================================================
+echo  =========================================================================
 echo =                                                                         =
-echo =    1.) CHECK EMULATIONSTATION FOR UPDATES                               =
+echo =    1.) Check EmulationStation for updates                               =
 echo =                                                                         =
-echo =    2.) MANAGE ES_SYSTEMS.CFG                                            =
+echo =    2.) Manage  es_systems.cfg  file                                     =
 echo =                                                                         =
-echo =    3.) MANAGE EMULATIONSTATION THEMES                                   =
+echo =    3.) Manage EmulationStation themes                                   =
 echo =                                                                         =
 echo =                                                                         =
-echo =    4.) RETURN TO MAIN MENU                                              =
+echo =    4.) Return to main menu                                              =
 echo =                                                                         =
-echo ===========================================================================
+echo  =========================================================================
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO ThemeManager
@@ -308,21 +353,21 @@ IF ERRORLEVEL ==1 GOTO StartESVerCheck
 :RAMenu
 ::Menu for managing RetroArch Updates, Core updates, and config.
 cls
-echo ===========================================================================
+echo  =========================================================================
 echo =                                                                         =
-Echo =    1.) INSTALL RETROARCH 1.9.0                                          =
+Echo =    1.) Install  RetroArch  1.9.0                                        =
 echo =                                                                         =
-echo =    2.) INSTALL/UPDATE CORES FOR RETROARCH  -- NIGHTLY BUILD (LATEST)    =
+echo =    2.) Install/Update Cores for RetroArch  -- Nightly Build (Latest)    =
 echo =                                                                         =
-echo =    3.) INSTALL/UPDATE NIGHTLY BUILD OF RETROARCH  (LATEST)              =
-echo =                                                                         =
-echo =                                                                         =
+echo =    3.) Install/Update Nightly Build of RetroArch  (Latest)              =
 echo =                                                                         =
 echo =                                                                         =
 echo =                                                                         =
-echo =    4.) RETURN TO MAIN MENU                                              =
 echo =                                                                         =
-echo ===========================================================================
+echo =                                                                         =
+echo =    4.) Return to main menu                                              =
+echo =                                                                         =
+echo  =========================================================================
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO UpdateRAn
@@ -334,26 +379,23 @@ IF ERRORLEVEL ==1 GOTO UpdateRA
 :RomMenu
 ::Menu for managing ROM directories in both windows and es_systems.cfg. Can also share your ROM directories.
 cls
-echo ===========================================================================
+echo  ============================================================================
 echo =
-Echo =    1.) CREATE DEFAULT ROM DIRECTORIES -  %rkdir%\ROMS\SYSTEMNAME
+Echo =    1.) Create  Default  ROM directories -  %rkdir%\ROMS\category-name\system-name
 echo =
-Echo =    2.) CREATE CUSTOM ROM DIRECTORIES                                    =
-echo =                                                                         =
-echo =    3.) SHARE ROM DIRECTORIES                                            =
+Echo =    2.) Create  Custom  ROM directories                                     =
+echo =                                                                            =
+echo =    3.) Scraper for  Default  ROM directory -  %rkdir%\ROMS\category-name
 echo =                                                                         
-echo =    4.) SCRAPER FOR DEFAULT ROM DIRECTORY -  %rkdir%\ROMS\SYSTEMNAME
-echo =                                                                         
-echo =    5.) SCRAPER FOR CUSTOM ROM DIRECTORY
-echo =                                                                         =
-echo =    6.) RETURN TO MAIN MENU                                              =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6)"
-IF ERRORLEVEL ==6 GOTO menu
-IF ERRORLEVEL ==5 GOTO ScraperSetupCustom
-IF ERRORLEVEL ==4 GOTO ScraperSetupDefault
-IF ERRORLEVEL ==3 GOTO DediShare
+echo =    4.) Scraper for  Custom  ROM directory 
+echo =                                                                            =
+echo =    5.) Return to main menu                                                 =
+echo =                                                                            =
+echo  ============================================================================
+CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
+IF ERRORLEVEL ==5 GOTO menu
+IF ERRORLEVEL ==4 GOTO ScraperSetupCustom
+IF ERRORLEVEL ==3 GOTO ScraperSetupDefault
 IF ERRORLEVEL ==2 GOTO CusRomDirSet
 IF ERRORLEVEL ==1 GOTO DefaultRomFolders
 
@@ -369,16 +411,16 @@ goto SetOfEmulators
 :SetOfEmulators
 ::Menu for managing set of emulators (Non RetroArch ones)
 cls
-echo ===========================================================================
+echo  =========================================================================
 echo =                                                                         =
-echo =    1.) INSTALL SET OF EMULATORS                                         =
+echo =    1.) Install set of Emulators                                         =
 echo =                                                                         =
-echo =    2.) UPDATE  SET OF EMULATORS                                         =
+echo =    2.) Update  set of Emulators                                         =
 echo =                                                                         =
 echo =                                                                         =
-echo =    3.) RETURN TO MAIN MENU                                              =
+echo =    3.) Return to main menu                                              =
 echo =                                                                         =
-echo ===========================================================================
+echo  =========================================================================
 CHOICE /N /C:123 /M "Enter Corresponding Menu choice (1, 2, 3)"
 IF ERRORLEVEL ==3 GOTO menu
 IF ERRORLEVEL ==2 GOTO UpdateAllEmu
@@ -392,9 +434,9 @@ goto StartAllEmu
 
 :UpdateAllEmu
 cls
-echo ===========================================================================
+echo  =========================================================================
 echo =                                                                         =
-echo =                BACKUP and REFRESH / UPDATE EMULATORS                    =
+echo =                Backup and Refresh / Update Emulators                    =
 echo =                                                                         =
 echo =                                                                         =
 echo =    This will move 'Emulators' folder into 'RetroCake\Temp'  folder      =
@@ -409,7 +451,7 @@ echo =                                                                         =
 echo =     When you're done with moving files, please empty Temp folder        =
 echo =     for to free up disk space.                                          =
 echo =                                                                         =
-echo ===========================================================================
+echo  =========================================================================
 echo .
 pause
 move %rkdir%\Emulators %rkdir%\Temp\Emulators-Backup_%gooddayte%_%goodthyme%
@@ -419,7 +461,7 @@ goto StartAllEmu
 :StartAllEmu
 ::Creates a temporary file (tmp.txt) for the goto statements after each emulator is installed. Allows chaining emulator installation.
 Echo This file is temporary. You should never see it > %rkdir%\Emulators\tmp.txt
-goto AdvanceMAME
+goto AppleWin
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -470,235 +512,31 @@ echo exit >> %rkdir%\Tools\Updater.bat
 start %rkdir%\Tools\Updater.bat
 exit
 
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-
-:DediMenu
-::Menu for dedicated EmuBos Options/installation. Used for setting the machine to be installed as a standalone emulator box and not just an application
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) SETUP ALL DEDICATED EMUBOX SETTINGS                              =
-echo =    (Auto Start, Auto Login, Folder Shares, System Name to RetroCake)    =
-echo =                                                                         =
-Echo =    2.) RETROCAKE AUTO START OPTIONS                                     =
-echo =                                                                         =
-echo =    3.) SETUP AUTOLOGIN                                                  =
-echo =                                                                         =
-echo =    4.) SETUP RETROCAKE FOLDER SHARES                                    =
-echo =                                                                         =
-echo =    5.) SETUP SYSTEM NAME                                                =
-echo =                                                                         =
-echo =                                                                         =
-echo =    6.) RETURN TO MAIN MENU                                              =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123456 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6)"
-IF ERRORLEVEL ==6 GOTO menu
-IF ERRORLEVEL ==5 GOTO DediHostnameMenu
-IF ERRORLEVEL ==4 GOTO DediShareMenu
-IF ERRORLEVEL ==3 GOTO AutoLogin
-IF ERRORLEVEL ==2 GOTO AutoStartMenu
-IF ERRORLEVEL ==1 GOTO FullDedi
-
-:DediAsk
-::Asks if this machine will be used as a dedicated emulator machine instead of installing as an application.
-cls
-
-set /P c=Is this system a dedicated Emulator Box [Y/N]?
-if /I "%c%" EQU "Y" goto FullDedi
-if /I "%c%" EQU "N" goto BrandNewClean
-
-:FullDedi
-::Creates a temporary file to guide the installation process through full dedicated setup.
-cls
-echo This file is temporary, you should never see it > %rkdir%\Temp\FullDedi.txt
-IF EXIST %rkdir%\Temp\FullDedi.txt goto DediAutoStartSetup
-goto erroorr
-::=================================================================================================================================================================================================================================================================================================================
-
-:AutoStartMenu
-::Menu for selecting if EmulationStation starts up when the PC logs in.
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) SETUP AUTOMATIC RETROCAKE LAUNCH ON LOGIN                        =
-echo =                                                                         =
-Echo =    2.) REMOVE AUTOMATIC RETROCAKE LAUNCH ON LOGIN                       =
-echo =                                                                         =
-echo =                                                                         =
-echo =    3.) RETURN TO DEDICATED EMUBOX MENU                                  =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123 /M "Enter Corresponding Menu choice (1, 2, 3)"
-IF ERRORLEVEL ==3 GOTO DediMenu
-IF ERRORLEVEL ==2 GOTO DediAutoStartRemove
-IF ERRORLEVEL ==1 GOTO DediAutoStartSetup
-
-:DediAutoStartSetup
-::Creates a batch file to launch Emulationstation. Creates a shortcut in the startup folder.
-cls
-echo ====================================================
-echo =                                                  =
-echo =      ADDING RETROCAKE TO AUTOSTART ON LOGIN      =
-echo =                                                  =
-echo ====================================================
-cd /D "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
-echo taskkill /im explorer.exe /f > "%rkdir%\Tools\startES.bat"
-echo "%rkdir%\EmulationStation\emulationstation.exe" >> "%rkdir%\Tools\startES.bat"
-
-del "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\startES.lnk"
-echo Set oWS = WScript.CreateObject("WScript.Shell") > "%USERPROFILE%\CreateShortcut2.vbs"
-echo sLinkFile = "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\startES.lnk" >> "%USERPROFILE%\CreateShortcut2.vbs"
-echo Set oLink = oWS.CreateShortcut(sLinkFile) >> "%USERPROFILE%\CreateShortcut2.vbs"
-echo oLink.TargetPath = "%rkdir%\Tools\startES.bat" >> "%USERPROFILE%\CreateShortcut2.vbs"
-echo oLink.Save >> "%USERPROFILE%\CreateShortcut2.vbs"
-cscript "%USERPROFILE%\CreateShortcut2.vbs"
-del "%USERPROFILE%\CreateShortcut2.vbs"
-IF EXIST %rkdir%\Temp\FullDedi.txt goto AutoLogin
-goto completed
-
-:DediAutoStartRemove
-::Removes the shortcut in the startup folder. Disabling launching emulationstation on login.
-cls
-echo ====================================================
-echo =                                                  =
-echo =      REMOVING RETROCAKE AUTOSTART ON LOGIN       =
-echo =                                                  =
-echo ====================================================
-del "%USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\startES.lnk" /s /q
-del %rkdir%\Tools\startES.bat /a /q
-goto completed
-
-::=================================================================================================================================================================================================================================================================================================================
-
-:AutoLogin
-::Guides the user through setting up Auto login. Tried to do this via registry edits, but it never worked properly.
-cls
-echo ==================================================================
-echo =                                                                =
-echo =                 PLEASE UNCHECK THE BOX LABELLED                =
-echo = Users must enter a user name and password to use this computer =
-echo =                      THEN PRESS OK OR APPLY                    =
-echo =                                                                =
-echo =                  PRESS ANY KEY WHEN FINISHED                   =
-echo =                                                                =
-echo ==================================================================
-start netplwiz
-pause > nul
-IF EXIST %rkdir%\Temp\FullDedi.txt goto DediShare
-goto completed
-
-::=================================================================================================================================================================================================================================================================================================================
-
-:DediShareMenu
-::Menu for Managing sharing of the RetroCake folders (ROMS, emulationstation config folder, RetroArch, and additional emulators.)
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) SETUP RETROCAKE SHARES WITH DEFAULT ROM DIRECTORY                =
-echo =                                                                         =
-Echo =    2.) SETUP RETROCAKE SHARES WITH CUSTOM ROM DIRECTORY                 =
-echo =                                                                         =
-Echo =    3.) REMOVE RETROCAKE SHARES                                          =
-echo =                                                                         =
-echo =                                                                         =
-echo =    4.) RETURN TO DEDICATED EMUBOX MENU                                  =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
-IF ERRORLEVEL ==4 GOTO DediMenu
-IF ERRORLEVEL ==3 GOTO DediRemoveShares
-IF ERRORLEVEL ==2 GOTO DediShare
-IF ERRORLEVEL ==1 GOTO DediShare
-
-:DediShare
-::Shares all folders and sets permissions to Everyone R/W. Moves to ROM shares and checks if they are default or custom.
-cls
-net share BIOS=%rkdir%\RetroArch\system /grant:everyone,full
-net share Emulationstation="%USERPROFILE%\.emulationstation" /grant:everyone,full
-net share Emulators=%rkdir%\Emulators /grant:everyone,full
-IF EXIST %rkdir%\ROMS\ goto RomShareDef
-goto RomShareCus
-
-:RomShareDef
-::Shares default ROM dir.
-net share ROMS=%rkdir%\ROMS /grant:everyone,full
-IF EXIST %rkdir%\Temp\FullDedi.txt goto DediHostnameDef
-goto completed
-
-:RomShareCus
-::Shares Custom ROM dir.
-
-set /p cusromdir="Enter Path for ROM Folder (default %rkdir%\ROMS): "
-net share ROMS=%cusromdir% /grant:everyone,full
-IF EXIST %rkdir%\Temp\FullDedi.txt goto DediHostnameDef
-goto completed
-
-:DediRemoveShares
-::Removes the shares created by this installer.
-cls
-net share BIOS /delete
-net share EmulationStation /delete
-net share ROMS /delete
-goto completed
-
-::=================================================================================================================================================================================================================================================================================================================
-
-:DediHostnameMenu
-::Menu for managing the PC's hostname
-cls
-echo ===========================================================================
-echo =                                                                         =
-Echo =    1.) CHANGE PC NAME TO RetroCake                                      =
-echo =                                                                         =
-Echo =    2.) CREATE CUSTOM PC NAME                                            =
-echo =                                                                         =
-echo =                                                                         =
-echo =    3.) RETURN TO DEDICATED EMUBOX MENU                                  =
-echo =                                                                         =
-echo ===========================================================================
-CHOICE /N /C:123 /M "Enter Corresponding Menu choice (1, 2, 3)"
-IF ERRORLEVEL ==3 GOTO DediMenu
-IF ERRORLEVEL ==2 GOTO DediHostnameCus
-IF ERRORLEVEL ==1 GOTO DediHostnameDef
-
-:DediHostnameDef
-::Sets the hostname to RetroCake.
-cls
-WMIC computersystem where caption='%COMPUTERNAME%' rename RetroCake
-IF EXIST %rkdir%\Temp\FullDedi.txt goto FullDediClean
-goto completed
-
-:DediHostnameCus
-::Allows the setting of and inserted hostname.
-cls
-set /p cushostname="Enter custom PC name: "
-WMIC computersystem where caption='%COMPUTERNAME%' rename %cushostname%
-goto completed
-
-:FullDediClean
-::Removes the temporary file used for performing all dedicated installation options.
-cls
-del %rkdir%\Temp\FullDedi.txt /s /q
-goto completed
-
-
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
+
 
 :StartESVerCheck
 ::Starts checking Emulationstation's version for update. Removes the ESCheck folder to ensure comparison results are good.
-cls
-echo ====================================================
+clsecho .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ==================================================
 echo =                                                  =
-echo =               CHECKING FOR UPDATES               =
+echo =            Checking for updates for              =
 echo =                                                  =
-echo ====================================================
+echo =                EmulationStation                  =
+echo =                                                  =
+echo  ==================================================
 IF EXIST %rkdir%\Temp\ESCheck\ goto CleanESCheck
 goto ESCheck
 
@@ -747,10 +585,13 @@ if /I "%c%" EQU "N" goto cancelled
 :updateES
 ::Backs up old installation
 cls
-echo ==========================================================
+echo  ========================================================
+echo =                                                        =
 echo =    Backing up EmulationStation folder to a zip file    =
+echo =                                                        =
 echo =    (ES_Backup...)  in RetroCake's Temp folder...       =
-echo ==========================================================
+echo =                                                        =
+echo  ========================================================
 %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\ES_Backup_%gooddayte%_%goodthyme%.zip" "%rkdir%\EmulationStation\"
 
 ::Removes old emulationstation files
@@ -759,8 +600,18 @@ mkdir "%rkdir%\EmulationStation"
 
 ::Downloads the latest build of EmulationStation
 cls
-
-echo ===========================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  =========================================================
 echo =                                                         =
 echo =   Downloading the latest build of EmulationStation      =
 echo =                                         ( jrassa )      =
@@ -775,7 +626,7 @@ echo =       folders  (fabricecaruso/G-rila/ordovice/CkauNui)  =
 echo =                                                         =
 echo =     ----== for my experimental purpose ==--             =
 echo =                                                         =
-echo ===========================================================
+echo  =========================================================
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/jrassa/EmulationStation/releases/download/continuous-master/EmulationStation-Win32.zip','%rkdir%\Temp\ES.zip')
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/fabricecaruso/batocera-emulationstation/releases/download/continuous-stable/EmulationStation-Win32.zip','%rkdir%\Temp\ES-Batocera.zip')
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/fabricecaruso/es-theme-carbon/archive/master.zip','%rkdir%\Temp\ESB-Theme-Carbon.zip')
@@ -797,9 +648,9 @@ ping 127.0.0.1 -n 3 > nul
 
 
 cls
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 ::Cleans up Downlaoded zip
 del "%rkdir%\Temp\ES.zip"
 del "%rkdir%\Temp\ES-Batocera.zip"
@@ -813,9 +664,9 @@ del "%rkdir%\Temp\ESB-Theme-Ckau-Book.zip"
 echo .
 echo .
 echo .
-echo ================================================
+echo  ==============================================
 echo =        Creating shortcut icons on Desktop    =
-echo ================================================
+echo  ==============================================
 ::Deletes old shortcut
 del "%USERPROFILE%\Desktop\*statio*.lnk
 
@@ -843,20 +694,24 @@ if EXIST "%rkdir%\EmulationStation\emulationstation.exe" goto ESNewSucceed
 :ESNewSucceed
 ::Backs up entire themes folder to RetroCake's Temp folder
 cls
-echo =========================================================
+echo  =======================================================
+echo =                                                       =
 echo =    Backing up entire themes folder to ES_Themes zip   =
 echo =    file in RetroCake's Temp folder...                 =
-echo =========================================================
+echo =                                                       =
+echo  =======================================================
 %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\ES_Themes_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\"
 
 ::Installs default Carbon theme (RetroPie)
 echo .
 echo .
 echo .
-echo ========================================================
+echo  ======================================================
+echo =                                                      =
 echo =    Downloading two versions of Carbon themes from    =
 echo =    RetroPie  and  kelvinator3300  sites...           =
-echo ========================================================
+echo =                                                      =
+echo  ======================================================
 rmdir "%USERPROFILE%\.emulationstation\themes" /S /Q
 mkdir "%USERPROFILE%\.emulationstation\themes"
 cd /D "%USERPROFILE%\.emulationstation\themes"
@@ -879,20 +734,20 @@ goto completed
 :ManESCFG
 ::Menu to manage es_systems.cfg
 cls
-echo ===================================================================================
+echo  =================================================================================
 echo =                                                                                 =
-Echo =    1.) CREATE NEW ES_SYSTEMS.CFG WITHOUT ROM PATHS
+Echo =    1.) Create new  es_systems.cfg  file without ROM paths 
 echo =
-echo =    2.) CREATE NEW ES_SYSTEMS.CFG WITH DEFAULT ROM PATH %rkdir%\ROMS\SYSTEM
+echo =    2.) Create new  es_systems.cfg  with  Default  ROM path..  %rkdir%\ROMS\category\system
 echo =
-echo =    3.) CREATE NEW ES_SYSTEMS.CFG WITH CUSTOM ROM PATH
+echo =    3.) Create new  es_systems.cfg  with  Custom  ROM path 
 echo =                                                                                 =
-echo =    4.) EDIT ES_SYSTEMS.CFG                                                      =
+echo =    4.) Edit  es_systems.cfg  file                                               =
 echo =                                                                                 =
 echo =                                                                                 =
-echo =    5.) RETURN TO EMULATIONSTATION MANAGER                                       =
+echo =    5.) Return to EmulationStation manager                                       =
 echo =                                                                                 =
-echo ===================================================================================
+echo  =================================================================================
 CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
 IF ERRORLEVEL ==5 GOTO esmenu
 IF ERRORLEVEL ==4 GOTO editES
@@ -920,7 +775,7 @@ mkdir "%USERPROFILE%\.emulationstation"
 
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :::                                                                                               :::
-:::   Generadtes  '^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\...'  for ROMS path  in es_systems.cfg     :::
+:::   Generates  '^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\...'  for ROMS path  in es_systems.cfg      :::
 :::                                                                                               :::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -943,25 +798,26 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>vector-games^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  Vector Games ^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\vector-games^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2003_plus_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>vector-games^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>vector-games^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>mame-libretro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Arcade.  MAME Libretro - latest^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\mame-libretro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>mame-libretro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>arcade^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>mame-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>fbneo-libretro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  FB Neo Libretro - latest^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\fbneo-libretro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>fbneo-libretro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>arcade^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>fbneo-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -980,53 +836,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>fbneo-libretro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  FB Neo Libretro - latest^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\fbneo-libretro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>fbneo-libretro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>fbneo-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>neogeo-mvs^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  Neo*Geo MVS^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\neogeo-mvs^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>neogeo-mvs^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>neogeo-mvs^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame-selects^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\mame-selects^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame-selects^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame-selects^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>fbneo-selects^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  FB Neo Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\fbneo-selects^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbalpha2012_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>fbneo-selects^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>fbneo-selects^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atomiswave^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  AtomisWave^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  Sammy AtomisWave^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\atomiswave^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.lst .LST .7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1037,7 +848,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>hikaru^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  Hikaru^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  Sega Hikaru^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\hikaru-demul^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<extension^>.7z .zip .7Z .ZIP^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1050,103 +861,14 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>NAOMI^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  NAOMI^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>naomi^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  Sega NAOMI^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\naomi^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.lst .LST .7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>naomi^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>naomi^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>advancemame^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  AdvanceMAME - (0.106)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\advancemame^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\AdvanceMAME\advmame.exe "%%BASENAME%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>advancemame^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>advancemame^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>fba^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  FB Alpha - (0.2.97.39)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\fba^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbalpha2012_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>fba^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>fba^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2000 - (0.37b5)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\mame2000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2000_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2000^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2003^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2003 - (0.78)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\mame2003^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2003_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2003^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2003^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2003-plus^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2003 Plus - (backports)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\mame2003-plus^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2003_plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2003-plus^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2003-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2010^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2010 - (0.139)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\mame2010^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2010_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2010^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2010^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2015^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2015 - (0.160)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\mame2015^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2015_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2015^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2015^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2016^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2016 - (0.174)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\mame2016^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2016_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2016^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2016^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
 
 
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1170,7 +892,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gx4000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Amstrad GX4000 - Europe - (Sep 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Amstrad GX4000 - Europe - (1990-1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\gx4000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .cdt .cpc .dsk .7Z .ZIP .CDT .CPC .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\cap32_libretro.dll "%%ROM_RAW%%"^</command^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1182,7 +904,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari2600^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari 2600 - (Sep 1977)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari 2600 - (1977-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\atari2600^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .a26 .bin .rom .zip .gz .7Z .A26 .BIN .ROM .ZIP .GZ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\stella_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1194,19 +916,20 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari2600-supercharger^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  SuperCharger  - Atari 2600 - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Starpath Supercharger for Atari 2600 - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\atari2600-supercharger^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .a26 .bin .rom .zip .gz .7Z .A26 .BIN .ROM .ZIP .GZ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\stella_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\stella2014_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>atari2600-supercharger^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>atari2600-supercharger^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>atari2600^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>atari2600-supercharger^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" 
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari5200^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari 5200 - (Nov 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari 5200 - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\atari5200^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .a52 .bin .car .7Z .ZIP .A52 .BIN .CAR^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\atari800_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1217,7 +940,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari7800^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari 7800 ProSystem - (May 1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari 7800 ProSystem - (1986-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\atari7800^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .a78 .bin .zip .7Z .A78 .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\prosystem_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1228,7 +951,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarijaguar^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari Jaguar - (Nov 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari Jaguar - (1993-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\atarijaguar^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .j64 .jag .zip .7Z .J64 .JAG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\virtualjaguar_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1239,7 +962,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>astrocade^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Bally Astrocade - (Apr 1978)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Bally Astrocade - (1978-1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\astrocade^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\astrocade\ astrocde -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1251,7 +974,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>colecovision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  ColecoVision - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  ColecoVision - (1982-1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\colecovision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .col .rom .zip .7Z .BIN .COL .ROM .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1262,18 +985,18 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>pv-1000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Casio PV-1000 - (Oct 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Casio PV-1000 - Japan - (1983-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\pv-1000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .cpr .zip .7Z .BIN .CPR .ZIP ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\pv-1000\ pv1000 -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>pv-1000^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pv-1000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>pv1000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>arcadia^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Emerson Arcadia 2001 - (May 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Emerson Arcadia 2001 - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\arcadia^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\arcadia\ arcadia -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1285,32 +1008,33 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>supercassettevision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Epoch Super Cassette Vision - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Epoch Super Cassette Vision - Japan - (1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\supercassettevision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\supercassettevision\ scv -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll scv -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>supercassettevision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>supercassettevision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>scv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>supercassettevision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>channel-f^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Fairchild Channel F - (Nov 1976)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Fairchild Channel F - (1976-1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\channel-f^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\freechaf_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll channelf -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\channel-f\ channelf -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>channel-f^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>channel-f^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>channelf^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>super-acan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Funtech Super A`can - Taiwan - (Oct 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Funtech Super A`can - Taiwan - (1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\super-acan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .cpr .7Z .ZIP .BIN .CPR^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\super-acan\ supracan -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1321,7 +1045,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Mattel Intellivision - (1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Mattel Intellivision - (1979-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\intellivision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\freeintv_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1332,64 +1056,56 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision-jzintv^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Intellivision - jzInTV^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Intellivision - jzInTV - (1979-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\console-keypad\intellivision-jzintv^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\jzIntv\bin\jzIntv.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>intellivision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>intellivision-jzintv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>intellivision-jzintv^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>intellivision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>intellivision-jzintv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision-voice^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  IntelliVoice - Intellivision - (1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  IntelliVoice - Intellivision - (1982-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\intellivision-voice^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\jzIntv\bin\jzIntv.exe -z720x480 "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>intellivision-voice^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>intellivision-voice^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>intellivision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>intellivision-voice^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision-ecs^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  ECS Computer Module - Intellivision - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  ECS Computer Module - Intellivision - (1983-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\intellivision-ecs^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\jzIntv\bin\jzIntv.exe -z720x480 "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>intellivision-ecs^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>intellivision-ecs^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>intellivision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>intellivision-ecs^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>turbografx-16^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  NEC TurboGrafx 16 - (Aug 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  NEC TurboGrafx / PC Engine - (1987-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\turbografx-16^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .pce .ccd .cue .zip .7Z .PCE .CCD .CUE .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>turbografx-16^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>turbografx-16^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>pcengine^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  NEC PC Engine - Japan - (Oct 1987)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\pcengine^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .pce .ccd .cue .zip .7Z .PCE .CCD .CUE .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>pcengine^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pcengine^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tg16^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>pcengine^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>supergrafx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  NEC SuperGrafx - Japan - (Dec 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  NEC SuperGrafx - Japan - (1989-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\supergrafx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .pce .ccd .cue .zip .7Z .PCE .CCD .CUE .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1401,29 +1117,19 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>nes^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo NES - (Oct 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo NES / Famicom - (1983-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\nes^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .nes .zip .7Z .NES .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>nes^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>nes^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>famicom^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo Famicom - Japan - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\famicom^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .nes .fds .zip .7Z .NES .FDS .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>famicom^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>famicom^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>famicom^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>fds^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Famicom Disk System - Japan - (Feb 1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Famicom Disk System - Japan - (1986-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\fds^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .nes .fds .zip .7Z .NES .FDS .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1434,21 +1140,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>snes^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo Super NES - (Aug 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo Super NES / Famicom - (1990-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\snes^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x2010_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>snes^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>snes^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>sfc^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>supergb^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Super Game Boy - SNES/SFC - (Jun 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Super Game Boy - (1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\supergb^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .gb .gbc .zip .7Z .GB .GBC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mgba_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>supergb^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>supergb^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1456,31 +1163,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>supergbc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Super Game Boy Color - SNES/SFC - (Jun 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\supergbc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mgba_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>supergbc^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>supergbc^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>sfc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo Super Famicom - Japan - (Nov 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\sfc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x2010_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>sfc^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>sfc^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>satellaview^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Satellaview - SFC - Japan - (Apr 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Satellaview - Japan - (1995-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\satellaview^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1491,7 +1175,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sufami^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sufami Turbo - SFC - Japan - (1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sufami Turbo - Japan - (1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\sufami^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1502,7 +1186,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>n64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo 64 - (Sep 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo 64 - (1996-2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\n64^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1512,31 +1196,20 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>n64-japan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo 64 - Japan - (Jun 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\n64-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>n64-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>n64-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>n64-dd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  64DD - N64 - Japan - (Dec 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo 64DD - Japan - (1999-2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\n64-dd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .ndd .v64 .7Z .ZIP .Z64 .N64 .NDD .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\parallel_n64_libretro_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64-dd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>n64-dd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>n64dd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>rca-studio-ii^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  RCA Studio II - (Jan 1977)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  RCA Studio II - (1977-1978)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\rca-studio-ii^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .st2 .7Z .ZIP .BIN .ST2^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\rca-studio-ii\ studio2 -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1548,7 +1221,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sg-1000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega SG-1000 - Japan - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega SG-1000 - Japan - (1983-1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\sg-1000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sg .bin .zip .7Z .SG .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1559,62 +1232,31 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>mastersystem^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Master System - (Sep 1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega Master System / Mark III - (1985-1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\mastersystem^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>mastersystem^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>mastersystem^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mark-iii^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Mark III - Japan - (Oct 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\mark-iii^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mark-iii^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mark-iii^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>markiii^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>genesis^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Genesis - (Aug 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega Genesis / Mega Drive - (1988-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\genesis^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>genesis^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>genesis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megadrive-japan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Mega Drive - Japan - (Oct 1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\megadrive-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megadrive-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megadrive-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megadrive^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Mega Drive - Europe - (Sep 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\megadrive^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megadrive^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megadrive^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>megadrive^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sega32x^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega 32X - (Nov 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega 32X - (1994-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\sega32x^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .32x .smd .bin .md .zip .7Z .32X .SMD .BIN .MD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\picodrive_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1624,69 +1266,26 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>super32x^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Super 32X - Japan - (Dec 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\super32x^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .32x .smd .bin .md .zip .7Z .32X .SMD .BIN .MD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\picodrive_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>super32x^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>super32x^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mega32x^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Mega 32X - Europe - (Jan 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-addon\mega32x^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .32x .smd .bin .md .zip .7Z .32X .SMD .BIN .MD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\picodrive_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mega32x^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mega32x^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>neogeo-aes^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  SNK Neo*Geo AES - (Jul 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\neogeo-aes^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>neogeo^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  SNK Neo*Geo (MVS/AES) - (1990-2004)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\neogeo^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.fba .zip .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>neogeo-aes^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>neogeo-aes^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>tectoy-ms^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Tectoy Master System - Brazil - (Sep 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\tectoy-ms^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>tectoy-ms^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>tectoy-ms^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>tectoy-md^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Tectoy Mega Drive - Brazil - (Dec 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console\tectoy-md^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>tectoy-md^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>tectoy-md^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>neogeo^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>neogeo^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>creativision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  VTech CreatiVision - (1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  VTech CreatiVision - Europe - (1982-1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\creativision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\creativision\ crvision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll crvision -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>creativision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>crvision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -1711,7 +1310,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>3do^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  3DO - (Oct 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  3DO - (1993-1997)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\3do^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .iso .CHD .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\opera_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1722,7 +1321,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>amigacd32^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Amiga CD32 - Europe - (Sep 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Amiga CD32 - Europe - (1993-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\amigacd32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .lha .CHD .CUE .LHA^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1734,30 +1333,31 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarijaguar-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Atari Jaguar CD - (Sep 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Atari Jaguar CD - (1995-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\atarijaguar-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .cue .iso .j64 .jag .zip .7Z .BIN .CUE .ISO .J64 .JAG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\virtualjaguar_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>atarijaguar-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>atarijaguar-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>atarijaguar^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>atarijaguar-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>commodore-cdtv^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Commodore CDTV - (Mar 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Commodore CDTV - (1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\commodore-cdtv^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\FS-UAE\System\FS-UAE\Windows\x86-64\fs-uae.exe --amiga-model=CDTV --joystick-port-0-mode=joystick --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>commodore-cdtv^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>commodore-cdtv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>cdtv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>xbox^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Microsoft XBOX - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Microsoft XBOX - (2001-2009)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\xbox^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1768,7 +1368,7 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>xbox360^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Microsoft XBOX 360 - (Nov 2005)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Microsoft XBOX 360 - (2005-2016)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\xbox360^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.iso .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\xenia\xenia.exe --vsync=false "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1781,31 +1381,20 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>turbografx-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  NEC TurboGrafx CD - (Nov 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  NEC TurboGrafx / PC Engine CD - (1989-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\turbografx-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .pce .ccd .cue .chd .iso .zip .7Z .PCE .CCD .CUE .CHD .ISO .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>turbografx-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>turbografx-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>pcengine-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  NEC PC Engine CD-ROM - Japan - (Dec 1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\pcengine-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.chd .ccd .cue .iso .CHD .CCD .CUE .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>pcengine-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pcengine-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tg-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>pce-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>pcfx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  NEC PC-FX - Japan - (Dec 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  NEC PC-FX - Japan - (1994-1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\pcfx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ccd .chd .cue .toc .zip .7Z .CCD .CHD .CUE .TOC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pcfx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1816,9 +1405,9 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamecube^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo GameCube - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Nintendo GameCube - (2001-2007)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\gamecube^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.iso .gcz .gcn .ISO .GCZ .GCN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.chd .iso .gcz .gcn .CHD .ISO .GCZ .GCN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\dolphin_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin-dev\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1829,7 +1418,7 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wii^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii - (Nov 2006)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Nintendo Wii - (2006-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\wii^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.iso .ISO .wbfs .WBFS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\dolphin_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1841,47 +1430,21 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>wii-ware^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii Ware - (Mar 2008)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\wii-ware^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.zip .ZIP .wad .WAD .iso .ISO .wbfs .WBFS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\dolphin_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin-dev\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>wii-ware^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>wii-ware^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wii-u^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii U - (Nov 2012)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Nintendo Wii U - (2012-2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\wii-u^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<extension^>.rpx .RPX .iso .ISO .wud .WUD .wux .WUX^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\cemu\Cemu.exe -f -g "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>wii-u^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>wii-u^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>wii-u-eshop^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii U eShop - (Nov 2012)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\wii-u-eshop^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<extension^>.rpx .RPX .iso .ISO .wud .WUD .wux .WUX^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\cemu\ Cemu.exe -f -g "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>wii-u-eshop^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>wii-u-eshop^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>wiiu^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>segacd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega CD - (Oct 1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sega / Mega CD - (1992-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\segacd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .iso .cue .CHD .ISO .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1891,30 +1454,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megacd-japan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Mega CD - Japan - (Dec 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\megacd-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.chd .iso .CHD .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megacd-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megacd-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megacd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Mega CD - Europe - (1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\megacd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.chd .iso .cue .CHD .ISO .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megacd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megacd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>saturn^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Saturn - (May 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sega Saturn - (1995-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\saturn^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cue .CUE .ccd .CCD .chd .CHD .iso .ISO .toc .TOC .m3u .M3U^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\kronos_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1926,9 +1467,9 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>dreamcast^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Dreamcast - (Sep 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sega Dreamcast - (1999-2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\dreamcast^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.gdi .cdi .GDI .CDI .chd .CHD^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.cdi .chd .gdi .CDI .CHD .GDI^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>dreamcast^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>dreamcast^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1936,46 +1477,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>dreamcast-demul^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Dreamcast (Demul)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\arcade\dreamcast-demul^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<extension^>.gdi .cdi .GDI .CDI .chd .CHD^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\Demul\demul.exe -run=dc -rom="%%BASENAME%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>dreamcast-demul^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>dreamcast-demul^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>dreamcast-indies^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Dreamcast Indies - (2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\dreamcast-indies^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.gdi .cdi .GDI .CDI .chd .CHD^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>dreamcast-indies^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>dreamcast-indies^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>neogeo-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  SNK Neo Geo CD - (Jan 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  SNK Neo Geo CD - (1996-1997)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<fullname^>Neo Geo CDZ^</fullname^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\neogeo-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.cue .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\neocd_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll --subsystem neocd "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>neogeo-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>neogeo-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>neocdz^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>neogeo-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>psx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sony PlayStation - (Sep 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sony PlayStation - (1995-2006)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\psx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .cbn .gz .img .iso .m3u .mdf .pbp .toc .z .znx .CHD .GZ .CUE .CBN .IMG .ISO .M3U .MDF .PBP .TOC .Z .ZNX^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_psx_hw_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1986,7 +1503,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ps2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sony PlayStation 2 - (Oct 2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sony PlayStation 2 - (2000-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\ps2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cue .cbn .gz .img .iso .m3u .mdf .pbp .toc .z .znx .GZ .CUE .CBN .IMG .ISO .M3U .MDF .PBP .TOC .Z .ZNX^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\play_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1999,7 +1516,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ps3^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sony PlayStation 3 - (Nov 2006)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sony PlayStation 3 - (2006-2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-optical\ps3^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2027,7 +1544,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarilynx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Atari Lynx - (Sep 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Atari Lynx - (1989-1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\atarilynx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .lnx .zip .7Z .LNX .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_lynx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2039,7 +1556,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wonderswan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Bandai WonderSwan - Japan - (Mar 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Bandai WonderSwan - Japan - (1999-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\wonderswan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ws .wsc .zip .7Z .WS .WSC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_wswan_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2050,7 +1567,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wonderswancolor^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Bandai WonderSwan Color - (Dec 2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Bandai WonderSwan Color - Japan - (2000-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\wonderswancolor^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ws .wsc .zip .7Z .WS .WSC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_wswan_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2061,7 +1578,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamemaster^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Hartung Game Master - (1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Hartung Game Master - Europe - (1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\gamemaster^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.tgc .bin .zip .TGC .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\portable\gamemaster\ gmaster -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2073,7 +1590,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gp32^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Game Park GP32 - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Game Park GP32 - Korea - (2001-2005)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\gp32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .smc .zip .7Z .SMC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\portable\gp32\ gp32 -memc "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2085,7 +1602,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gb^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Game Boy - (Jul 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Game Boy - (1989-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\gb^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\gambatte_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2096,7 +1613,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gbc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Game Boy Color - (Nov 1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Game Boy Color - (1998-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\gbc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gbc .zip .7Z .GBC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\gambatte_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2107,7 +1624,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gba^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Game Boy Advance - (Jun 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Game Boy Advance - (2001-2010)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\gba^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gba .zip .7Z .GBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mgba_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2118,18 +1635,18 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>pokemon-mini^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Pokemon Mini - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Pokemon Mini - (2001-2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\pokemon-mini^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .min .7Z .ZIP .MIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\pokemonmini_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>pokemon-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pokemon-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>pokemini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>nds^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo DS - (Nov 2004)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo DS - (2004-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable-touch\nds^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .nds .7Z .ZIP .NDS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\desmume_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2141,7 +1658,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>3ds^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo 3DS - (Mar 2011)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo 3DS - (2011-2020)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable-touch\3ds^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .3ds .7Z .ZIP .3DS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\citra_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2151,19 +1668,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>3ds-eshop^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo 3DS eShop - (Jun 2011)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable-touch\3ds-eshop^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .3ds .7Z .ZIP .3DS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\citra_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>3ds-eshop^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>3ds-eshop^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>switch^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Switch - (Mar 2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Switch - (2017-)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable-touch\switch^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2176,7 +1682,7 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamegear^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Sega Game Gear - (Apr 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sega Game Gear - (1991-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\gamegear^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gg .bin .sms .zip .7Z .GG .BIN .SMS .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2187,7 +1693,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ngp^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket - (Oct 1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket - Japan/Europe - (1998-1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\ngp^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ngp .zip .7Z .NGP .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_ngp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2198,7 +1704,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ngpc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket Color - (Aug 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket Color - (1999-2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\ngpc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ngc .zip .7Z .NGC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_ngp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2209,7 +1715,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>psp^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Sony PSP - (Mar 2005)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sony PSP - (2005-2014)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable-optical\psp^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cso .iso .pbp .CSO .ISO .PBP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\ppsspp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2220,18 +1726,19 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>psp-minis^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  PSP minis - (Oct 2009)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable-optical\psp-minis^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sony PSP Go minis - (2009-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\psp-minis^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cso .iso .pbp .CSO .ISO .PBP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\ppsspp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>psp-minis^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>psp-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>pspminis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>pspgo-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamecom^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Tiger Game.com - (Aug 1997)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Tiger Game.com - (1997-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable\gamecom^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.tgc .bin .zip .TGC .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\portable\gamecom\ gamecom -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2285,7 +1792,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>adventurevision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Entex Adventure Vision - (Oct 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Entex Adventure Vision - (1982-1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\adventurevision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bin .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\specialty\adventurevision\ advision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" 
@@ -2297,7 +1804,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>vectrex^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  GCE Vectrex - (Nov 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  GCE Vectrex - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\vectrex^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .vec .gam .bin .zip .7Z .VEC .GAM .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\vecx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2307,8 +1814,20 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>vectrex-parajve^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  GCE Vectrex - ParaJVE - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\vectrex-parajve^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>vectrex-parajve^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>vectrex^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>vectrex-parajve^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gameandwatch^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Nintendo Game ^& Watch - (Apr 1980)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Nintendo Game ^& Watch - (1980-1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\gameandwatch^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.mgw .MGW^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\gw_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2319,7 +1838,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>virtualboy^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Nintendo Virtual Boy - (Aug 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Nintendo Virtual Boy - (1995-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\virtualboy^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .vb .zip .7Z .VB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_vb_libretro_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2358,7 +1877,8 @@ echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\genesis-mini^</path^> >> 
 echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>genesis-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>genesis-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>genesis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>genesis-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -2369,29 +1889,19 @@ echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\turbografx-mini^</path^> 
 echo     ^<extension^>.7z .pce .ccd .cue .chd .iso .zip .7Z .PCE .CCD .CUE .CHD .ISO .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>turbografx-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>turbografx-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>turbografx-16^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>turbografx-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>msu1^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Specialty.  MSU-1 for SNES/SFC - (May 2012)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\msu1^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\snes-msu1^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.sfc .SFC^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>msu1^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msu1^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>vectrex-parajve^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Vectrex - ParaJVE - (Nov 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\specialty\vectrex-parajve^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>vectrex-parajve^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>vectrex-parajve^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>snesmsu1^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -2465,7 +1975,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>scummvm^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Port.  ScummVM - (Oct 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Port.  ScummVM - (2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\port\scummvm^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2495,7 +2005,7 @@ echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\port\tic-80^</path^> >> "%USERPROFI
 echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\tic80_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>tic-80^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>tic-80^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tic80^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -2520,7 +2030,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>dosbox^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  DOSBox - (Jul 2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  DOSBox - (2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\dosbox^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2533,7 +2043,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>bbcmicro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Acorn BBC Micro - UK -(Dec 1981)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Acorn BBC Micro, Electron - UK - (1981-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\bbcmicro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .ssd .dsd .ad .img .7Z .ZIP .SSD .DSD .AD .IMG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\BeebEm\BeebEm.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2541,25 +2051,13 @@ echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\c
 echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\computer\bbcmicro\ bbcb -cass OR -flop "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>bbcmicro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>bbcmicro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>electron^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Acorn Electron - UK - (Summer 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\electron^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .ssd .dsd .ad .img .7Z .ZIP .SSD .DSD .AD .IMG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\BeebEm\BeebEm.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll electron -cass OR -flop "%%ROM_RAW%%"^</command^> >> --^> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\computer\electron\ electron -cass OR -flop "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>electron^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>electron^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>electron^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>amstradcpc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Amstrad CPC - Europe - (Jun 1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Amstrad CPC - Europe - (1984-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\amstradcpc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .cdt .cpc .dsk .7Z .ZIP .CDT .CPC .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\cap32_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2570,7 +2068,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>apple2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Apple II - (Jun 1977)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Apple II - (1977-1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\apple2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .dsk .7Z .ZIP .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\AppleWin\Applewin.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2581,7 +2079,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>macintosh^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Apple Macintosh - (Jan 1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Apple Macintosh, OS 7.5.2 thru 9.0.4^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\macintosh^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .dsk .img .rom .7Z .ZIP .DSK .IMG .ROM^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo ^<!-- START:  THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2596,7 +2094,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari800^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Atari 800 - (Nov 1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Atari 800 - (1979-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\atari800^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bas .bin .car .com .xex .atr .xfd .dcm .atr.gz .xfd.gz .7Z .ZIP .BAS .BIN .CAR .COM .XEX .ATR .XFD .DCM .ATR.GZ .XFD.GZ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\atari800_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2607,7 +2105,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarist^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Atari ST - (Jun 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Atari ST - (1985-1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\atarist^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .st .stx .img .rom .raw .ipf .ctr .7Z .ZIP .ST .STX .IMG .ROM .RAW .IPF .CTR^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\hatari_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2620,7 +2118,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>adam^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Coleco ADAM - (Oct 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Coleco ADAM - (1983-1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\adam^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bas .bin .col .com .ddp .dsk .img .lbr .rom .zip .7Z .BAS .BIN .COL .COM .DDP .DSK .IMG .LBR .ROM .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2631,7 +2129,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>c64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Commodore 64 - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Commodore 64 - (1982-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\c64^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .crt .d64 .g64 .t64 .tap .x64 .zip .prg .7Z .CRT .D64 .G64 .T64 .TAP .X64 .ZIP .PRG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\vice_x64_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2643,7 +2141,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>amiga^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Commodore Amiga - (Jul 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Commodore Amiga - (1985-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\amiga^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.adf .ADF .zip .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2653,19 +2151,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>dragon32^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Dragon 32 - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\dragon32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .cas .wav .bas .asc .dmk .jvc .os9 .dsk .vdk .rom .ccc .sna .7Z .ZIP .CAS .WAV .BAS .ASC .DMK .JVC .OS9 .DSK .VDK .ROM .CCC .SNA^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\XRoar\xroar.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>dragon32^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>dragon32^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>aquarius^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Mattel Aquarius - (Oct 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Mattel Aquarius - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\aquarius^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\computer\aquarius\ aquarius -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2677,18 +2164,19 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>odyssey2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Magnavox Odyssey 2 - (Feb 1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Magnavox Odyssey 2, Videopac, Videopac+ - (1978-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\odyssey2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .zip .7Z .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\o2em_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>odyssey2^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>odyssey2^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>videopac^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>msx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Microsoft MSX, MSX2, MSX2+, MSX turboR - (1983-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\msx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2698,63 +2186,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>msx2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX 2 - (1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\msx2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>msx2^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msx2^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>msx2-plus^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX 2+ - (1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\msx2-plus^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>msx2-plus^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msx2-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>msx-turbo-r^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX Turbo R - (1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\msx-turbo-r^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>msx-turbo-r^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msx-turbo-r^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>videopac^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Philips Videopac - Europe - (Dec 1978)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\videopac^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .zip .7Z .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\o2em_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>videopac^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>videopac^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>videopac-plus^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Philips Videopac Plus - Europe - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\videopac-plus^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .zip .7Z .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\o2em_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>videopac-plus^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>videopac-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sc-3000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sega SC-3000 - Japan - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sega SC-3000 - Japan - (1983-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\sc-3000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .7Z .ZIP .sg. SG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2765,7 +2198,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>x1^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sharp X1 - Japan - (1987)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sharp X1 - Japan - (1982-1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\x1^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .d88 .zip .7Z .D88 .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\x1_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2778,7 +2211,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>x68000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sharp X68000 - Japan - (Mar 1987)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sharp X68000 - Japan - (1987-1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\x68000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .dim .m3u .zip .7Z .DIM .M3U .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\px68k_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2789,7 +2222,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>zx81^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sinclair Z81 - UK - (Mar 1981)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sinclair Z81 - UK - (1981-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\zx81^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sh .sna .szx .z80 .tap .tzx .gz .udi .mgt .img .trd .scl .dsk .zip .7Z .SH .SNA .SZX .Z80 .TAP .TZX .GZ .UDI .MGT .IMG .TRD .SCL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\81_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2800,7 +2233,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>zxspectrum^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sinclair ZX Spectrum - UK - (Apr 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sinclair ZX Spectrum - UK - (1982-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\zxspectrum^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sh .sna .szx .z80 .tap .tzx .gz .udi .mgt .img .trd .scl .dsk .zip .7Z .SH .SNA .SZX .Z80 .TAP .TZX .GZ .UDI .MGT .IMG .TRD .SCL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fuse_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2811,29 +2244,31 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>spectravideo^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  SVI SpectraVideo - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  SVI SpectraVideo - (1983-1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\spectravideo^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bas .bin .col .com .ddp .dsk .img .lbr .rom .zip .7Z .BAS .BIN .COL .COM .DDP .DSK .IMG .LBR .ROM .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>spectravideo^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>spectravideo^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>svi318^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>spectravideo^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>coco^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Tandy Color Computer - (1980)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Tandy Color / Dragon 32 - (1980-1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\coco^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .cas .wav .bas .asc .dmk .jvc .os9 .dsk .vdk .rom .ccc .sna .7Z .ZIP .CAS .WAV .BAS .ASC .DMK .JVC .OS9 .DSK .VDK .ROM .CCC .SNA^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\XRoar\xroar.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>coco^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>coco^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>dragon32^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ti99^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Texas Inst. TI-99/4A - (Jun 1981)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Texas Inst. TI-99/4A - (1981-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\ti99^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.zip .ZIP .bin .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\Classic99\classic99.exe -rom "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2880,11 +2315,11 @@ mkdir "%USERPROFILE%\.emulationstation"
 
 
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:::                                                                                            :::
-:::   Generates  '^<path^>%rkdir%\ROMS\...'  for ROMS path  in es_systems.cfg                  :::
-:::                                                                                            :::
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::                                                                                               :::
+:::   Generates  '^<path^>%rkdir%\ROMS\...'  for ROMS path  in es_systems.cfg                     :::
+:::                                                                                               :::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 echo ^<?xml version="1.0"?^> > "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
@@ -2905,25 +2340,26 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>vector-games^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  Vector Games ^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\vector-games^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2003_plus_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>vector-games^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>vector-games^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>mame-libretro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Arcade.  MAME Libretro - latest^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\arcade\mame-libretro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>mame-libretro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>arcade^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>mame-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>fbneo-libretro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  FB Neo Libretro - latest^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\arcade\fbneo-libretro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>fbneo-libretro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>arcade^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>fbneo-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -2942,53 +2378,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>fbneo-libretro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  FB Neo Libretro - latest^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\fbneo-libretro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>fbneo-libretro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>fbneo-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>neogeo-mvs^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  Neo*Geo MVS^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\neogeo-mvs^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>neogeo-mvs^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>neogeo-mvs^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame-selects^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\mame-selects^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame-selects^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame-selects^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>fbneo-selects^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  FB Neo Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\fbneo-selects^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbalpha2012_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>fbneo-selects^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>fbneo-selects^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atomiswave^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  AtomisWave^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  Sammy AtomisWave^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\arcade\atomiswave^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.lst .LST .7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -2999,7 +2390,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>hikaru^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  Hikaru^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  Sega Hikaru^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\arcade\hikaru-demul^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<extension^>.7z .zip .7Z .ZIP^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3012,103 +2403,14 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>NAOMI^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  NAOMI^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>naomi^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  Sega NAOMI^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\arcade\naomi^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.lst .LST .7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>naomi^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>naomi^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>advancemame^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  AdvanceMAME - (0.106)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\advancemame^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\AdvanceMAME\advmame.exe "%%BASENAME%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>advancemame^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>advancemame^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>fba^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  FB Alpha - (0.2.97.39)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\fba^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbalpha2012_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>fba^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>fba^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2000 - (0.37b5)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\mame2000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2000_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2000^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2003^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2003 - (0.78)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\mame2003^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2003_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2003^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2003^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2003-plus^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2003 Plus - (backports)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\mame2003-plus^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2003_plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2003-plus^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2003-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2010^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2010 - (0.139)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\mame2010^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2010_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2010^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2010^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2015^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2015 - (0.160)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\mame2015^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2015_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2015^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2015^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2016^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2016 - (0.174)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\mame2016^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2016_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2016^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2016^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
 
 
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3132,7 +2434,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gx4000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Amstrad GX4000 - Europe - (Sep 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Amstrad GX4000 - Europe - (1990-1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\gx4000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .cdt .cpc .dsk .7Z .ZIP .CDT .CPC .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\cap32_libretro.dll "%%ROM_RAW%%"^</command^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3144,7 +2446,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari2600^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari 2600 - (Sep 1977)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari 2600 - (1977-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\atari2600^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .a26 .bin .rom .zip .gz .7Z .A26 .BIN .ROM .ZIP .GZ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\stella_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3156,19 +2458,20 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari2600-supercharger^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  SuperCharger  - Atari 2600 - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Starpath Supercharger for Atari 2600 - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\atari2600-supercharger^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .a26 .bin .rom .zip .gz .7Z .A26 .BIN .ROM .ZIP .GZ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\stella_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\stella2014_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>atari2600-supercharger^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>atari2600-supercharger^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>atari2600^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>atari2600-supercharger^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" 
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari5200^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari 5200 - (Nov 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari 5200 - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-keypad\atari5200^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .a52 .bin .car .7Z .ZIP .A52 .BIN .CAR^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\atari800_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3179,7 +2482,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari7800^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari 7800 ProSystem - (May 1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari 7800 ProSystem - (1986-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\atari7800^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .a78 .bin .zip .7Z .A78 .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\prosystem_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3190,7 +2493,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarijaguar^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari Jaguar - (Nov 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari Jaguar - (1993-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-keypad\atarijaguar^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .j64 .jag .zip .7Z .J64 .JAG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\virtualjaguar_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3201,7 +2504,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>astrocade^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Bally Astrocade - (Apr 1978)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Bally Astrocade - (1978-1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-keypad\astrocade^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\astrocade\ astrocde -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3213,7 +2516,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>colecovision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  ColecoVision - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  ColecoVision - (1982-1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-keypad\colecovision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .col .rom .zip .7Z .BIN .COL .ROM .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3224,18 +2527,18 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>pv-1000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Casio PV-1000 - (Oct 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Casio PV-1000 - Japan - (1983-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\pv-1000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .cpr .zip .7Z .BIN .CPR .ZIP ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\pv-1000\ pv1000 -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>pv-1000^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pv-1000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>pv1000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>arcadia^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Emerson Arcadia 2001 - (May 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Emerson Arcadia 2001 - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-keypad\arcadia^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\arcadia\ arcadia -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3247,32 +2550,33 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>supercassettevision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Epoch Super Cassette Vision - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Epoch Super Cassette Vision - Japan - (1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-keypad\supercassettevision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\supercassettevision\ scv -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll scv -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>supercassettevision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>supercassettevision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>scv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>supercassettevision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>channel-f^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Fairchild Channel F - (Nov 1976)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Fairchild Channel F - (1976-1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\channel-f^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\freechaf_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll channelf -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\channel-f\ channelf -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>channel-f^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>channel-f^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>channelf^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>super-acan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Funtech Super A`can - Taiwan - (Oct 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Funtech Super A`can - Taiwan - (1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\super-acan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .cpr .7Z .ZIP .BIN .CPR^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\super-acan\ supracan -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3283,7 +2587,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Mattel Intellivision - (1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Mattel Intellivision - (1979-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-keypad\intellivision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\freeintv_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3294,64 +2598,56 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision-jzintv^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Intellivision - jzInTV^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Intellivision - jzInTV - (1979-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\console-keypad\intellivision-jzintv^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\jzIntv\bin\jzIntv.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>intellivision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>intellivision-jzintv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>intellivision-jzintv^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>intellivision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>intellivision-jzintv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision-voice^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  IntelliVoice - Intellivision - (1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  IntelliVoice - Intellivision - (1982-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\intellivision-voice^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\jzIntv\bin\jzIntv.exe -z720x480 "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>intellivision-voice^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>intellivision-voice^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>intellivision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>intellivision-voice^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision-ecs^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  ECS Computer Module - Intellivision - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  ECS Computer Module - Intellivision - (1983-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\intellivision-ecs^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\jzIntv\bin\jzIntv.exe -z720x480 "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>intellivision-ecs^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>intellivision-ecs^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>intellivision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>intellivision-ecs^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>turbografx-16^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  NEC TurboGrafx 16 - (Aug 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  NEC TurboGrafx / PC Engine - (1987-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\turbografx-16^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .pce .ccd .cue .zip .7Z .PCE .CCD .CUE .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>turbografx-16^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>turbografx-16^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>pcengine^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  NEC PC Engine - Japan - (Oct 1987)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\pcengine^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .pce .ccd .cue .zip .7Z .PCE .CCD .CUE .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>pcengine^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pcengine^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tg16^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>pcengine^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>supergrafx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  NEC SuperGrafx - Japan - (Dec 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  NEC SuperGrafx - Japan - (1989-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\supergrafx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .pce .ccd .cue .zip .7Z .PCE .CCD .CUE .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3363,29 +2659,19 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>nes^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo NES - (Oct 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo NES / Famicom - (1983-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\nes^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .nes .zip .7Z .NES .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>nes^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>nes^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>famicom^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo Famicom - Japan - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\famicom^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .nes .fds .zip .7Z .NES .FDS .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>famicom^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>famicom^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>famicom^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>fds^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Famicom Disk System - Japan - (Feb 1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Famicom Disk System - Japan - (1986-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\fds^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .nes .fds .zip .7Z .NES .FDS .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3396,21 +2682,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>snes^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo Super NES - (Aug 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo Super NES / Famicom - (1990-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\snes^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x2010_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>snes^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>snes^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>sfc^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>supergb^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Super Game Boy - SNES/SFC - (Jun 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Super Game Boy - (1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\supergb^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .gb .gbc .zip .7Z .GB .GBC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mgba_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>supergb^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>supergb^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3418,31 +2705,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>supergbc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Super Game Boy Color - SNES/SFC - (Jun 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-addon\supergbc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mgba_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>supergbc^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>supergbc^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>sfc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo Super Famicom - Japan - (Nov 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\sfc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x2010_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>sfc^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>sfc^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>satellaview^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Satellaview - SFC - Japan - (Apr 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Satellaview - Japan - (1995-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\satellaview^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3453,7 +2717,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sufami^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sufami Turbo - SFC - Japan - (1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sufami Turbo - Japan - (1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\sufami^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3464,7 +2728,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>n64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo 64 - (Sep 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo 64 - (1996-2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\n64^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3474,31 +2738,20 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>n64-japan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo 64 - Japan - (Jun 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\n64-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>n64-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>n64-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>n64-dd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  64DD - N64 - Japan - (Dec 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo 64DD - Japan - (1999-2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\n64-dd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .ndd .v64 .7Z .ZIP .Z64 .N64 .NDD .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\parallel_n64_libretro_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64-dd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>n64-dd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>n64dd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>rca-studio-ii^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  RCA Studio II - (Jan 1977)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  RCA Studio II - (1977-1978)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-keypad\rca-studio-ii^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .st2 .7Z .ZIP .BIN .ST2^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\rca-studio-ii\ studio2 -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3510,7 +2763,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sg-1000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega SG-1000 - Japan - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega SG-1000 - Japan - (1983-1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\sg-1000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sg .bin .zip .7Z .SG .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3521,62 +2774,31 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>mastersystem^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Master System - (Sep 1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega Master System / Mark III - (1985-1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\mastersystem^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>mastersystem^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>mastersystem^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mark-iii^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Mark III - Japan - (Oct 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\mark-iii^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mark-iii^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mark-iii^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>markiii^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>genesis^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Genesis - (Aug 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega Genesis / Mega Drive - (1988-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console\genesis^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>genesis^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>genesis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megadrive-japan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Mega Drive - Japan - (Oct 1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\megadrive-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megadrive-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megadrive-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megadrive^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Mega Drive - Europe - (Sep 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\megadrive^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megadrive^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megadrive^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>megadrive^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sega32x^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega 32X - (Nov 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega 32X - (1994-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-addon\sega32x^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .32x .smd .bin .md .zip .7Z .32X .SMD .BIN .MD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\picodrive_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3586,69 +2808,26 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>super32x^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Super 32X - Japan - (Dec 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-addon\super32x^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .32x .smd .bin .md .zip .7Z .32X .SMD .BIN .MD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\picodrive_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>super32x^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>super32x^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mega32x^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Mega 32X - Europe - (Jan 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-addon\mega32x^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .32x .smd .bin .md .zip .7Z .32X .SMD .BIN .MD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\picodrive_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mega32x^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mega32x^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>neogeo-aes^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  SNK Neo*Geo AES - (Jul 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\neogeo-aes^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>neogeo^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  SNK Neo*Geo (MVS/AES) - (1990-2004)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\console\neogeo^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.fba .zip .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>neogeo-aes^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>neogeo-aes^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>tectoy-ms^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Tectoy Master System - Brazil - (Sep 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\tectoy-ms^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>tectoy-ms^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>tectoy-ms^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>tectoy-md^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Tectoy Mega Drive - Brazil - (Dec 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console\tectoy-md^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>tectoy-md^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>tectoy-md^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>neogeo^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>neogeo^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>creativision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  VTech CreatiVision - (1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  VTech CreatiVision - Europe - (1982-1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-keypad\creativision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\creativision\ crvision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll crvision -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>creativision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>crvision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -3673,7 +2852,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>3do^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  3DO - (Oct 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  3DO - (1993-1997)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\3do^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .iso .CHD .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\opera_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3684,7 +2863,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>amigacd32^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Amiga CD32 - Europe - (Sep 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Amiga CD32 - Europe - (1993-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\amigacd32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .lha .CHD .CUE .LHA^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3696,30 +2875,31 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarijaguar-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Atari Jaguar CD - (Sep 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Atari Jaguar CD - (1995-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\atarijaguar-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .cue .iso .j64 .jag .zip .7Z .BIN .CUE .ISO .J64 .JAG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\virtualjaguar_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>atarijaguar-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>atarijaguar-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>atarijaguar^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>atarijaguar-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>commodore-cdtv^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Commodore CDTV - (Mar 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Commodore CDTV - (1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\commodore-cdtv^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\FS-UAE\System\FS-UAE\Windows\x86-64\fs-uae.exe --amiga-model=CDTV --joystick-port-0-mode=joystick --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>commodore-cdtv^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>commodore-cdtv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>cdtv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>xbox^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Microsoft XBOX - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Microsoft XBOX - (2001-2009)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\xbox^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3730,7 +2910,7 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>xbox360^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Microsoft XBOX 360 - (Nov 2005)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Microsoft XBOX 360 - (2005-2016)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\xbox360^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.iso .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\xenia\xenia.exe --vsync=false "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3743,31 +2923,20 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>turbografx-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  NEC TurboGrafx CD - (Nov 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  NEC TurboGrafx / PC Engine CD - (1989-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\turbografx-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .pce .ccd .cue .chd .iso .zip .7Z .PCE .CCD .CUE .CHD .ISO .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>turbografx-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>turbografx-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>pcengine-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  NEC PC Engine CD-ROM - Japan - (Dec 1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-optical\pcengine-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.chd .ccd .cue .iso .CHD .CCD .CUE .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>pcengine-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pcengine-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tg-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>pce-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>pcfx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  NEC PC-FX - Japan - (Dec 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  NEC PC-FX - Japan - (1994-1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\pcfx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ccd .chd .cue .toc .zip .7Z .CCD .CHD .CUE .TOC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pcfx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3778,9 +2947,9 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamecube^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo GameCube - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Nintendo GameCube - (2001-2007)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\gamecube^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.iso .gcz .gcn .ISO .GCZ .GCN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.chd .iso .gcz .gcn .CHD .ISO .GCZ .GCN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\dolphin_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin-dev\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3791,7 +2960,7 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wii^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii - (Nov 2006)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Nintendo Wii - (2006-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\wii^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.iso .ISO .wbfs .WBFS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\dolphin_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3803,47 +2972,21 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>wii-ware^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii Ware - (Mar 2008)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-optical\wii-ware^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.zip .ZIP .wad .WAD .iso .ISO .wbfs .WBFS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\dolphin_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin-dev\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>wii-ware^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>wii-ware^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wii-u^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii U - (Nov 2012)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Nintendo Wii U - (2012-2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\wii-u^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<extension^>.rpx .RPX .iso .ISO .wud .WUD .wux .WUX^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\cemu\Cemu.exe -f -g "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>wii-u^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>wii-u^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>wii-u-eshop^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii U eShop - (Nov 2012)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-optical\wii-u-eshop^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<extension^>.rpx .RPX .iso .ISO .wud .WUD .wux .WUX^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\cemu\ Cemu.exe -f -g "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>wii-u-eshop^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>wii-u-eshop^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>wiiu^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>segacd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega CD - (Oct 1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sega / Mega CD - (1992-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\segacd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .iso .cue .CHD .ISO .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3853,30 +2996,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megacd-japan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Mega CD - Japan - (Dec 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-optical\megacd-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.chd .iso .CHD .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megacd-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megacd-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megacd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Mega CD - Europe - (1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-optical\megacd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.chd .iso .cue .CHD .ISO .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megacd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megacd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>saturn^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Saturn - (May 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sega Saturn - (1995-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\saturn^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cue .CUE .ccd .CCD .chd .CHD .iso .ISO .toc .TOC .m3u .M3U^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\kronos_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3888,9 +3009,9 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>dreamcast^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Dreamcast - (Sep 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sega Dreamcast - (1999-2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\dreamcast^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.gdi .cdi .GDI .CDI .chd .CHD^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.cdi .chd .gdi .CDI .CHD .GDI^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>dreamcast^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>dreamcast^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3898,46 +3019,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>dreamcast-demul^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Dreamcast (Demul)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\arcade\dreamcast-demul^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<extension^>.gdi .cdi .GDI .CDI .chd .CHD^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\Demul\demul.exe -run=dc -rom="%%BASENAME%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>dreamcast-demul^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>dreamcast-demul^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>dreamcast-indies^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Dreamcast Indies - (2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-optical\dreamcast-indies^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.gdi .cdi .GDI .CDI .chd .CHD^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>dreamcast-indies^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>dreamcast-indies^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>neogeo-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  SNK Neo Geo CD - (Jan 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  SNK Neo Geo CD - (1996-1997)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<fullname^>Neo Geo CDZ^</fullname^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\neogeo-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.cue .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\neocd_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll --subsystem neocd "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>neogeo-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>neogeo-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>neocdz^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>neogeo-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>psx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sony PlayStation - (Sep 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sony PlayStation - (1995-2006)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\psx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .cbn .gz .img .iso .m3u .mdf .pbp .toc .z .znx .CHD .GZ .CUE .CBN .IMG .ISO .M3U .MDF .PBP .TOC .Z .ZNX^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_psx_hw_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3948,7 +3045,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ps2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sony PlayStation 2 - (Oct 2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sony PlayStation 2 - (2000-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\ps2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cue .cbn .gz .img .iso .m3u .mdf .pbp .toc .z .znx .GZ .CUE .CBN .IMG .ISO .M3U .MDF .PBP .TOC .Z .ZNX^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\play_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3961,7 +3058,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ps3^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sony PlayStation 3 - (Nov 2006)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sony PlayStation 3 - (2006-2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\console-optical\ps3^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3989,7 +3086,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarilynx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Atari Lynx - (Sep 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Atari Lynx - (1989-1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\atarilynx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .lnx .zip .7Z .LNX .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_lynx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4001,7 +3098,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wonderswan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Bandai WonderSwan - Japan - (Mar 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Bandai WonderSwan - Japan - (1999-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\wonderswan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ws .wsc .zip .7Z .WS .WSC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_wswan_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4012,7 +3109,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wonderswancolor^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Bandai WonderSwan Color - (Dec 2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Bandai WonderSwan Color - Japan - (2000-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\wonderswancolor^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ws .wsc .zip .7Z .WS .WSC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_wswan_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4023,7 +3120,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamemaster^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Hartung Game Master - (1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Hartung Game Master - Europe - (1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\gamemaster^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.tgc .bin .zip .TGC .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\portable\gamemaster\ gmaster -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4035,7 +3132,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gp32^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Game Park GP32 - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Game Park GP32 - Korea - (2001-2005)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\gp32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .smc .zip .7Z .SMC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\portable\gp32\ gp32 -memc "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4047,7 +3144,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gb^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Game Boy - (Jul 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Game Boy - (1989-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\gb^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\gambatte_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4058,7 +3155,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gbc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Game Boy Color - (Nov 1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Game Boy Color - (1998-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\gbc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gbc .zip .7Z .GBC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\gambatte_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4069,7 +3166,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gba^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Game Boy Advance - (Jun 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Game Boy Advance - (2001-2010)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\gba^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gba .zip .7Z .GBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mgba_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4080,18 +3177,18 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>pokemon-mini^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Pokemon Mini - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Pokemon Mini - (2001-2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\pokemon-mini^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .min .7Z .ZIP .MIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\pokemonmini_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>pokemon-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pokemon-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>pokemini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>nds^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo DS - (Nov 2004)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo DS - (2004-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable-touch\nds^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .nds .7Z .ZIP .NDS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\desmume_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4103,7 +3200,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>3ds^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo 3DS - (Mar 2011)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo 3DS - (2011-2020)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable-touch\3ds^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .3ds .7Z .ZIP .3DS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\citra_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4113,19 +3210,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>3ds-eshop^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo 3DS eShop - (Jun 2011)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\portable-touch\3ds-eshop^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .3ds .7Z .ZIP .3DS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\citra_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>3ds-eshop^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>3ds-eshop^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>switch^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Switch - (Mar 2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Switch - (2017-)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable-touch\switch^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4138,7 +3224,7 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamegear^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Sega Game Gear - (Apr 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sega Game Gear - (1991-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\gamegear^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gg .bin .sms .zip .7Z .GG .BIN .SMS .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4149,7 +3235,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ngp^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket - (Oct 1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket - Japan/Europe - (1998-1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\ngp^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ngp .zip .7Z .NGP .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_ngp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4160,7 +3246,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ngpc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket Color - (Aug 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket Color - (1999-2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\ngpc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ngc .zip .7Z .NGC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_ngp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4171,7 +3257,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>psp^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Sony PSP - (Mar 2005)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sony PSP - (2005-2014)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable-optical\psp^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cso .iso .pbp .CSO .ISO .PBP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\ppsspp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4182,18 +3268,19 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>psp-minis^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  PSP minis - (Oct 2009)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\portable-optical\psp-minis^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sony PSP Go minis - (2009-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\portable\psp-minis^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cso .iso .pbp .CSO .ISO .PBP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\ppsspp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>psp-minis^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>psp-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>pspminis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>pspgo-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamecom^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Tiger Game.com - (Aug 1997)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Tiger Game.com - (1997-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\portable\gamecom^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.tgc .bin .zip .TGC .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\portable\gamecom\ gamecom -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4247,7 +3334,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>adventurevision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Entex Adventure Vision - (Oct 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Entex Adventure Vision - (1982-1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\specialty\adventurevision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bin .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\specialty\adventurevision\ advision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" 
@@ -4259,7 +3346,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>vectrex^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  GCE Vectrex - (Nov 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  GCE Vectrex - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\specialty\vectrex^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .vec .gam .bin .zip .7Z .VEC .GAM .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\vecx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4269,8 +3356,20 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>vectrex-parajve^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  GCE Vectrex - ParaJVE - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\specialty\vectrex-parajve^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>vectrex-parajve^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>vectrex^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>vectrex-parajve^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gameandwatch^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Nintendo Game ^& Watch - (Apr 1980)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Nintendo Game ^& Watch - (1980-1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\specialty\gameandwatch^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.mgw .MGW^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\gw_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4281,7 +3380,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>virtualboy^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Nintendo Virtual Boy - (Aug 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Nintendo Virtual Boy - (1995-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\specialty\virtualboy^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .vb .zip .7Z .VB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_vb_libretro_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4320,7 +3419,8 @@ echo     ^<path^>%rkdir%\ROMS\specialty\genesis-mini^</path^> >> "%USERPROFILE%\
 echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>genesis-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>genesis-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>genesis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>genesis-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -4331,29 +3431,19 @@ echo     ^<path^>%rkdir%\ROMS\specialty\turbografx-mini^</path^> >> "%USERPROFIL
 echo     ^<extension^>.7z .pce .ccd .cue .chd .iso .zip .7Z .PCE .CCD .CUE .CHD .ISO .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>turbografx-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>turbografx-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>turbografx-16^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>turbografx-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>msu1^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Specialty.  MSU-1 for SNES/SFC - (May 2012)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\specialty\msu1^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\specialty\snes-msu1^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.sfc .SFC^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>msu1^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msu1^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>vectrex-parajve^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Vectrex - ParaJVE - (Nov 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\specialty\vectrex-parajve^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>vectrex-parajve^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>vectrex-parajve^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>snesmsu1^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -4427,7 +3517,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>scummvm^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Port.  ScummVM - (Oct 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Port.  ScummVM - (2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\port\scummvm^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4457,7 +3547,7 @@ echo     ^<path^>%rkdir%\ROMS\port\tic-80^</path^> >> "%USERPROFILE%\.emulations
 echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\tic80_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>tic-80^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>tic-80^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tic80^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -4482,7 +3572,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>dosbox^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  DOSBox - (Jul 2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  DOSBox - (2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\dosbox^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4495,7 +3585,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>bbcmicro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Acorn BBC Micro - UK -(Dec 1981)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Acorn BBC Micro, Electron - UK - (1981-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\bbcmicro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .ssd .dsd .ad .img .7Z .ZIP .SSD .DSD .AD .IMG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\BeebEm\BeebEm.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4503,25 +3593,13 @@ echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\c
 echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\computer\bbcmicro\ bbcb -cass OR -flop "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>bbcmicro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>bbcmicro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>electron^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Acorn Electron - UK - (Summer 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\computer\electron^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .ssd .dsd .ad .img .7Z .ZIP .SSD .DSD .AD .IMG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\BeebEm\BeebEm.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll electron -cass OR -flop "%%ROM_RAW%%"^</command^> >> --^> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\computer\electron\ electron -cass OR -flop "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>electron^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>electron^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>electron^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>amstradcpc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Amstrad CPC - Europe - (Jun 1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Amstrad CPC - Europe - (1984-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\amstradcpc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .cdt .cpc .dsk .7Z .ZIP .CDT .CPC .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\cap32_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4532,7 +3610,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>apple2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Apple II - (Jun 1977)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Apple II - (1977-1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\apple2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .dsk .7Z .ZIP .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\AppleWin\Applewin.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4543,7 +3621,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>macintosh^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Apple Macintosh - (Jan 1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Apple Macintosh, OS 7.5.2 thru 9.0.4^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\macintosh^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .dsk .img .rom .7Z .ZIP .DSK .IMG .ROM^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo ^<!-- START:  THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4558,7 +3636,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari800^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Atari 800 - (Nov 1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Atari 800 - (1979-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\atari800^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bas .bin .car .com .xex .atr .xfd .dcm .atr.gz .xfd.gz .7Z .ZIP .BAS .BIN .CAR .COM .XEX .ATR .XFD .DCM .ATR.GZ .XFD.GZ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\atari800_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4569,7 +3647,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarist^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Atari ST - (Jun 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Atari ST - (1985-1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\atarist^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .st .stx .img .rom .raw .ipf .ctr .7Z .ZIP .ST .STX .IMG .ROM .RAW .IPF .CTR^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\hatari_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4582,7 +3660,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>adam^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Coleco ADAM - (Oct 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Coleco ADAM - (1983-1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\adam^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bas .bin .col .com .ddp .dsk .img .lbr .rom .zip .7Z .BAS .BIN .COL .COM .DDP .DSK .IMG .LBR .ROM .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4593,7 +3671,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>c64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Commodore 64 - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Commodore 64 - (1982-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\c64^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .crt .d64 .g64 .t64 .tap .x64 .zip .prg .7Z .CRT .D64 .G64 .T64 .TAP .X64 .ZIP .PRG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\vice_x64_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4605,7 +3683,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>amiga^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Commodore Amiga - (Jul 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Commodore Amiga - (1985-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\amiga^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.adf .ADF .zip .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4615,19 +3693,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>dragon32^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Dragon 32 - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\computer\dragon32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .cas .wav .bas .asc .dmk .jvc .os9 .dsk .vdk .rom .ccc .sna .7Z .ZIP .CAS .WAV .BAS .ASC .DMK .JVC .OS9 .DSK .VDK .ROM .CCC .SNA^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\XRoar\xroar.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>dragon32^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>dragon32^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>aquarius^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Mattel Aquarius - (Oct 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Mattel Aquarius - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\aquarius^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\computer\aquarius\ aquarius -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4639,18 +3706,19 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>odyssey2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Magnavox Odyssey 2 - (Feb 1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Magnavox Odyssey 2, Videopac, Videopac+ - (1978-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\odyssey2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .zip .7Z .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\o2em_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>odyssey2^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>odyssey2^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>videopac^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>msx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Microsoft MSX, MSX2, MSX2+, MSX turboR - (1983-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\msx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4660,63 +3728,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>msx2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX 2 - (1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\computer\msx2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>msx2^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msx2^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>msx2-plus^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX 2+ - (1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\computer\msx2-plus^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>msx2-plus^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msx2-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>msx-turbo-r^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX Turbo R - (1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\computer\msx-turbo-r^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>msx-turbo-r^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msx-turbo-r^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>videopac^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Philips Videopac - Europe - (Dec 1978)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\computer\videopac^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .zip .7Z .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\o2em_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>videopac^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>videopac^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>videopac-plus^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Philips Videopac Plus - Europe - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\computer\videopac-plus^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .zip .7Z .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\o2em_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>videopac-plus^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>videopac-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sc-3000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sega SC-3000 - Japan - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sega SC-3000 - Japan - (1983-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\sc-3000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .7Z .ZIP .sg. SG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4727,7 +3740,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>x1^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sharp X1 - Japan - (1987)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sharp X1 - Japan - (1982-1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\x1^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .d88 .zip .7Z .D88 .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\x1_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4740,7 +3753,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>x68000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sharp X68000 - Japan - (Mar 1987)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sharp X68000 - Japan - (1987-1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\x68000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .dim .m3u .zip .7Z .DIM .M3U .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\px68k_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4751,7 +3764,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>zx81^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sinclair Z81 - UK - (Mar 1981)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sinclair Z81 - UK - (1981-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\zx81^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sh .sna .szx .z80 .tap .tzx .gz .udi .mgt .img .trd .scl .dsk .zip .7Z .SH .SNA .SZX .Z80 .TAP .TZX .GZ .UDI .MGT .IMG .TRD .SCL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\81_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4762,7 +3775,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>zxspectrum^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sinclair ZX Spectrum - UK - (Apr 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sinclair ZX Spectrum - UK - (1982-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\zxspectrum^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sh .sna .szx .z80 .tap .tzx .gz .udi .mgt .img .trd .scl .dsk .zip .7Z .SH .SNA .SZX .Z80 .TAP .TZX .GZ .UDI .MGT .IMG .TRD .SCL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fuse_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4773,29 +3786,31 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>spectravideo^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  SVI SpectraVideo - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  SVI SpectraVideo - (1983-1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\spectravideo^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bas .bin .col .com .ddp .dsk .img .lbr .rom .zip .7Z .BAS .BIN .COL .COM .DDP .DSK .IMG .LBR .ROM .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>spectravideo^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>spectravideo^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>svi318^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>spectravideo^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>coco^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Tandy Color Computer - (1980)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Tandy Color / Dragon 32 - (1980-1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\coco^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .cas .wav .bas .asc .dmk .jvc .os9 .dsk .vdk .rom .ccc .sna .7Z .ZIP .CAS .WAV .BAS .ASC .DMK .JVC .OS9 .DSK .VDK .ROM .CCC .SNA^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\XRoar\xroar.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>coco^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>coco^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>dragon32^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ti99^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Texas Inst. TI-99/4A - (Jun 1981)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Texas Inst. TI-99/4A - (1981-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%rkdir%\ROMS\computer\ti99^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.zip .ZIP .bin .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\Classic99\classic99.exe -rom "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4814,11 +3829,11 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 echo ^</systemList^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:::                                                                                         :::
-:::   End of  '^<path^>%rkdir%\ROMS\...'  for ROMS path  in es_systems.cfg                  :::
-:::                                                                                         :::
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::                                                                                            :::
+:::   End of  '^<path^>%rkdir%\ROMS\...'  for ROMS path  in es_systems.cfg                     :::
+:::                                                                                            :::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 IF EXIST %rkdir%\Temp\BrandNewDef goto DefaultRomFolders
@@ -4837,11 +3852,11 @@ set /p cusromdir="Enter Path for ROM Folder (default %rkdir%\ROMS): "
 
 
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:::                                                                                            :::
-:::   Generates  '^<path^>%cusromdir%\ROMS\...'  for ROMS path  in es_systems.cfg              :::
-:::                                                                                            :::
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::                                                                                               :::
+:::   Generates  '^<path^>%cusromdir%\ROMS\...'  for ROMS path  in es_systems.cfg                 :::
+:::                                                                                               :::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 echo ^<?xml version="1.0"?^> > "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
@@ -4862,25 +3877,26 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>vector-games^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  Vector Games ^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\vector-games^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2003_plus_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>vector-games^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>vector-games^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>mame-libretro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Arcade.  MAME Libretro - latest^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\arcade\mame-libretro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>mame-libretro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>arcade^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>mame-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>fbneo-libretro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  FB Neo Libretro - latest^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\arcade\fbneo-libretro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>fbneo-libretro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>arcade^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>fbneo-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -4899,53 +3915,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>fbneo-libretro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  FB Neo Libretro - latest^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\fbneo-libretro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>fbneo-libretro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>fbneo-libretro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>neogeo-mvs^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  Neo*Geo MVS^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\neogeo-mvs^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>neogeo-mvs^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>neogeo-mvs^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame-selects^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\mame-selects^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame-selects^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame-selects^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>fbneo-selects^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  FB Neo Selects^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\fbneo-selects^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbalpha2012_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>fbneo-selects^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>fbneo-selects^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atomiswave^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  AtomisWave^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  Sammy AtomisWave^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\arcade\atomiswave^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.lst .LST .7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4956,7 +3927,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>hikaru^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  Hikaru^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  Sega Hikaru^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\arcade\hikaru-demul^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<extension^>.7z .zip .7Z .ZIP^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -4969,103 +3940,14 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>NAOMI^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  NAOMI^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>naomi^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Arcade.  Sega NAOMI^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\arcade\naomi^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.lst .LST .7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>naomi^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>naomi^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>advancemame^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  AdvanceMAME - (0.106)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\advancemame^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\AdvanceMAME\advmame.exe "%%BASENAME%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>advancemame^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>advancemame^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>fba^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  FB Alpha - (0.2.97.39)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\fba^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .fba .zip .7Z .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbalpha2012_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>fba^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>fba^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2000 - (0.37b5)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\mame2000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2000_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2000^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2003^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2003 - (0.78)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\mame2003^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2003_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2003^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2003^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2003-plus^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2003 Plus - (backports)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\mame2003-plus^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2003_plus_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2003-plus^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2003-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2010^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2010 - (0.139)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\mame2010^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2010_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2010^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2010^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2015^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2015 - (0.160)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\mame2015^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2015_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2015^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2015^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mame2016^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Arcade.  MAME 2016 - (0.174)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\mame2016^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame2016_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mame2016^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mame2016^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
 
 
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5089,7 +3971,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gx4000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Amstrad GX4000 - Europe - (Sep 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Amstrad GX4000 - Europe - (1990-1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\gx4000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .cdt .cpc .dsk .7Z .ZIP .CDT .CPC .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\cap32_libretro.dll "%%ROM_RAW%%"^</command^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5101,7 +3983,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari2600^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari 2600 - (Sep 1977)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari 2600 - (1977-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\atari2600^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .a26 .bin .rom .zip .gz .7Z .A26 .BIN .ROM .ZIP .GZ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\stella_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5113,19 +3995,20 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari2600-supercharger^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  SuperCharger  - Atari 2600 - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Starpath Supercharger for Atari 2600 - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\atari2600-supercharger^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .a26 .bin .rom .zip .gz .7Z .A26 .BIN .ROM .ZIP .GZ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\stella_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\stella2014_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>atari2600-supercharger^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>atari2600-supercharger^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>atari2600^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>atari2600-supercharger^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" 
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari5200^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari 5200 - (Nov 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari 5200 - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-keypad\atari5200^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .a52 .bin .car .7Z .ZIP .A52 .BIN .CAR^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\atari800_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5136,7 +4019,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari7800^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari 7800 ProSystem - (May 1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari 7800 ProSystem - (1986-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\atari7800^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .a78 .bin .zip .7Z .A78 .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\prosystem_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5147,7 +4030,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarijaguar^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Atari Jaguar - (Nov 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Atari Jaguar - (1993-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-keypad\atarijaguar^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .j64 .jag .zip .7Z .J64 .JAG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\virtualjaguar_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5158,7 +4041,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>astrocade^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Bally Astrocade - (Apr 1978)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Bally Astrocade - (1978-1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-keypad\astrocade^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\astrocade\ astrocde -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5170,7 +4053,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>colecovision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  ColecoVision - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  ColecoVision - (1982-1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-keypad\colecovision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .col .rom .zip .7Z .BIN .COL .ROM .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5181,18 +4064,18 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>pv-1000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Casio PV-1000 - (Oct 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Casio PV-1000 - Japan - (1983-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\pv-1000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .cpr .zip .7Z .BIN .CPR .ZIP ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\pv-1000\ pv1000 -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>pv-1000^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pv-1000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>pv1000^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>arcadia^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Emerson Arcadia 2001 - (May 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Emerson Arcadia 2001 - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-keypad\arcadia^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\arcadia\ arcadia -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5204,32 +4087,33 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>supercassettevision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Epoch Super Cassette Vision - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Epoch Super Cassette Vision - Japan - (1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-keypad\supercassettevision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\supercassettevision\ scv -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll scv -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>supercassettevision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>supercassettevision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>scv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>supercassettevision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>channel-f^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Fairchild Channel F - (Nov 1976)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Fairchild Channel F - (1976-1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\channel-f^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\freechaf_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll channelf -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\channel-f\ channelf -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>channel-f^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>channel-f^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>channelf^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>super-acan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Funtech Super A`can - Taiwan - (Oct 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Funtech Super A`can - Taiwan - (1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\super-acan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .cpr .7Z .ZIP .BIN .CPR^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath %rkdir%\ROMS\console\super-acan\ supracan -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5240,7 +4124,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Mattel Intellivision - (1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Mattel Intellivision - (1979-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-keypad\intellivision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\freeintv_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5251,64 +4135,56 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision-jzintv^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Intellivision - jzInTV^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Intellivision - jzInTV - (1979-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\console-keypad\intellivision-jzintv^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\jzIntv\bin\jzIntv.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>intellivision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>intellivision-jzintv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>intellivision-jzintv^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>intellivision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>intellivision-jzintv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision-voice^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  IntelliVoice - Intellivision - (1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  IntelliVoice - Intellivision - (1982-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\intellivision-voice^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\jzIntv\bin\jzIntv.exe -z720x480 "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>intellivision-voice^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>intellivision-voice^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>intellivision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>intellivision-voice^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>intellivision-ecs^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  ECS Computer Module - Intellivision - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  ECS Computer Module - Intellivision - (1983-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\intellivision-ecs^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .int .bin .7Z .ZIP .INT .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\jzIntv\bin\jzIntv.exe -z720x480 "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>intellivision-ecs^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>intellivision-ecs^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>intellivision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>intellivision-ecs^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>turbografx-16^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  NEC TurboGrafx 16 - (Aug 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  NEC TurboGrafx / PC Engine - (1987-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\turbografx-16^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .pce .ccd .cue .zip .7Z .PCE .CCD .CUE .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>turbografx-16^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>turbografx-16^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>pcengine^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  NEC PC Engine - Japan - (Oct 1987)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\pcengine^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .pce .ccd .cue .zip .7Z .PCE .CCD .CUE .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>pcengine^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pcengine^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tg16^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>pcengine^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>supergrafx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  NEC SuperGrafx - Japan - (Dec 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  NEC SuperGrafx - Japan - (1989-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\supergrafx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .pce .ccd .cue .zip .7Z .PCE .CCD .CUE .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5320,29 +4196,19 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>nes^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo NES - (Oct 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo NES / Famicom - (1983-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\nes^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .nes .zip .7Z .NES .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>nes^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>nes^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>famicom^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo Famicom - Japan - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\famicom^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .nes .fds .zip .7Z .NES .FDS .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>famicom^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>famicom^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>famicom^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>fds^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Famicom Disk System - Japan - (Feb 1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Famicom Disk System - Japan - (1986-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\fds^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .nes .fds .zip .7Z .NES .FDS .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fceumm_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5353,21 +4219,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>snes^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo Super NES - (Aug 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo Super NES / Famicom - (1990-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\snes^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x2010_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>snes^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>snes^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>sfc^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>supergb^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Super Game Boy - SNES/SFC - (Jun 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Super Game Boy - (1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\supergb^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .gb .gbc .zip .7Z .GB .GBC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mgba_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>supergb^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>supergb^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5375,31 +4242,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>supergbc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Super Game Boy Color - SNES/SFC - (Jun 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-addon\supergbc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mgba_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>supergbc^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>supergbc^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>sfc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo Super Famicom - Japan - (Nov 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\sfc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .smc .sfc .fig .swc .mgd .zip .7Z .BIN .SMC .SFC .FIG .SWC .MGD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x2010_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>sfc^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>sfc^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>satellaview^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Satellaview - SFC - Japan - (Apr 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Satellaview - Japan - (1995-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\satellaview^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5410,7 +4254,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sufami^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sufami Turbo - SFC - Japan - (1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sufami Turbo - Japan - (1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\sufami^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5421,7 +4265,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>n64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo 64 - (Sep 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo 64 - (1996-2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\n64^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5431,31 +4275,20 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>n64-japan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Nintendo 64 - Japan - (Jun 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\n64-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .z64 .n64 .v64 .7Z .ZIP .Z64 .N64 .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>n64-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>n64-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>n64-dd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  64DD - N64 - Japan - (Dec 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Nintendo 64DD - Japan - (1999-2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\n64-dd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .z64 .n64 .ndd .v64 .7Z .ZIP .Z64 .N64 .NDD .V64^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mupen64plus_next_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\parallel_n64_libretro_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>n64-dd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>n64-dd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>n64dd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>rca-studio-ii^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  RCA Studio II - (Jan 1977)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  RCA Studio II - (1977-1978)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-keypad\rca-studio-ii^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .st2 .7Z .ZIP .BIN .ST2^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\rca-studio-ii\ studio2 -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5467,7 +4300,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sg-1000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega SG-1000 - Japan - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega SG-1000 - Japan - (1983-1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\sg-1000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sg .bin .zip .7Z .SG .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5478,62 +4311,31 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>mastersystem^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Master System - (Sep 1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega Master System / Mark III - (1985-1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\mastersystem^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>mastersystem^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>mastersystem^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mark-iii^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Mark III - Japan - (Oct 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\mark-iii^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mark-iii^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mark-iii^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>markiii^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>genesis^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Genesis - (Aug 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega Genesis / Mega Drive - (1988-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console\genesis^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>genesis^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>genesis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megadrive-japan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Mega Drive - Japan - (Oct 1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\megadrive-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megadrive-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megadrive-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megadrive^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega Mega Drive - Europe - (Sep 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\megadrive^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megadrive^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megadrive^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>megadrive^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sega32x^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Sega 32X - (Nov 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  Sega 32X - (1994-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-addon\sega32x^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .32x .smd .bin .md .zip .7Z .32X .SMD .BIN .MD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\picodrive_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5543,69 +4345,26 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>super32x^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Super 32X - Japan - (Dec 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-addon\super32x^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .32x .smd .bin .md .zip .7Z .32X .SMD .BIN .MD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\picodrive_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>super32x^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>super32x^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>mega32x^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Mega 32X - Europe - (Jan 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-addon\mega32x^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .32x .smd .bin .md .zip .7Z .32X .SMD .BIN .MD .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\picodrive_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>mega32x^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>mega32x^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>neogeo-aes^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  SNK Neo*Geo AES - (Jul 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\neogeo-aes^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>neogeo^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  SNK Neo*Geo (MVS/AES) - (1990-2004)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\console\neogeo^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.fba .zip .FBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>neogeo-aes^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>neogeo-aes^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>tectoy-ms^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Tectoy Master System - Brazil - (Sep 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\tectoy-ms^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>tectoy-ms^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>tectoy-ms^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>tectoy-md^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  Tectoy Mega Drive - Brazil - (Dec 1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console\tectoy-md^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .sms .bin .zip .7Z .SMS .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>tectoy-md^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>tectoy-md^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>neogeo^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>neogeo^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>creativision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  VTech CreatiVision - (1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Console.  VTech CreatiVision - Europe - (1982-1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-keypad\creativision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\console-keypad\creativision\ crvision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll crvision -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>creativision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>crvision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -5630,7 +4389,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>3do^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  3DO - (Oct 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  3DO - (1993-1997)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\3do^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .iso .CHD .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\opera_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5641,7 +4400,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>amigacd32^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Amiga CD32 - Europe - (Sep 1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Amiga CD32 - Europe - (1993-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\amigacd32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .lha .CHD .CUE .LHA^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5653,30 +4412,31 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarijaguar-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Atari Jaguar CD - (Sep 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Atari Jaguar CD - (1995-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\atarijaguar-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .cue .iso .j64 .jag .zip .7Z .BIN .CUE .ISO .J64 .JAG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\virtualjaguar_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>atarijaguar-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>atarijaguar-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>atarijaguar^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>atarijaguar-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>commodore-cdtv^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Commodore CDTV - (Mar 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Commodore CDTV - (1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\commodore-cdtv^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\FS-UAE\System\FS-UAE\Windows\x86-64\fs-uae.exe --amiga-model=CDTV --joystick-port-0-mode=joystick --fullscreen=1 --cdrom-drive-0="%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>commodore-cdtv^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>commodore-cdtv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>cdtv^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>xbox^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Microsoft XBOX - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Microsoft XBOX - (2001-2009)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\xbox^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5687,7 +4447,7 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>xbox360^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Microsoft XBOX 360 - (Nov 2005)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Microsoft XBOX 360 - (2005-2016)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\xbox360^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.iso .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\xenia\xenia.exe --vsync=false "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5700,31 +4460,20 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>turbografx-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  NEC TurboGrafx CD - (Nov 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  NEC TurboGrafx / PC Engine CD - (1989-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\turbografx-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .pce .ccd .cue .chd .iso .zip .7Z .PCE .CCD .CUE .CHD .ISO .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>turbografx-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>turbografx-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>pcengine-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  NEC PC Engine CD-ROM - Japan - (Dec 1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-optical\pcengine-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.chd .ccd .cue .iso .CHD .CCD .CUE .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_fast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>pcengine-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pcengine-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tg-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>pce-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>pcfx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  NEC PC-FX - Japan - (Dec 1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  NEC PC-FX - Japan - (1994-1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\pcfx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ccd .chd .cue .toc .zip .7Z .CCD .CHD .CUE .TOC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pcfx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5735,9 +4484,9 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamecube^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo GameCube - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Nintendo GameCube - (2001-2007)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\gamecube^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.iso .gcz .gcn .ISO .GCZ .GCN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.chd .iso .gcz .gcn .CHD .ISO .GCZ .GCN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\dolphin_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin-dev\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5748,7 +4497,7 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wii^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii - (Nov 2006)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Nintendo Wii - (2006-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\wii^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.iso .ISO .wbfs .WBFS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\dolphin_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5760,47 +4509,21 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>wii-ware^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii Ware - (Mar 2008)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-optical\wii-ware^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.zip .ZIP .wad .WAD .iso .ISO .wbfs .WBFS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\dolphin_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\Dolphin-dev\Dolphin.exe -e "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>wii-ware^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>wii-ware^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wii-u^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii U - (Nov 2012)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Nintendo Wii U - (2012-2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\wii-u^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<extension^>.rpx .RPX .iso .ISO .wud .WUD .wux .WUX^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\Emulators\cemu\Cemu.exe -f -g "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>wii-u^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>wii-u^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>wii-u-eshop^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Nintendo Wii U eShop - (Nov 2012)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-optical\wii-u-eshop^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<extension^>.rpx .RPX .iso .ISO .wud .WUD .wux .WUX^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\cemu\ Cemu.exe -f -g "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>wii-u-eshop^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>wii-u-eshop^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>wiiu^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>segacd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega CD - (Oct 1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sega / Mega CD - (1992-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\segacd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .iso .cue .CHD .ISO .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5810,30 +4533,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megacd-japan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Mega CD - Japan - (Dec 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-optical\megacd-japan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.chd .iso .CHD .ISO^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megacd-japan^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megacd-japan^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>megacd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Mega CD - Europe - (1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-optical\megacd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.chd .iso .cue .CHD .ISO .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>megacd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>megacd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>saturn^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Saturn - (May 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sega Saturn - (1995-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\saturn^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cue .CUE .ccd .CCD .chd .CHD .iso .ISO .toc .TOC .m3u .M3U^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\kronos_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5845,9 +4546,9 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>dreamcast^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sega Dreamcast - (Sep 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sega Dreamcast - (1999-2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\dreamcast^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.gdi .cdi .GDI .CDI .chd .CHD^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.cdi .chd .gdi .CDI .CHD .GDI^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>dreamcast^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>dreamcast^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5855,46 +4556,22 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>dreamcast-demul^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Dreamcast (Demul)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\arcade\dreamcast-demul^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<extension^>.gdi .cdi .GDI .CDI .chd .CHD^</extension^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\Demul\demul.exe -run=dc -rom="%%BASENAME%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>dreamcast-demul^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>dreamcast-demul^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>dreamcast-indies^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Dreamcast Indies - (2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-optical\dreamcast-indies^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.gdi .cdi .GDI .CDI .chd .CHD^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\flycast_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>dreamcast-indies^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>dreamcast-indies^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>neogeo-cd^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  SNK Neo Geo CD - (Jan 1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  SNK Neo Geo CD - (1996-1997)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<fullname^>Neo Geo CDZ^</fullname^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\neogeo-cd^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.cue .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.chd .cue .CHD .CUE^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\neocd_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fbneo_libretro.dll --subsystem neocd "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>neogeo-cd^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>neogeo-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>neocdz^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>neogeo-cd^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>psx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sony PlayStation - (Sep 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sony PlayStation - (1995-2006)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\psx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.chd .cue .cbn .gz .img .iso .m3u .mdf .pbp .toc .z .znx .CHD .GZ .CUE .CBN .IMG .ISO .M3U .MDF .PBP .TOC .Z .ZNX^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_psx_hw_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5905,7 +4582,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ps2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sony PlayStation 2 - (Oct 2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sony PlayStation 2 - (2000-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\ps2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cue .cbn .gz .img .iso .m3u .mdf .pbp .toc .z .znx .GZ .CUE .CBN .IMG .ISO .M3U .MDF .PBP .TOC .Z .ZNX^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\play_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5918,7 +4595,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ps3^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Optical.  Sony PlayStation 3 - (Nov 2006)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Optical.  Sony PlayStation 3 - (2006-2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\console-optical\ps3^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5946,7 +4623,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarilynx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Atari Lynx - (Sep 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Atari Lynx - (1989-1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\atarilynx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .lnx .zip .7Z .LNX .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_lynx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5958,7 +4635,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wonderswan^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Bandai WonderSwan - Japan - (Mar 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Bandai WonderSwan - Japan - (1999-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\wonderswan^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ws .wsc .zip .7Z .WS .WSC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_wswan_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5969,7 +4646,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>wonderswancolor^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Bandai WonderSwan Color - (Dec 2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Bandai WonderSwan Color - Japan - (2000-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\wonderswancolor^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ws .wsc .zip .7Z .WS .WSC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_wswan_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5980,7 +4657,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamemaster^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Hartung Game Master - (1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Hartung Game Master - Europe - (1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\gamemaster^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.tgc .bin .zip .TGC .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\portable\gamemaster\ gmaster -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5992,7 +4669,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gp32^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Game Park GP32 - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Game Park GP32 - Korea - (2001-2005)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\gp32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .smc .zip .7Z .SMC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\portable\gp32\ gp32 -memc "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6004,7 +4681,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gb^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Game Boy - (Jul 1989)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Game Boy - (1989-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\gb^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gb .zip .7Z .GB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\gambatte_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6015,7 +4692,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gbc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Game Boy Color - (Nov 1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Game Boy Color - (1998-2003)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\gbc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gbc .zip .7Z .GBC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\gambatte_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6026,7 +4703,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gba^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Game Boy Advance - (Jun 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Game Boy Advance - (2001-2010)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\gba^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gba .zip .7Z .GBA .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mgba_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6037,18 +4714,18 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>pokemon-mini^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Pokemon Mini - (Nov 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Pokemon Mini - (2001-2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\pokemon-mini^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .min .7Z .ZIP .MIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\pokemonmini_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>pokemon-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>pokemon-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>pokemini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>nds^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo DS - (Nov 2004)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo DS - (2004-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable-touch\nds^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .nds .7Z .ZIP .NDS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\desmume_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6060,7 +4737,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>3ds^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo 3DS - (Mar 2011)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo 3DS - (2011-2020)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable-touch\3ds^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .3ds .7Z .ZIP .3DS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\citra_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6070,19 +4747,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>3ds-eshop^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo 3DS eShop - (Jun 2011)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\portable-touch\3ds-eshop^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .3ds .7Z .ZIP .3DS^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\citra_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>3ds-eshop^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>3ds-eshop^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>switch^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Nintendo Switch - (Mar 2017)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Nintendo Switch - (2017-)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable-touch\switch^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6095,7 +4761,7 @@ echo   ^</system^>  >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamegear^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Sega Game Gear - (Apr 1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sega Game Gear - (1991-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\gamegear^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .gg .bin .sms .zip .7Z .GG .BIN .SMS .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6106,7 +4772,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ngp^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket - (Oct 1998)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket - Japan/Europe - (1998-1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\ngp^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ngp .zip .7Z .NGP .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_ngp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6117,7 +4783,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ngpc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket Color - (Aug 1999)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  SNK Neo*Geo Pocket Color - (1999-2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\ngpc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .ngc .zip .7Z .NGC .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_ngp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6128,7 +4794,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>psp^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Sony PSP - (Mar 2005)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sony PSP - (2005-2014)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable-optical\psp^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cso .iso .pbp .CSO .ISO .PBP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\ppsspp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6139,18 +4805,19 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>psp-minis^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  PSP minis - (Oct 2009)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\portable-optical\psp-minis^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sony PSP Go minis - (2009-2013)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\portable\psp-minis^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.cso .iso .pbp .CSO .ISO .PBP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\ppsspp_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>psp-minis^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>psp-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>pspminis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>pspgo-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gamecom^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Portable.  Tiger Game.com - (Aug 1997)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Tiger Game.com - (1997-2000)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\portable\gamecom^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.tgc .bin .zip .TGC .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\portable\gamecom\ gamecom -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6204,7 +4871,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>adventurevision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Entex Adventure Vision - (Oct 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Entex Adventure Vision - (1982-1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\specialty\adventurevision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bin .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\specialty\adventurevision\ advision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" 
@@ -6216,7 +4883,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>vectrex^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  GCE Vectrex - (Nov 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  GCE Vectrex - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\specialty\vectrex^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .vec .gam .bin .zip .7Z .VEC .GAM .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\vecx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6226,8 +4893,20 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>vectrex-parajve^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  GCE Vectrex - ParaJVE - (1982-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\specialty\vectrex-parajve^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>vectrex-parajve^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>vectrex^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>vectrex-parajve^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>gameandwatch^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Nintendo Game ^& Watch - (Apr 1980)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Nintendo Game ^& Watch - (1980-1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\specialty\gameandwatch^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.mgw .MGW^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\gw_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6238,7 +4917,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>virtualboy^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Nintendo Virtual Boy - (Aug 1995)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Specialty.  Nintendo Virtual Boy - (1995-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\specialty\virtualboy^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .vb .zip .7Z .VB .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_vb_libretro_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6277,7 +4956,8 @@ echo     ^<path^>%cusromdir%\ROMS\specialty\genesis-mini^</path^> >> "%USERPROFI
 echo     ^<extension^>.7z .smd .bin .gen .md .sg .zip .7Z .SMD .BIN .GEN .MD .SG .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>genesis-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>genesis-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>genesis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>genesis-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -6288,29 +4968,19 @@ echo     ^<path^>%cusromdir%\ROMS\specialty\turbografx-mini^</path^> >> "%USERPR
 echo     ^<extension^>.7z .pce .ccd .cue .chd .iso .zip .7Z .PCE .CCD .CUE .CHD .ISO .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mednafen_pce_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>turbografx-mini^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>turbografx-mini^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>turbografx-16^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>turbografx-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>msu1^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<fullname^>Specialty.  MSU-1 for SNES/SFC - (May 2012)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\specialty\msu1^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\specialty\snes-msu1^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.sfc .SFC^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\snes9x_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>msu1^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msu1^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>vectrex-parajve^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Specialty.  Vectrex - ParaJVE - (Nov 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\specialty\vectrex-parajve^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>vectrex-parajve^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>vectrex-parajve^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>snesmsu1^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -6384,7 +5054,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>scummvm^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Port.  ScummVM - (Oct 2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Port.  ScummVM - (2001)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\port\scummvm^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6414,7 +5084,7 @@ echo     ^<path^>%cusromdir%\ROMS\port\tic-80^</path^> >> "%USERPROFILE%\.emulat
 echo     ^<extension^>.7z .zip .7Z .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\tic80_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>tic-80^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>tic-80^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>tic80^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -6439,7 +5109,7 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>dosbox^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  DOSBox - (Jul 2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  DOSBox - (2002)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\dosbox^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.bat .BAT^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>"%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6452,7 +5122,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>bbcmicro^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Acorn BBC Micro - UK -(Dec 1981)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Acorn BBC Micro, Electron - UK - (1981-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\bbcmicro^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .ssd .dsd .ad .img .7Z .ZIP .SSD .DSD .AD .IMG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\BeebEm\BeebEm.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6460,25 +5130,13 @@ echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\c
 echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\computer\bbcmicro\ bbcb -cass OR -flop "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>bbcmicro^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>bbcmicro^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>electron^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Acorn Electron - UK - (Summer 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\computer\electron^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .ssd .dsd .ad .img .7Z .ZIP .SSD .DSD .AD .IMG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\BeebEm\BeebEm.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mess2015_libretro.dll electron -cass OR -flop "%%ROM_RAW%%"^</command^> >> --^> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\computer\electron\ electron -cass OR -flop "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>electron^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>electron^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>electron^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>amstradcpc^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Amstrad CPC - Europe - (Jun 1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Amstrad CPC - Europe - (1984-1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\amstradcpc^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .cdt .cpc .dsk .7Z .ZIP .CDT .CPC .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\cap32_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6489,7 +5147,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>apple2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Apple II - (Jun 1977)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Apple II - (1977-1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\apple2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .dsk .7Z .ZIP .DSK^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\AppleWin\Applewin.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6500,7 +5158,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>macintosh^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Apple Macintosh - (Jan 1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Apple Macintosh, OS 7.5.2 thru 9.0.4^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\macintosh^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .dsk .img .rom .7Z .ZIP .DSK .IMG .ROM^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo ^<!-- START:  THIS  IS  WORK  IN  PROGRESS  --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6515,7 +5173,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atari800^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Atari 800 - (Nov 1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Atari 800 - (1979-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\atari800^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bas .bin .car .com .xex .atr .xfd .dcm .atr.gz .xfd.gz .7Z .ZIP .BAS .BIN .CAR .COM .XEX .ATR .XFD .DCM .ATR.GZ .XFD.GZ^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\atari800_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6526,7 +5184,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>atarist^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Atari ST - (Jun 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Atari ST - (1985-1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\atarist^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .st .stx .img .rom .raw .ipf .ctr .7Z .ZIP .ST .STX .IMG .ROM .RAW .IPF .CTR^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\hatari_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6539,10 +5197,9 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>adam^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Coleco ADAM - (Oct 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Coleco ADAM - (1983-1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\adam^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bas .bin .col .com .ddp .dsk .img .lbr .rom .zip .7Z .BAS .BIN .COL .COM .DDP .DSK .IMG .LBR .ROM .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\Emulators\ColEm\colem.exe "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>adam^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>adam^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6551,7 +5208,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>c64^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Commodore 64 - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Commodore 64 - (1982-1994)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\c64^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .crt .d64 .g64 .t64 .tap .x64 .zip .prg .7Z .CRT .D64 .G64 .T64 .TAP .X64 .ZIP .PRG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\vice_x64_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6563,7 +5220,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>amiga^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Commodore Amiga - (Jul 1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Commodore Amiga - (1985-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\amiga^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.adf .ADF .zip .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\puae_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6573,19 +5230,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>dragon32^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Dragon 32 - (Aug 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\computer\dragon32^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .zip .cas .wav .bas .asc .dmk .jvc .os9 .dsk .vdk .rom .ccc .sna .7Z .ZIP .CAS .WAV .BAS .ASC .DMK .JVC .OS9 .DSK .VDK .ROM .CCC .SNA^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\XRoar\xroar.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>dragon32^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>dragon32^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>aquarius^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Mattel Aquarius - (Oct 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Mattel Aquarius - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\aquarius^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .bin .7Z .ZIP .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\mame\mame64.exe -rompath C:\RetroCake\ROMS\computer\aquarius\ aquarius -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6597,18 +5243,19 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>odyssey2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Magnavox Odyssey 2 - (Feb 1979)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Magnavox Odyssey 2, Videopac, Videopac+ - (1978-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\odyssey2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bin .zip .7Z .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\o2em_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>odyssey2^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>odyssey2^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>videopac^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>msx^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Microsoft MSX, MSX2, MSX2+, MSX turboR - (1983-1996)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\msx^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6618,63 +5265,8 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>msx2^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX 2 - (1985)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\computer\msx2^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>msx2^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msx2^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>msx2-plus^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX 2+ - (1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\computer\msx2-plus^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>msx2-plus^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msx2-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>msx-turbo-r^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Microsoft MSX Turbo R - (1990)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\computer\msx-turbo-r^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .rom .mx1 .mx2 .col .dsk .zip .7Z .ROM .MX1 .MX2 .COL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>msx-turbo-r^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>msx-turbo-r^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>videopac^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Philips Videopac - Europe - (Dec 1978)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\computer\videopac^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .zip .7Z .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\o2em_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>videopac^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>videopac^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>videopac-plus^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Philips Videopac Plus - Europe - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\computer\videopac-plus^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .zip .7Z .BIN .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\o2em_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>videopac-plus^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>videopac-plus^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>sc-3000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sega SC-3000 - Japan - (Jul 1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sega SC-3000 - Japan - (1983-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\sc-3000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .7Z .ZIP .sg. SG^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\genesis_plus_gx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6685,7 +5277,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>x1^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sharp X1 - Japan - (1987)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sharp X1 - Japan - (1982-1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\x1^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .d88 .zip .7Z .D88 .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\x1_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6698,7 +5290,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>x68000^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sharp X68000 - Japan - (Mar 1987)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sharp X68000 - Japan - (1987-1993)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\x68000^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .dim .m3u .zip .7Z .DIM .M3U .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\px68k_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6709,7 +5301,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>zx81^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sinclair Z81 - UK - (Mar 1981)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sinclair Z81 - UK - (1981-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\zx81^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sh .sna .szx .z80 .tap .tzx .gz .udi .mgt .img .trd .scl .dsk .zip .7Z .SH .SNA .SZX .Z80 .TAP .TZX .GZ .UDI .MGT .IMG .TRD .SCL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\81_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6720,7 +5312,7 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>zxspectrum^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Sinclair ZX Spectrum - UK - (Apr 1982)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Sinclair ZX Spectrum - UK - (1982-1992)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\zxspectrum^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .sh .sna .szx .z80 .tap .tzx .gz .udi .mgt .img .trd .scl .dsk .zip .7Z .SH .SNA .SZX .Z80 .TAP .TZX .GZ .UDI .MGT .IMG .TRD .SCL .DSK .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\fuse_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6731,29 +5323,31 @@ echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>spectravideo^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  SVI SpectraVideo - (1983)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  SVI SpectraVideo - (1983-1988)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\spectravideo^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .bas .bin .col .com .ddp .dsk .img .lbr .rom .zip .7Z .BAS .BIN .COL .COM .DDP .DSK .IMG .LBR .ROM .ZIP^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\bluemsx_libretro.dll "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>spectravideo^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>spectravideo^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>svi318^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>spectravideo^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>coco^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Tandy Color Computer - (1980)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Tandy Color / Dragon 32 - (1980-1991)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\coco^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.7z .zip .cas .wav .bas .asc .dmk .jvc .os9 .dsk .vdk .rom .ccc .sna .7Z .ZIP .CAS .WAV .BAS .ASC .DMK .JVC .OS9 .DSK .VDK .ROM .CCC .SNA^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\XRoar\xroar.exe "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>coco^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>coco^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>dragon32^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
 echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<name^>ti99^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Computer.  Texas Inst. TI-99/4A - (Jun 1981)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  Texas Inst. TI-99/4A - (1981-1984)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<path^>%cusromdir%\ROMS\computer\ti99^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<extension^>.zip .ZIP .bin .BIN^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<command^>%rkdir%\Emulators\Classic99\classic99.exe -rom "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -6772,11 +5366,11 @@ echo   ^<!--  **************************************************   --^> >> "%USE
 echo ^</systemList^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:::                                                                                :::
-:::   End of  '^<path^>%cusromdir%\ROMS\...'  for ROMS path  in es_systems.cfg     :::
-:::                                                                                :::
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::                                                                                            :::
+:::   End of  '^<path^>%cusromdir%\ROMS\...'  for ROMS path  in es_systems.cfg                 :::
+:::                                                                                            :::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
 
@@ -6797,49 +5391,28 @@ goto ManESCFG
 ::Creates default ROM folders in RetroCake\ROMS
 cls
 
-mkdir %rkdir%\ROMS\arcade\advancemame
 mkdir %rkdir%\ROMS\arcade\atomiswave
 mkdir %rkdir%\ROMS\arcade\daphne
-mkdir %rkdir%\ROMS\arcade\fba
 mkdir %rkdir%\ROMS\arcade\fbneo-libretro
-mkdir %rkdir%\ROMS\arcade\fbneo-selects
 mkdir %rkdir%\ROMS\arcade\hikaru-demul
 mkdir %rkdir%\ROMS\arcade\mame-libretro
-mkdir %rkdir%\ROMS\arcade\mame-selects
-mkdir %rkdir%\ROMS\arcade\mame2000
-mkdir %rkdir%\ROMS\arcade\mame2003
-mkdir %rkdir%\ROMS\arcade\mame2003-plus
-mkdir %rkdir%\ROMS\arcade\mame2010
-mkdir %rkdir%\ROMS\arcade\mame2015
-mkdir %rkdir%\ROMS\arcade\mame2016
 mkdir %rkdir%\ROMS\arcade\naomi
-mkdir %rkdir%\ROMS\arcade\neogeo-mvs
-mkdir %rkdir%\ROMS\arcade\vector-games
 
 
 mkdir %rkdir%\ROMS\console\atari2600
 mkdir %rkdir%\ROMS\console\atari7800
 mkdir %rkdir%\ROMS\console\channel-f
-mkdir %rkdir%\ROMS\console\famicom
-mkdir %rkdir%\ROMS\console\genesis
 mkdir %rkdir%\ROMS\console\gx4000
-mkdir %rkdir%\ROMS\console\mark-iii
+mkdir %rkdir%\ROMS\console\genesis
 mkdir %rkdir%\ROMS\console\mastersystem
-mkdir %rkdir%\ROMS\console\megadrive
-mkdir %rkdir%\ROMS\console\megadrive-japan
 mkdir %rkdir%\ROMS\console\n64
-mkdir %rkdir%\ROMS\console\n64-japan
-mkdir %rkdir%\ROMS\console\neogeo-aes
+mkdir %rkdir%\ROMS\console\neogeo
 mkdir %rkdir%\ROMS\console\nes
-mkdir %rkdir%\ROMS\console\pcengine
 mkdir %rkdir%\ROMS\console\pv-1000
-mkdir %rkdir%\ROMS\console\sfc
 mkdir %rkdir%\ROMS\console\sg-1000
 mkdir %rkdir%\ROMS\console\snes
 mkdir %rkdir%\ROMS\console\super-acan
 mkdir %rkdir%\ROMS\console\supergrafx
-mkdir %rkdir%\ROMS\console\tectoy-ms
-mkdir %rkdir%\ROMS\console\tectoy-md
 mkdir %rkdir%\ROMS\console\turbografx-16
 
 
@@ -6859,27 +5432,19 @@ mkdir %rkdir%\ROMS\console-addon\atari2600-supercharger
 mkdir %rkdir%\ROMS\console-addon\fds
 mkdir %rkdir%\ROMS\console-addon\intellivision-ecs
 mkdir %rkdir%\ROMS\console-addon\intellivision-voice
-mkdir %rkdir%\ROMS\console-addon\mega32x
 mkdir %rkdir%\ROMS\console-addon\n64-dd
 mkdir %rkdir%\ROMS\console-addon\sega32x
 mkdir %rkdir%\ROMS\console-addon\satellaview
 mkdir %rkdir%\ROMS\console-addon\sufami
-mkdir %rkdir%\ROMS\console-addon\super32x
 mkdir %rkdir%\ROMS\console-addon\supergb
-mkdir %rkdir%\ROMS\console-addon\supergbc
 
 
 mkdir %rkdir%\ROMS\console-optical\3do
 mkdir %rkdir%\ROMS\console-optical\amigacd32
 mkdir %rkdir%\ROMS\console-optical\commodore-cdtv
 mkdir %rkdir%\ROMS\console-optical\dreamcast
-mkdir %rkdir%\ROMS\console-optical\dreamcast-demul
-mkdir %rkdir%\ROMS\console-optical\dreamcast-indies
 mkdir %rkdir%\ROMS\console-optical\gamecube
-mkdir %rkdir%\ROMS\console-optical\megacd
-mkdir %rkdir%\ROMS\console-optical\megacd-japan
 mkdir %rkdir%\ROMS\console-optical\neogeo-cd
-mkdir %rkdir%\ROMS\console-optical\pcengine-cd
 mkdir %rkdir%\ROMS\console-optical\pcfx
 mkdir %rkdir%\ROMS\console-optical\ps2
 mkdir %rkdir%\ROMS\console-optical\ps3
@@ -6889,8 +5454,6 @@ mkdir %rkdir%\ROMS\console-optical\segacd
 mkdir %rkdir%\ROMS\console-optical\turbografx-cd
 mkdir %rkdir%\ROMS\console-optical\wii
 mkdir %rkdir%\ROMS\console-optical\wii-u
-mkdir %rkdir%\ROMS\console-optical\wii-u-eshop
-mkdir %rkdir%\ROMS\console-optical\wii-ware
 mkdir %rkdir%\ROMS\console-optical\xbox
 mkdir %rkdir%\ROMS\console-optical\xbox360
 
@@ -6907,17 +5470,16 @@ mkdir %rkdir%\ROMS\portable\megaduck
 mkdir %rkdir%\ROMS\portable\ngp
 mkdir %rkdir%\ROMS\portable\ngpc
 mkdir %rkdir%\ROMS\portable\pokemon-mini
+mkdir %rkdir%\ROMS\portable\psp-minis
 mkdir %rkdir%\ROMS\portable\supervision
 mkdir %rkdir%\ROMS\portable\wonderswan
 mkdir %rkdir%\ROMS\portable\wonderswancolor
 
 
 mkdir %rkdir%\ROMS\portable-optical\psp
-mkdir %rkdir%\ROMS\portable-optical\psp-minis
 
 
 mkdir %rkdir%\ROMS\portable-touch\3ds
-mkdir %rkdir%\ROMS\portable-touch\3ds-eshop
 mkdir %rkdir%\ROMS\portable-touch\nds
 mkdir %rkdir%\ROMS\portable-touch\switch
 
@@ -6925,7 +5487,7 @@ mkdir %rkdir%\ROMS\portable-touch\switch
 mkdir %rkdir%\ROMS\specialty\adventurevision
 mkdir %rkdir%\ROMS\specialty\gameandwatch
 mkdir %rkdir%\ROMS\specialty\genesis-mini
-mkdir %rkdir%\ROMS\specialty\msu1
+mkdir %rkdir%\ROMS\specialty\snes-msu1
 mkdir %rkdir%\ROMS\specialty\nes-classic
 mkdir %rkdir%\ROMS\specialty\snes-classic
 mkdir %rkdir%\ROMS\specialty\turbografx-mini
@@ -6960,18 +5522,12 @@ mkdir %rkdir%\ROMS\computer\atarist
 mkdir %rkdir%\ROMS\computer\bbcmicro
 mkdir %rkdir%\ROMS\computer\c64
 mkdir %rkdir%\ROMS\computer\coco
-mkdir %rkdir%\ROMS\computer\dragon32
-mkdir %rkdir%\ROMS\computer\electron
 mkdir %rkdir%\ROMS\computer\macintosh
 mkdir %rkdir%\ROMS\computer\msx
-mkdir %rkdir%\ROMS\computer\msx2
-mkdir %rkdir%\ROMS\computer\msx-turbo-r
 mkdir %rkdir%\ROMS\computer\odyssey2
 mkdir %rkdir%\ROMS\computer\sc-3000
 mkdir %rkdir%\ROMS\computer\spectravideo
 mkdir %rkdir%\ROMS\computer\ti99
-mkdir %rkdir%\ROMS\computer\videopac
-mkdir %rkdir%\ROMS\computer\videopac-plus
 mkdir %rkdir%\ROMS\computer\x1
 mkdir %rkdir%\ROMS\computer\x68000
 mkdir %rkdir%\ROMS\computer\zx81
@@ -7003,49 +5559,28 @@ goto CustomRomFolders
 ::Creates ROM folders based on variable set bu user above
 cls
 
-mkdir %cusromdir%\ROMS\arcade\advancemame
 mkdir %cusromdir%\ROMS\arcade\atomiswave
 mkdir %cusromdir%\ROMS\arcade\daphne
-mkdir %cusromdir%\ROMS\arcade\fba
 mkdir %cusromdir%\ROMS\arcade\fbneo-libretro
-mkdir %cusromdir%\ROMS\arcade\fbneo-selects
 mkdir %cusromdir%\ROMS\arcade\hikaru-demul
 mkdir %cusromdir%\ROMS\arcade\mame-libretro
-mkdir %cusromdir%\ROMS\arcade\mame-selects
-mkdir %cusromdir%\ROMS\arcade\mame2000
-mkdir %cusromdir%\ROMS\arcade\mame2003
-mkdir %cusromdir%\ROMS\arcade\mame2003-plus
-mkdir %cusromdir%\ROMS\arcade\mame2010
-mkdir %cusromdir%\ROMS\arcade\mame2015
-mkdir %cusromdir%\ROMS\arcade\mame2016
 mkdir %cusromdir%\ROMS\arcade\naomi
-mkdir %cusromdir%\ROMS\arcade\neogeo-mvs
-mkdir %cusromdir%\ROMS\arcade\vector-games
 
 
 mkdir %cusromdir%\ROMS\console\atari2600
 mkdir %cusromdir%\ROMS\console\atari7800
 mkdir %cusromdir%\ROMS\console\channel-f
-mkdir %cusromdir%\ROMS\console\famicom
 mkdir %cusromdir%\ROMS\console\genesis
 mkdir %cusromdir%\ROMS\console\gx4000
-mkdir %cusromdir%\ROMS\console\mark-iii
 mkdir %cusromdir%\ROMS\console\mastersystem
-mkdir %cusromdir%\ROMS\console\megadrive
-mkdir %cusromdir%\ROMS\console\megadrive-japan
 mkdir %cusromdir%\ROMS\console\n64
-mkdir %cusromdir%\ROMS\console\n64-japan
-mkdir %cusromdir%\ROMS\console\neogeo-aes
+mkdir %cusromdir%\ROMS\console\neogeo
 mkdir %cusromdir%\ROMS\console\nes
-mkdir %cusromdir%\ROMS\console\pcengine
 mkdir %cusromdir%\ROMS\console\pv-1000
-mkdir %cusromdir%\ROMS\console\sfc
 mkdir %cusromdir%\ROMS\console\sg-1000
 mkdir %cusromdir%\ROMS\console\snes
 mkdir %cusromdir%\ROMS\console\super-acan
 mkdir %cusromdir%\ROMS\console\supergrafx
-mkdir %cusromdir%\ROMS\console\tectoy-ms
-mkdir %cusromdir%\ROMS\console\tectoy-md
 mkdir %cusromdir%\ROMS\console\turbografx-16
 
 
@@ -7070,20 +5605,14 @@ mkdir %cusromdir%\ROMS\console-addon\sega32x
 mkdir %cusromdir%\ROMS\console-addon\satellaview
 mkdir %cusromdir%\ROMS\console-addon\sufami
 mkdir %cusromdir%\ROMS\console-addon\supergb
-mkdir %cusromdir%\ROMS\console-addon\supergbc
 
 
 mkdir %cusromdir%\ROMS\console-optical\3do
 mkdir %cusromdir%\ROMS\console-optical\amigacd32
 mkdir %cusromdir%\ROMS\console-optical\commodore-cdtv
 mkdir %cusromdir%\ROMS\console-optical\dreamcast
-mkdir %cusromdir%\ROMS\console-optical\dreamcast-demul
-mkdir %cusromdir%\ROMS\console-optical\dreamcast-indies
 mkdir %cusromdir%\ROMS\console-optical\gamecube
-mkdir %cusromdir%\ROMS\console-optical\megacd
-mkdir %cusromdir%\ROMS\console-optical\megacd-japan
 mkdir %cusromdir%\ROMS\console-optical\neogeo-cd
-mkdir %cusromdir%\ROMS\console-optical\pcengine-cd
 mkdir %cusromdir%\ROMS\console-optical\pcfx
 mkdir %cusromdir%\ROMS\console-optical\ps2
 mkdir %cusromdir%\ROMS\console-optical\ps3
@@ -7093,8 +5622,6 @@ mkdir %cusromdir%\ROMS\console-optical\segacd
 mkdir %cusromdir%\ROMS\console-optical\turbografx-cd
 mkdir %cusromdir%\ROMS\console-optical\wii
 mkdir %cusromdir%\ROMS\console-optical\wii-u
-mkdir %cusromdir%\ROMS\console-optical\wii-u-eshop
-mkdir %cusromdir%\ROMS\console-optical\wii-ware
 mkdir %cusromdir%\ROMS\console-optical\xbox
 mkdir %cusromdir%\ROMS\console-optical\xbox360
 
@@ -7111,17 +5638,16 @@ mkdir %cusromdir%\ROMS\portable\megaduck
 mkdir %cusromdir%\ROMS\portable\ngp
 mkdir %cusromdir%\ROMS\portable\ngpc
 mkdir %cusromdir%\ROMS\portable\pokemon-mini
+mkdir %cusromdir%\ROMS\portable\psp-minis
 mkdir %cusromdir%\ROMS\portable\supervision
 mkdir %cusromdir%\ROMS\portable\wonderswan
 mkdir %cusromdir%\ROMS\portable\wonderswancolor
 
 
 mkdir %cusromdir%\ROMS\portable-optical\psp
-mkdir %cusromdir%\ROMS\portable-optical\psp-minis
 
 
 mkdir %cusromdir%\ROMS\portable-touch\3ds
-mkdir %cusromdir%\ROMS\portable-touch\3ds-eshop
 mkdir %cusromdir%\ROMS\portable-touch\nds
 mkdir %cusromdir%\ROMS\portable-touch\switch
 
@@ -7129,7 +5655,7 @@ mkdir %cusromdir%\ROMS\portable-touch\switch
 mkdir %cusromdir%\ROMS\specialty\adventurevision
 mkdir %cusromdir%\ROMS\specialty\gameandwatch
 mkdir %cusromdir%\ROMS\specialty\genesis-mini
-mkdir %cusromdir%\ROMS\specialty\msu1
+mkdir %cusromdir%\ROMS\specialty\snes-msu1
 mkdir %cusromdir%\ROMS\specialty\nes-classic
 mkdir %cusromdir%\ROMS\specialty\snes-classic
 mkdir %cusromdir%\ROMS\specialty\turbografx-mini
@@ -7164,18 +5690,12 @@ mkdir %cusromdir%\ROMS\computer\atarist
 mkdir %cusromdir%\ROMS\computer\bbcmicro
 mkdir %cusromdir%\ROMS\computer\c64
 mkdir %cusromdir%\ROMS\computer\coco
-mkdir %cusromdir%\ROMS\computer\dragon32
-mkdir %cusromdir%\ROMS\computer\electron
 mkdir %cusromdir%\ROMS\computer\macintosh
 mkdir %cusromdir%\ROMS\computer\msx
-mkdir %cusromdir%\ROMS\computer\msx2
-mkdir %cusromdir%\ROMS\computer\msx-turbo-r
 mkdir %cusromdir%\ROMS\computer\odyssey2
 mkdir %cusromdir%\ROMS\computer\sc-3000
 mkdir %cusromdir%\ROMS\computer\spectravideo
 mkdir %cusromdir%\ROMS\computer\ti99
-mkdir %cusromdir%\ROMS\computer\videopac
-mkdir %cusromdir%\ROMS\computer\videopac-plus
 mkdir %cusromdir%\ROMS\computer\x1
 mkdir %cusromdir%\ROMS\computer\x68000
 mkdir %cusromdir%\ROMS\computer\zx81
@@ -7211,18 +5731,29 @@ move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_Backup_%gooddayte%_%goodthyme%"
 cls
 
 ::Installs RetroArch 1.9.0  (64-bit) to RetroCake\RetroArch. Cleans up all downloaded files when done.
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
 echo =   Downloading RetroArch (64-bit)...                           =
 echo =                                                               =
-echo =================================================================
+echo  ===============================================================
 powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.9.0/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
 cls
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 ping 127.0.0.1 -n 4 >nul
 del "%rkdir%\Temp\RetroArch_x64.zip" /q
 goto UpdateRACores
@@ -7239,13 +5770,24 @@ cls
 :x64core
 ::Install RetroArch cores -- 64 bit
 cls
-echo ========================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ======================================================================
 echo =                                                                      =
-echo =     Downloading  130+  cores  (nightly) for 64-bit RetroArch         =
+echo =     Downloading  150+  cores  (nightly) for 64-bit RetroArch         =
 echo =                                                                      =
 echo =     This takes some time to complete...                              =
 echo =                                                                      =
-echo ========================================================================
+echo  ======================================================================
 
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/81_libretro.dll.zip -Destination "%rkdir%\Temp\cores\1.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/2048_libretro.dll.zip -Destination "%rkdir%\Temp\cores\2.zip"
@@ -7255,153 +5797,186 @@ powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nigh
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bluemsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\6.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/boom3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\7.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/boom3_xp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\8.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\9.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cannonball_libretro.dll.zip -Destination "%rkdir%\Temp\cores\10.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\9.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\10.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\11.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_cplusplus98_libretro.dll.zip -Destination "%rkdir%\Temp\cores\12.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\13.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\14.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\15.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\16.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cannonball_libretro.dll.zip -Destination "%rkdir%\Temp\cores\17.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cap32_libretro.dll.zip -Destination "%rkdir%\Temp\cores\18.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/chailove_libretro.dll.zip -Destination "%rkdir%\Temp\cores\19.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_canary_libretro.dll.zip -Destination "%rkdir%\Temp\cores\20.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_libretro.dll.zip -Destination "%rkdir%\Temp\cores\21.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/craft_libretro.dll.zip -Destination "%rkdir%\Temp\cores\22.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/crocods_libretro.dll.zip -Destination "%rkdir%\Temp\cores\23.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\24.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume_libretro.dll.zip -Destination "%rkdir%\Temp\cores\25.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dinothawr_libretro.dll.zip -Destination "%rkdir%\Temp\cores\26.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_core_libretro.dll.zip -Destination "%rkdir%\Temp\cores\27.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\28.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/duckstation_libretro.dll.zip -Destination "%rkdir%\Temp\cores\29.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ecwolf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\30.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\31.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\32.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\33.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_libretro.dll.zip -Destination "%rkdir%\Temp\cores\34.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_neogeo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\35.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha_libretro.dll.zip -Destination "%rkdir%\Temp\cores\36.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbneo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\37.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fceumm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\38.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ffmpeg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\39.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixgb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\40.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\41.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\42.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\43.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freechaf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\44.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -Destination "%rkdir%\Temp\cores\45.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/frodo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\46.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -Destination "%rkdir%\Temp\cores\47.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -Destination "%rkdir%\Temp\cores\48.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\49.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\50.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\51.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\52.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\53.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\54.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\55.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -Destination "%rkdir%\Temp\cores\56.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hbmame_libretro.dll.zip -Destination "%rkdir%\Temp\cores\57.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -Destination "%rkdir%\Temp\cores\58.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\59.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2000_libretro.dll.zip -Destination "%rkdir%\Temp\cores\60.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_libretro.dll.zip -Destination "%rkdir%\Temp\cores\61.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_midway_libretro.dll.zip -Destination "%rkdir%\Temp\cores\62.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\63.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\64.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\65.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2016_libretro.dll.zip -Destination "%rkdir%\Temp\cores\66.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\67.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\68.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\69.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\70.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\71.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\72.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\73.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\74.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\75.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_snes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\76.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supafaust_libretro.dll.zip -Destination "%rkdir%\Temp\cores\77.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\78.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\79.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -Destination "%rkdir%\Temp\cores\80.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -Destination "%rkdir%\Temp\cores\81.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -Destination "%rkdir%\Temp\cores\82.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -Destination "%rkdir%\Temp\cores\83.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesens_libretro.dll.zip -Destination "%rkdir%\Temp\cores\84.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\85.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/meteor_libretro.dll.zip -Destination "%rkdir%\Temp\cores\86.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\87.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/minivmac_libretro.dll.zip -Destination "%rkdir%\Temp\cores\88.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\89.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -Destination "%rkdir%\Temp\cores\90.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\91.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\92.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/neocd_libretro.dll.zip -Destination "%rkdir%\Temp\cores\93.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -Destination "%rkdir%\Temp\cores\94.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -Destination "%rkdir%\Temp\cores\95.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\96.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -Destination "%rkdir%\Temp\cores\97.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/oberon_libretro.dll.zip -Destination "%rkdir%\Temp\cores\98.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/openlara_libretro.dll.zip -Destination "%rkdir%\Temp\cores\99.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/opera_libretro.dll.zip -Destination "%rkdir%\Temp\cores\100.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\101.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -Destination "%rkdir%\Temp\cores\102.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -Destination "%rkdir%\Temp\cores\103.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/play_libretro.dll.zip -Destination "%rkdir%\Temp\cores\104.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\105.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -Destination "%rkdir%\Temp\cores\106.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\107.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\108.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\109.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -Destination "%rkdir%\Temp\cores\110.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -Destination "%rkdir%\Temp\cores\111.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -Destination "%rkdir%\Temp\cores\112.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\113.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\114.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -Destination "%rkdir%\Temp\cores\115.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/retro8_libretro.dll.zip -Destination "%rkdir%\Temp\cores\116.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\117.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\118.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/smsplus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\119.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -Destination "%rkdir%\Temp\cores\120.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -Destination "%rkdir%\Temp\cores\121.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\122.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\123.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -Destination "%rkdir%\Temp\cores\124.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\125.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -Destination "%rkdir%\Temp\cores\126.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -Destination "%rkdir%\Temp\cores\127.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/test_libretro.dll.zip -Destination "%rkdir%\Temp\cores\128.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -Destination "%rkdir%\Temp\cores\129.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -Destination "%rkdir%\Temp\cores\130.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\131.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -Destination "%rkdir%\Temp\cores\132.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -Destination "%rkdir%\Temp\cores\133.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\134.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/uzem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\135.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\136.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -Destination "%rkdir%\Temp\cores\137.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\138.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\139.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\140.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\141.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -Destination "%rkdir%\Temp\cores\142.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\143.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm5x0_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xscpu64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -Destination "%rkdir%\Temp\cores\149.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\150.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\151.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/x1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\152.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\153.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\154.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\155.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cap32_libretro.dll.zip -Destination "%rkdir%\Temp\cores\11.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/chailove_libretro.dll.zip -Destination "%rkdir%\Temp\cores\12.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_canary_libretro.dll.zip -Destination "%rkdir%\Temp\cores\13.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_libretro.dll.zip -Destination "%rkdir%\Temp\cores\14.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/craft_libretro.dll.zip -Destination "%rkdir%\Temp\cores\15.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/crocods_libretro.dll.zip -Destination "%rkdir%\Temp\cores\16.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\17.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume_libretro.dll.zip -Destination "%rkdir%\Temp\cores\18.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dinothawr_libretro.dll.zip -Destination "%rkdir%\Temp\cores\19.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_core_libretro.dll.zip -Destination "%rkdir%\Temp\cores\20.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\21.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/duckstation_libretro.dll.zip -Destination "%rkdir%\Temp\cores\22.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ecwolf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\23.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\24.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\25.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_libretro.dll.zip -Destination "%rkdir%\Temp\cores\26.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_neogeo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\27.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbneo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\28.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fceumm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\29.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ffmpeg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\30.zip"
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ======================================================================
+echo =                                                                      =
+echo =     Downloading  additional cores from other sites...                =
+echo =                                                                      =
+echo =     For now, it's only   dolphin_libretro.dll                        =
+echo =                                                                      =
+echo  ======================================================================
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\31.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\32.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freechaf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\33.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -Destination "%rkdir%\Temp\cores\34.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/frodo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\35.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -Destination "%rkdir%\Temp\cores\36.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -Destination "%rkdir%\Temp\cores\37.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\38.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\39.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\40.zip"
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/hunterk/libretro_builds/releases/download/Windows_64-bit/dolphin_libretro.dll.zip','%rkdir%\Temp\cores\dolphin-libretro.zip')
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\41.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\42.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\43.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -Destination "%rkdir%\Temp\cores\44.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hbmame_libretro.dll.zip -Destination "%rkdir%\Temp\cores\45.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -Destination "%rkdir%\Temp\cores\46.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\47.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2000_libretro.dll.zip -Destination "%rkdir%\Temp\cores\48.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_libretro.dll.zip -Destination "%rkdir%\Temp\cores\49.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\50.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\51.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\52.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2016_libretro.dll.zip -Destination "%rkdir%\Temp\cores\53.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\54.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\55.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\56.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\57.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\58.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\59.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\60.zip"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\61.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\62.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supafaust_libretro.dll.zip -Destination "%rkdir%\Temp\cores\63.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\64.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\65.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -Destination "%rkdir%\Temp\cores\66.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -Destination "%rkdir%\Temp\cores\67.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -Destination "%rkdir%\Temp\cores\68.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -Destination "%rkdir%\Temp\cores\69.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\70.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\71.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\72.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -Destination "%rkdir%\Temp\cores\73.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\74.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\75.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/neocd_libretro.dll.zip -Destination "%rkdir%\Temp\cores\76.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -Destination "%rkdir%\Temp\cores\77.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -Destination "%rkdir%\Temp\cores\78.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\79.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -Destination "%rkdir%\Temp\cores\80.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/oberon_libretro.dll.zip -Destination "%rkdir%\Temp\cores\81.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/openlara_libretro.dll.zip -Destination "%rkdir%\Temp\cores\82.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/opera_libretro.dll.zip -Destination "%rkdir%\Temp\cores\83.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\84.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -Destination "%rkdir%\Temp\cores\85.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -Destination "%rkdir%\Temp\cores\86.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/play_libretro.dll.zip -Destination "%rkdir%\Temp\cores\87.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\88.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -Destination "%rkdir%\Temp\cores\89.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\90.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\91.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\92.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -Destination "%rkdir%\Temp\cores\93.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -Destination "%rkdir%\Temp\cores\94.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -Destination "%rkdir%\Temp\cores\95.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\96.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\97.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -Destination "%rkdir%\Temp\cores\98.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\99.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\100.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/smsplus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\101.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -Destination "%rkdir%\Temp\cores\102.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -Destination "%rkdir%\Temp\cores\103.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\104.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\105.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -Destination "%rkdir%\Temp\cores\106.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\107.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -Destination "%rkdir%\Temp\cores\108.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -Destination "%rkdir%\Temp\cores\109.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -Destination "%rkdir%\Temp\cores\110.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -Destination "%rkdir%\Temp\cores\111.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\112.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -Destination "%rkdir%\Temp\cores\113.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -Destination "%rkdir%\Temp\cores\114.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\115.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/uzem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\116.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\117.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -Destination "%rkdir%\Temp\cores\118.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\119.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\120.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\121.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\122.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -Destination "%rkdir%\Temp\cores\123.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\124.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm5x0_libretro.dll.zip -Destination "%rkdir%\Temp\cores\125.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -Destination "%rkdir%\Temp\cores\126.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -Destination "%rkdir%\Temp\cores\127.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -Destination "%rkdir%\Temp\cores\128.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -Destination "%rkdir%\Temp\cores\129.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\130.zip"
-
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\131.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/x1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\132.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\133.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\134.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\135.zip"
 
 mkdir %rkdir%\RetroArch\cores
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
 cls
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 ping 127.0.0.1 -n 4 >nul
 rmdir "%rkdir%\Temp\cores" /s /q
 IF EXIST %rkdir%\Temp\BrandNewBlank goto InstallAllEmu
@@ -7419,18 +5994,28 @@ move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_Backup_%gooddayte%_%goodthyme%"
 cls
 
 ::Installs nightly RetroArch (64-bit) to RetroCake\RetroArch.
-
-echo =======================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  =====================================================================
 echo =                                                                     =
 echo =  Downloading nightly RetroArch (64-bit)...                          =
 echo =                                                                     =
-echo =======================================================================
+echo  =====================================================================
 powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/nightly/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
 cls
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 ping 127.0.0.1 -n 4 >nul
 del "%rkdir%\Temp\RetroArch_x64.zip" /q
 goto completed
@@ -7442,7 +6027,7 @@ goto completed
 :ThemeManager
 ::Menu for managing and installing themes for EmulationStation
 cls
-echo ===========================================================================
+echo  =========================================================================
 echo =                                                                         =
 echo =    1.) Update Carbon and Mur5 themes                                    =
 echo =                                                                         =
@@ -7452,7 +6037,7 @@ echo =    3.) View themes gallery  (RetroPie's website)                        =
 echo =                                                                         =
 echo =    4.) Exit Theme Manager                                               =
 echo =                                                                         =
-echo ===========================================================================
+echo  =========================================================================
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO ThemeGallery
@@ -7461,7 +6046,7 @@ IF ERRORLEVEL ==1 GOTO UpdateCarbonTheme
 
 :ThemeGallery
 cls
-echo ===========================================================================
+echo  =========================================================================
 echo =                                                                         =
 echo =   Visit RetroPie's ES Themes webpage in MS Edge web browser.            =
 echo =                                                                         =
@@ -7567,59 +6152,36 @@ goto ThemeManager
 :: -- This fork of RetroCake uses RetroArch cores as much as possible.  If not available or not working properly, dedicated emulators are used.
 ::
 
-:AdvanceMAME
-::Installs  AdvanceMAME  emulator.  Used this for Vector-based games as they look better with this last version.
-
-cls
-
-echo ================================================================
-echo =                                                              =
-echo =                  DOWNLOADING AdvanceMAME                     =
-echo =                                                              =
-echo =          Note:  Supports MAME 0.106 roms only !!             =
-echo =                                                              =
-echo ================================================================
-
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/amadvance/advancemame/releases/download/v3.9/advancemame-3.9-windows-x86.zip','%rkdir%\Temp\AdvanceMAME.zip')
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\AdvanceMAME.zip" -o"%rkdir%\Emulators\AdvanceMAME" -aoa > nul
-
-cls
-
-echo ================================================
-echo =        Cleaning up downloaded file(s)        =
-echo ================================================
-
-::  ping 127.0.0.1 -n 2 > nul
-::  cd %rkdir%\Emulators
-::  ren %rkdir%\Emulators\expanded-folder new-named-folder
-
-ping 127.0.0.1 -n 2 > nul
-del %rkdir%\Temp\AdvanceMAME.zip
-if EXIST %rkdir%\Emulators\tmp.txt goto AppleWin
-goto completed
-
-
-::=================================================================================================================================================================================================================================================================================================================
-
-
 
 :AppleWin
 ::Installs  AppleWin  emulator  ( Apple II )
 cls
-
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =                     DOWNLOADING APPLEWIN                      =
+echo =       Downloading:    AppleWin                                =
 echo =                                                               =
-echo =================================================================
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/AppleWin/AppleWin/releases/download/v1.29.16.0/AppleWin1.29.16.0.zip','%rkdir%\Temp\AppleWin.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\AppleWin.zip" -o"%rkdir%\Emulators\AppleWin" -aoa > nul
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 3 > nul
 del %rkdir%\Temp\AppleWin.zip
@@ -7633,12 +6195,24 @@ goto completed
 :BeebEm
 ::Installs  Beebem  emulator  ( BBC Micro )
 cls
-
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =                       DOWNLOADING BEEBEM                      =
+echo =       Downloading:    BeebEm                                  =
 echo =                                                               =
-echo =================================================================
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 ::  github at  https://github.com/stardot/beebem-windows
 
@@ -7647,9 +6221,9 @@ powershell -command Start-BitsTransfer -Source http://www.mkw.me.uk/beebem/BeebE
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\BeebEm.zip
@@ -7665,12 +6239,24 @@ goto completed
 :BlueMSX
 ::Installs  BlueMSX  emulator  ( MSX 1/2/2+/Turbo R, Colecovision, SpectraVideo, SG-1000, SC-3000  )
 cls
-
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =             DOWNLOADING BlueMSX (Full Version)                =
+echo =       Downloading:    BlueMSX  (Full Version)                 =
 echo =                                                               =
-echo =================================================================
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 
 powershell -command Start-BitsTransfer -Source http://bluemsx.msxblue.com/rel_download/blueMSXv282full.zip -Destination "%rkdir%\Temp\BlueMSX.zip"
@@ -7678,9 +6264,9 @@ powershell -command Start-BitsTransfer -Source http://bluemsx.msxblue.com/rel_do
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 3 > nul
 del %rkdir%\Temp\BlueMSX.zip
@@ -7696,21 +6282,33 @@ goto completed
 :ColecoEmu
 ::Installs  ColEm  emulator  ( ColecoVision emulator )
 cls
-
-echo ================================================================
-echo =                                                              =
-echo =                    DOWNLOADING ColEm                         =
-echo =                                                              =
-echo ================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    ColEm                                   =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 powershell -command Start-BitsTransfer -Source https://fms.komkon.org/ColEm/ColEm54-Windows-bin.zip -Destination "%rkdir%\Temp\colem.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\colem.zip" -o"%rkdir%\Emulators\ColEm" -aoa > nul
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\colem.zip
@@ -7724,12 +6322,24 @@ goto completed
 :Classic99
 ::Installs  Classic99  emulator  ( Ti-99 / 4A )
 cls
-
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =             DOWNLOADING Classic99                             =
+echo =       Downloading:    Classic99                               =
 echo =                                                               =
-echo =================================================================
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/tursilion/classic99/raw/master/dist/classic99.zip','%rkdir%\Temp\Classic99.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Classic99.zip" -o"%rkdir%\Emulators" -aoa > nul
@@ -7737,9 +6347,9 @@ ren %rkdir%\Emulators\classic99 Classic99
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 3 > nul
 del %rkdir%\Temp\Classic99.zip
@@ -7756,12 +6366,24 @@ goto completed
 :Daphne
 ::Installs  Daphne  emulator  ( Laserdisc game emulator )
 cls
-
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =                      DOWNLOADING DAPHNE                       =
+echo =       Downloading:    DAPHNE                                  =
 echo =                                                               =
-echo =================================================================
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 powershell -command Start-BitsTransfer -Source http://www.daphne-emu.com/download/daphne-1.0v-win32.zip -Destination "%rkdir%\Temp\Daphne.zip"
 mkdir %rkdir%\Emulators\Daphne
@@ -7769,9 +6391,9 @@ mkdir %rkdir%\Emulators\Daphne
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\Daphne.zip
@@ -7783,17 +6405,29 @@ goto completed
 
 
 :Demul
-::Installs  DEMUL emulator  (Hikaru, Cave CV1000, Gaelco, Naomi 2, Naomi, Atomiswave, Dreamcast, System SP)
+::Installs  DEmul emulator  (Hikaru, Cave CV1000, Gaelco, Naomi 2, Naomi, Atomiswave, Dreamcast, System SP)
 ::Use this emulator for a few of games that don't work with RetroArch (Flycast, MAME, FBneo)
 ::'Planet Harriers' game works with DEMUL as it runs on a Hikaru system.
 
 cls
-
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =              DOWNLOADING DEMUL                                =
+echo =       Downloading:    DEmul                                   =
 echo =                                                               =
-echo =================================================================
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 
 powershell -command Start-BitsTransfer -Source http://demul.emulation64.com/files/demul07_280418.7z -Destination "%rkdir%\Temp\demul.7z"
@@ -7834,9 +6468,9 @@ powershell -command Start-BitsTransfer -Source http://demul.emulation64.com/file
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\demul.7z
@@ -7852,12 +6486,24 @@ goto completed
 ::Installs  FS-UAE  emulator  ( Amiga, Amiga CD32 ).  Use this for files ending with .LHA extension
 
 cls
-
-echo =========================================================
-echo =                                                       =
-echo =             DOWNLOADING FS-UAE  (64-bit only)         =
-echo =                                                       =
-echo =========================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    FS-UAE  (64-bit only)                   =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 powershell -command Start-BitsTransfer -Source https://fs-uae.net/stable/3.0.5/FS-UAE-Suite_3.0.5_Windows_x86-64.zip -Destination "%rkdir%\Temp\FS-UAE.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\FS-UAE.7z" -o"%rkdir%\Emulators\FS-UAE" -aoa > nul
@@ -7865,9 +6511,9 @@ powershell -command Start-BitsTransfer -Source https://fs-uae.net/stable/3.0.5/F
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\FS-UAE.7z
@@ -7884,29 +6530,42 @@ goto completed
 :Hatari
 ::Installs  Hatari  emulator  ( Atari ST / STE / TT / Falcon )
 cls
-
-echo ===========================================================
-echo =                                                         =
-echo =                DOWNLOADING HATARI 64-bit                =
-echo =                                                         =
-echo =        Note:  Version 2.1.0 has proper IPF support      =
-echo =                                                         =
-echo =   If latest version properly supports IPF, then get it  =
-echo =                                                         =
-echo ===========================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    Hatari  (64-bit only)                   =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo =                                                               =
+echo =   Note:  Version 2.1.0 has proper IPF file support            =
+echo =                                                               =
+echo =   If latest version properly supports IPF, then use it        =
+echo =                                                               =
+echo  ===============================================================
 
 powershell -command Start-BitsTransfer -Source http://download.tuxfamily.org/hatari/2.1.0/hatari-2.1.0_windows64.zip -Destination "%rkdir%\Temp\Hatari64.zip"
-powershell -command Start-BitsTransfer -Source http://download.tuxfamily.org/hatari/2.3.0/hatari-2.3.0_windows64.zip -Destination "%rkdir%\Temp\Hatari64Latest.zip"
+powershell -command Start-BitsTransfer -Source http://download.tuxfamily.org/hatari/2.3.1/hatari-2.3.1_windows64.zip -Destination "%rkdir%\Temp\Hatari64Latest.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Hatari64.zip" -o"%rkdir%\Emulators" -aoa > nul
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Hatari64Latest.zip" -o"%rkdir%\Emulators" -aoa > nul
 ren %rkdir%\Emulators\hatari-2.1.0_windows64 Hatari
-ren %rkdir%\Emulators\hatari-2.3.0_windows64 Hatari-latest
+ren %rkdir%\Emulators\hatari-2.3.1_windows64 Hatari-latest
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\Hatari64.zip
@@ -7923,14 +6582,24 @@ goto completed
 :jzIntv
 ::Installs  jzIntv  emulator  ( Intellivision ).  Use this for IntelliVoice and ECS games (Entertainment Computer System)
 cls
-
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =                       DOWNLOADING JZINTV                      =
+echo =       Downloading:    jzIntv  (32 and new 64 bits)            =
 echo =                                                               =
-echo =                    (32-bit  and  new 64-bit)                  =
+echo =        please wait...                                         =
 echo =                                                               =
-echo =================================================================
+echo  ===============================================================
 
 powershell -command Start-BitsTransfer -Source http://spatula-city.org/~im14u2c/intv/dl/jzintv-20200712-win32-sdl2.zip -Destination "%rkdir%\Temp\jzIntv.zip"
 powershell -command Start-BitsTransfer -Source http://spatula-city.org/~im14u2c/intv/dl/jzintv-20200712-linux-x86-64-sdl2.zip -Destination "%rkdir%\Temp\jzIntv-64.zip"
@@ -7941,9 +6610,9 @@ ren %rkdir%\Emulators\jzintv-20200712-linux-x86-64-sdl2 JzIntv-64
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\jzIntv.zip
@@ -7958,21 +6627,33 @@ goto completed
 	
 :MAME
 cls
-
-echo ===========================================================
-echo =                                                         =
-echo =             DOWNLOADING LATEST MAME 64-bit              =
-echo =                                                         =
-echo ===========================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    MAME  (64-bit, latest)                  =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/mamedev/mame/releases/download/mame0226/mame0226b_64bit.exe','%rkdir%\Temp\Mame64.exe')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame64.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\Mame64.exe
@@ -7988,12 +6669,24 @@ goto completed
 :PCSX2
 ::Installs  PCSX2  emulator  ( PlayStation 2 )
 cls
-
-echo =================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
 echo =                                                               =
-echo =                       DOWNLOADING PCSX2                       =
+echo =       Downloading:    PCSX2                                   =
 echo =                                                               =
-echo =================================================================
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 :: official site... https://github.com/PCSX2/pcsx2
 
@@ -8003,9 +6696,9 @@ ren "%rkdir%\Emulators\PCSX2 1.6.0" PCSX2
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\PCSX2.7z
@@ -8020,12 +6713,24 @@ goto completed
 ::Installs  PPSSPP  emulator  ( Playstation Portable )
 
 cls
-
-echo ================================================================
-echo =                                                              =
-echo =           DOWNLOADING PPSSPP  (Sony PSP Emulator)            =
-echo =                                                              =
-echo ================================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    PPSSPP                                  =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 
 powershell -command Start-BitsTransfer -Source http://www.ppsspp.org/files/1_10_3/ppsspp_win.zip -Destination "%rkdir%\Temp\ppsspp.zip"
@@ -8033,9 +6738,9 @@ powershell -command Start-BitsTransfer -Source http://www.ppsspp.org/files/1_10_
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\ppsspp.zip
@@ -8052,12 +6757,24 @@ goto completed
 :VICE
 ::Installs  VICE  emulator  ( Commodore 64 )
 cls
-
-echo =========================================================
-echo =                                                       =
-echo =               DOWNLOADING VICE  64-bit                =
-echo =                                                       =
-echo =========================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    VICE   (64-bit only)                    =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 :: official site... http://vice-emu.sourceforge.net/windows.html
 
@@ -8070,9 +6787,9 @@ ren %rkdir%\Emulators\GTK3VICE-3.4-win64-r37296 Vice
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ==============================================
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\VICE64-old.7z
@@ -8092,12 +6809,24 @@ goto completed
 :XRoar
 ::Installs  Xroar  emulator  (CoCo, Dragon32, Tandy Color )
 cls
-
-echo =============================================================
-echo =                                                           =
-echo =                DOWNLOADING XROAR  64-bit                  =
-echo =                                                           =
-echo =============================================================
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    XRoar  (64-bit only)                    =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
 
 powershell -command Start-BitsTransfer -Source http://www.6809.org.uk/xroar/dl/xroar-0.36.2-w64.zip -Destination "%rkdir%\Temp\XRoar64.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\XRoar64.zip" -o"%rkdir%\Emulators" -aoa > nul
@@ -8105,9 +6834,9 @@ ren %rkdir%\Emulators\xroar-0.36.2-w64 Xroar
 
 cls
 
-echo ================================================
+echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
-echo ================================================
+echo  ============================================== 
 
 ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\XRoar64.zip
@@ -8535,6 +7264,26 @@ goto completed
 ::        Rom Scraper Tools
 
 :ScraperSetupDefault
+cls
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    Sselph Scraper                          =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
+
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_amd64.zip','%rkdir%\Temp\scraperx64.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx64.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
 del %rkdir%\Temp\scraperx64.zip
@@ -8542,6 +7291,26 @@ goto RecalToolsDefault
 
 
 :RecalToolsDefault
+cls
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    Toolbox for Recalbox                    =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
+
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/paradadf/recaltools/archive/master.zip','%rkdir%\Temp\recaltools.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\recaltools.zip" -o"%rkdir%\Tools" -aoa > nul
 del %rkdir%\Temp\recaltools.zip
@@ -8727,9 +7496,9 @@ goto menu
 :tmpClean
 ::Cleans up temp files created by the automated installers.
 del %rkdir%\Emulators\tmp.txt /s /q
-IF EXIST %rkdir%\Temp\BrandNewBlank goto DediAsk
-IF EXIST %rkdir%\Temp\BrandNewDef goto DediAsk
-IF EXIST %rkdir%\Temp\BrandNewCus goto DediAsk
+IF EXIST %rkdir%\Temp\BrandNewBlank goto BrandNewClean
+IF EXIST %rkdir%\Temp\BrandNewDef goto BrandNewClean
+IF EXIST %rkdir%\Temp\BrandNewCus goto BrandNewClean
 goto completed
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -8739,13 +7508,13 @@ goto completed
 ::Informational Echoes
 
 :erroorr
-::yells at you if there is an error, should only show if the script totally failed and ran through to the end somehow
+::Informs you if there is an error, should only show if the script totally failed and ran through to the end somehow
 cls
-echo =============================================
+echo  ===========================================
 echo =                                           =
-echo =          SOMETHING WENT WRONG D:          =
+echo =          Something went wrong...          =
 echo =                                           =
-echo =============================================
+echo  ===========================================
 echo      Press any key to return to main menu
 pause >nul
 goto menu
@@ -8753,13 +7522,13 @@ goto menu
 ::=================================================================================================================================================================================================================================================================================================================
 
 :completed
-::Lets you know when a selected operation is done.
+::Informs you of when a selected operation is done.
 cls
-echo =============================================
+echo  ===========================================
 echo =                                           =
-echo =            OPERATION COMPLETED!           =
+echo =            Operation completed!           =
 echo =                                           =
-echo =============================================
+echo  ===========================================
 echo      Press any key to return to main menu
 pause >nul
 goto menu
@@ -8767,13 +7536,13 @@ goto menu
 ::=================================================================================================================================================================================================================================================================================================================
 
 :cancelled
-::Appears when an operation is canceled.
+::Informs you when an operation is canceled.
 cls
-echo =============================================
+echo  ===========================================
 echo =                                           =
-echo =            OPERATION CANCELLED            =
+echo =            Operation cancelled            =
 echo =                                           =
-echo =============================================
+echo  ===========================================
 echo      Press any key to return to main menu
 pause >nul
 goto menu
@@ -8781,13 +7550,13 @@ goto menu
 ::=================================================================================================================================================================================================================================================================================================================
 
 :NoFeat
-::Used when I have a dummy menu item.
+::Informs you when a dummy feature is used (for testing purpose or future release)
 cls
-echo =============================================
+echo  ===========================================
 echo =                                           =
-echo =    THIS FEATURE IS NOT YET IMPLEMENTED    =
+echo =    This feature is not yet implemented    =
 echo =                                           =
-echo =============================================
+echo  ===========================================
 echo      Press any key to return to main menu
 pause >nul
 goto menu
@@ -8795,13 +7564,13 @@ goto menu
 ::=================================================================================================================================================================================================================================================================================================================
 
 :Disabled
-::Used for a feature that is temporarily disabled
+::Informs you that a feature that is temporarily disabled
 cls
-echo ==============================================
+echo  ============================================
 echo =                                            =
 echo = Currently Disabled due to dependency issue =
 echo =                                            =
-echo ==============================================
+echo  ============================================
 echo      Press any key to return to main menu
 pause >nul
 goto menu
@@ -8809,13 +7578,13 @@ goto menu
 ::=================================================================================================================================================================================================================================================================================================================
 
 :UpToDate
-::Lets the user know emulationstation is up to date and does not need updates.
+::Informs you that EmulationStation is up to date and does not need updates.
 cls
-echo =============================================
+echo  ===========================================
 echo =                                           =
-echo =            YOU ARE UP TO DATE!            =
+echo =       EmulationStation is up to date.     =
 echo =                                           =
-echo =============================================
+echo  ===========================================
 echo      Press any key to return to main menu
 pause >nul
 goto menu
@@ -8823,15 +7592,16 @@ goto menu
 ::=================================================================================================================================================================================================================================================================================================================
 
 :CleanAllExit
-::Lets you know all files are removed. exits the bat file.
+::Informs you that all files are removed, and then exits this batch file.
 cls
-echo ===================================================
-echo =                                                 =
-echo = CLEANUP COMPLETED, PLEASE RESTART RETROCAKE.BAT =
-echo =  IF YOU HAD ANYTHING IN %rkdir%\ROMS THEY       =
-echo =         ARE NOW IN %USERPROFILE%\ROMS           =
-echo =                                                 =
-echo ===================================================
+echo  ======================================================
+echo =                                                      =
+echo =  Cleanup completed...  Please restart RetroCake.bat  =
+echo =                                                      =
+echo =  If you had anything in %rkdir%\ROMS  they           =
+echo =         are now in %USERPROFILE%\ROMS                =
+echo =                                                      =
+echo  ======================================================
 echo            Press Any Key to Exit
 pause >nul
 exit
@@ -8840,9 +7610,9 @@ exit
 ::=================================================================================================================================================================================================================================================================================================================
 
 :7zerror
-::Throws error if 7z fails to download
+::Informs you of an error if 7z fails to download
 cls
-echo =============================================
+echo  ===========================================
 echo =                                           =
 echo =    7z tools download / install failed!    =
 echo =                                           =
@@ -8850,7 +7620,7 @@ echo =        Check and update the URL or        =
 echo =                                           =
 echo =       filename in this batch script       =
 echo =                                           =
-echo =============================================
+echo  ===========================================
 echo            Press Any Key to Exit
 pause >nul
 exit
@@ -8858,17 +7628,17 @@ exit
 ::=================================================================================================================================================================================================================================================================================================================
 
 :GITerror
-::Throws error if GIT fails to download
+::Informs you of an error if Git for Windows fails to download
 cls
-echo =============================================
-echo =                                           =
-echo =       Git download / install failed!      =
-echo =                                           =
-echo =        Check and update the URL or        =
-echo =                                           =
-echo =       filename in this batch script       =
-echo =                                           =
-echo =============================================
+echo  ==================================================
+echo =                                                  =
+echo =    Git for Windows download / install failed!    =
+echo =                                                  =
+echo =           Check and update the URL or            =
+echo =                                                  =
+echo =          filename in this batch script           =
+echo =                                                  =
+echo  ==================================================
 echo            Press Any Key to Exit
 pause >nul
 exit
@@ -8876,13 +7646,13 @@ exit
 ::=================================================================================================================================================================================================================================================================================================================
 
 :AdminFail
-::Yells at you for not running as admin. :-D
+::Informs you that this batch file requires admin right
 cls
-echo =============================================
+echo  ===========================================
 echo =                                           =
 echo =        Please run as Administrator        =
 echo =                                           =
-echo =============================================
+echo  ===========================================
 echo            Press Any Key to Exit
 pause >nul
 exit
