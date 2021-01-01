@@ -36,7 +36,7 @@ goto CheckRetroCake
 :CusInstall
 ::Prompts to install in a custom directory or default C:\RetroCake.
 cls
-
+echo .
 echo  ===============================================================
 echo =                                                               =
 echo =    Install RetroCake in which directory...                    =
@@ -77,6 +77,7 @@ mkdir %rkdir%
 mkdir %rkdir%\EmulationStation
 mkdir %rkdir%\RetroArch
 mkdir %rkdir%\Temp
+mkdir %rkdir%\Temp\Backup
 mkdir %rkdir%\Tools
 icacls "%rkdir%" /grant everyone:(OI)(CI)F /T
 echo pls no delete > %rkdir%\RetroCake
@@ -101,7 +102,7 @@ goto install7z
 
 :install7z
 ::Installs 7z with pretty information.
-clsecho .
+cls
 echo .
 echo .
 echo .
@@ -112,13 +113,16 @@ echo .
 echo .
 echo .
 echo .
-echo  ===============================================================
-echo =                                                               =
-echo =               Setting up latest versions of                   =
-echo =                                                               =
-echo =             7-Zip for Win x64  and  7za tools                 =
-echo =                                                               =
-echo  ===============================================================
+echo .
+echo  =================================================================
+echo =                                                                 =
+echo =    Download / Install:    7-Zip for Win x64  and  7za tools     =
+echo =                                                                 =
+echo =                       please wait...                            =
+echo =                                                                 =
+echo  =================================================================
+echo .
+
 mkdir %rkdir%\Tools\7za
 ::Pull latest version of 7-Zip for Win x64 and 7ZA tools.
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://www.7-zip.org/a/7z1900-x64.exe','%rkdir%\Temp\7z1900-x64.exe')
@@ -157,12 +161,16 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =            Setting up  Git for Windows...  (64-bit)           =
+echo =    Download / Install:    Git for Windows  (64-bit)           =
+echo =                                                               =
+echo =                       please wait...                          =
 echo =                                                               =
 echo  ===============================================================
+echo .
+
 mkdir %rkdir%\Tools\Git
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/git-for-windows/git/releases/download/v2.29.2.windows.3/PortableGit-2.29.2.3-64-bit.7z.exe','%rkdir%\Temp\Git.7z.exe')
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Git.7z.exe" -o"%rkdir%\Tools\git" -aoa > nul
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Git.7z.exe" -o"%rkdir%\Tools\Git" -aoa > nul
 cls
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
@@ -190,27 +198,38 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =    Setting up Visual C++ Redistributables  (64 and 32 bit)    =
+echo =    Download / Install:    Visual C++ Redistributables         =
 echo =                                                               =
-echo =               please wait...                                  =
+echo =                       please wait...                          =
 echo =                                                               =
 echo  ===============================================================
+echo .
+
+powershell -command Start-BitsTransfer -Source https://aka.ms/vs/16/release/vc_redist.x86.exe -Destination "%rkdir%\Temp\VC_Redist_2019_32.exe"
+powershell -command Start-BitsTransfer -Source https://aka.ms/vs/16/release/VC_redist.x64.exe -Destination "%rkdir%\Temp\VC_Redist_2019_64.exe"
 powershell -command Start-BitsTransfer -Source https://download.visualstudio.microsoft.com/download/pr/11100230/15ccb3f02745c7b206ad10373cbca89b/VC_redist.x64.exe -Destination "%rkdir%\Temp\VC_Redist_2017.exe"
 powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x64.exe -Destination "%rkdir%\Temp\VC_Redist_2015_64.exe"
 powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/9/3/F/93FCF1E7-E6A4-478B-96E7-D4B285925B00/vc_redist.x86.exe -Destination "%rkdir%\Temp\VC_Redist_2015_32.exe"
 powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/5/B/C/5BC5DBB3-652D-4DCE-B14A-475AB85EEF6E/vcredist_x86.exe -Destination "%rkdir%\Temp\VC_Redist_2010_32.exe"
 powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/3/2/2/3224B87F-CFA0-4E70-BDA3-3DE650EFEBA5/vcredist_x64.exe -Destination "%rkdir%\Temp\VC_Redist_2010_64.exe"
+
+
+%rkdir%\Temp\VC_Redist_2019_32.exe /install /quiet
+%rkdir%\Temp\VC_Redist_2019_64.exe /install /quiet
 %rkdir%\Temp\VC_Redist_2017.exe /install /quiet
-%rkdir%\Temp\VC_Redist_2015_64.exe /install /quiet
 %rkdir%\Temp\VC_Redist_2015_32.exe /install /quiet
+%rkdir%\Temp\VC_Redist_2015_64.exe /install /quiet
 %rkdir%\Temp\VC_Redist_2010_32.exe /install /quiet
 %rkdir%\Temp\VC_Redist_2010_64.exe /install /quiet
+
 echo VCRedistInstalled > "%rkdir%\Tools\VC"
 cls
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
 ping 127.0.0.1 -n 3 > nul
+del "%rkdir%\Temp\VC_Redist_2019_32.exe"
+del "%rkdir%\Temp\VC_Redist_2019_64.exe"
 del "%rkdir%\Temp\VC_Redist_2017.exe"
 del "%rkdir%\Temp\VC_Redist_2015_64.exe"
 del "%rkdir%\Temp\VC_Redist_2015_32.exe"
@@ -237,13 +256,16 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =          Setting up Direct X End-User Runtime                 =
+echo =    Download / Install:    Direct X End-User Runtime           =
 echo =                                                               =
-echo =               please wait...                                  =
+echo =                       please wait...                          =
 echo =                                                               =
 echo  ===============================================================
-powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe  -Destination "%rkdir%\Temp\dxwebsetup.exe"
+echo .
+
+powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe -Destination "%rkdir%\Temp\dxwebsetup.exe"
 %rkdir%\Temp\dxwebsetup.exe /Q
+
 echo DXInstalled > "%rkdir%\Tools\DX"
 cls
 echo  ==============================================
@@ -260,7 +282,8 @@ goto menu
 :menu
 ::Main menu selection.
 cls
-echo   A fork of Flerp/RetroCake                  Modified date: Dec 30, 2020
+echo .
+echo   A fork of Flerp/RetroCake                  Modified date: Dec 31, 2020
 echo  =========================================================================
 echo =                                                                         =
 Echo =    1.) Automated Installers                                             =
@@ -277,17 +300,15 @@ echo =    5.) Manage ROM directories and scraper                               =
 echo =                                                                         =
 echo =    6.) Update RetroCake script                                          =
 echo =                                                                         =
-echo =    7.) How to cleanup and/or backup                                     =
-echo =                                                                         =
 echo =                                                                         =
 echo ===========================================================================
 echo =                                                                         =
-echo =    8.)  Exit  this RetroCake script                                     =
+echo =    7.)  Exit  this RetroCake script                                     =
 echo =                                                                         =
 echo  =========================================================================
-CHOICE /N /C:12345678 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7, 8)"
-IF ERRORLEVEL ==8 GOTO ExitRetroCake
-IF ERRORLEVEL ==7 GOTO HowToCleanupBackup
+echo .
+CHOICE /N /C:1234567 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5, 6, 7)"
+IF ERRORLEVEL ==7 GOTO ExitRetroCake
 IF ERRORLEVEL ==6 GOTO RetroCakeUpdate
 IF ERRORLEVEL ==5 GOTO RomMenu
 IF ERRORLEVEL ==4 GOTO EmuFolderCheck
@@ -307,18 +328,49 @@ exit
 :automated
 ::Menu for automated full installers (Emulationstation + RetroArch + Config Generation + ROM Directory Setup)
 cls
+echo .
+echo .
+echo .
+echo .
+echo ===================================================================================
+echo =                                                                                  =
+echo =                                                                                  =
+echo =    Important:  This script can overwrite your existing RetroCake data !!         =
+echo =                                                                                  =
+echo =                                                                                  =
+echo =   Make a choice:                                                                 =
+echo =                                                                                  =
+echo =     1.  Back to menu - to exit and rename your RetroCake folder                  =
+echo =                                                                                  =
+echo =     2.  Procced - your RetroCake folder is already renamed  or  does not exist   =
+echo =                                                                                  =
+echo . 
+
+CHOICE /N /C:12 /M "Enter Corresponding Menu choice (1, 2)"
+IF ERRORLEVEL ==2 GOTO ConfirmAutomated
+IF ERRORLEVEL ==1 GOTO menu
+
+
+:ConfirmAutomated
+cls
+echo .
+echo .
+echo .
 echo  ====================================================================================
+echo =  
 echo =                                                                               
-echo =    1.) Full setup with  Default  ROM directories (%rkdir%\ROMS\category-name\system-name)
+echo =    1.) Full setup with  Default  ROM directories (%rkdir%\ROMS\category\system)
 echo = 
-echo =    2.) Full setup with  Custom  ROM directories                                    =
+echo =    2.) Full setup with  Custom  ROM directories 
 echo = 
 echo =    3.) Full setup without ROM directories  (need to edit  es_systems.cfg  file)
 echo = 
 echo =                                                                                    =
 echo =    4.) Return to main menu                                                         =
 echo =                                                                                    =
+echo =                                                                                    =
 echo  ====================================================================================
+echo .
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO BrandNewBlank
@@ -330,9 +382,10 @@ IF ERRORLEVEL ==1 GOTO BrandNewDef
 :ESMenu
 ::Menu for Managing Emulationstation updates, config, and themes.
 cls
+echo .
 echo  =========================================================================
 echo =                                                                         =
-echo =    1.) Check EmulationStation for updates                               =
+echo =    1.) Update or Reinstall  EmulationStation                            =
 echo =                                                                         =
 echo =    2.) Manage  es_systems.cfg  file                                     =
 echo =                                                                         =
@@ -342,32 +395,33 @@ echo =                                                                         =
 echo =    4.) Return to main menu                                              =
 echo =                                                                         =
 echo  =========================================================================
+echo .
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO ThemeManager
 IF ERRORLEVEL ==2 GOTO ManESCFG
-IF ERRORLEVEL ==1 GOTO StartESVerCheck
+IF ERRORLEVEL ==1 GOTO updateES
+
 
 ::=================================================================================================================================================================================================================================================================================================================
 
 :RAMenu
 ::Menu for managing RetroArch Updates, Core updates, and config.
 cls
+echo .
 echo  =========================================================================
 echo =                                                                         =
-Echo =    1.) Install  RetroArch  1.9.0                                        =
+Echo =    1.) Update or Reinstall RetroArch  -- 1.9.0                          =
 echo =                                                                         =
-echo =    2.) Install/Update Cores for RetroArch  -- Nightly Build (Latest)    =
+echo =    2.) Update Cores for RetroArch  -- Nightly build (Latest)            =
 echo =                                                                         =
-echo =    3.) Install/Update Nightly Build of RetroArch  (Latest)              =
-echo =                                                                         =
-echo =                                                                         =
-echo =                                                                         =
+echo =    3.) Switch to / Update  Nightly build of RetroArch  (Latest)         =
 echo =                                                                         =
 echo =                                                                         =
 echo =    4.) Return to main menu                                              =
 echo =                                                                         =
 echo  =========================================================================
+echo .
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO UpdateRAn
@@ -379,19 +433,22 @@ IF ERRORLEVEL ==1 GOTO UpdateRA
 :RomMenu
 ::Menu for managing ROM directories in both windows and es_systems.cfg. Can also share your ROM directories.
 cls
+echo .
 echo  ============================================================================
 echo =
-Echo =    1.) Create  Default  ROM directories -  %rkdir%\ROMS\category-name\system-name
+Echo =    1.) Create  Default  ROM directories -  %rkdir%\ROMS\category\system
 echo =
 Echo =    2.) Create  Custom  ROM directories                                     =
-echo =                                                                            =
-echo =    3.) Scraper for  Default  ROM directory -  %rkdir%\ROMS\category-name
-echo =                                                                         
+echo = 
+echo =    3.) Scraper for  Default  ROM directory -  %rkdir%\ROMS\category
+echo = 
 echo =    4.) Scraper for  Custom  ROM directory 
+echo =                                                                            =
 echo =                                                                            =
 echo =    5.) Return to main menu                                                 =
 echo =                                                                            =
 echo  ============================================================================
+echo .
 CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
 IF ERRORLEVEL ==5 GOTO menu
 IF ERRORLEVEL ==4 GOTO ScraperSetupCustom
@@ -411,55 +468,40 @@ goto SetOfEmulators
 :SetOfEmulators
 ::Menu for managing set of emulators (Non RetroArch ones)
 cls
+echo .
 echo  =========================================================================
 echo =                                                                         =
-echo =    1.) Install set of Emulators                                         =
+echo =    1.) Update or Reinstall set of Emulators                             =
 echo =                                                                         =
-echo =    2.) Update  set of Emulators                                         =
-echo =                                                                         =
-echo =                                                                         =
-echo =    3.) Return to main menu                                              =
-echo =                                                                         =
-echo  =========================================================================
-CHOICE /N /C:123 /M "Enter Corresponding Menu choice (1, 2, 3)"
-IF ERRORLEVEL ==3 GOTO menu
-IF ERRORLEVEL ==2 GOTO UpdateAllEmu
-IF ERRORLEVEL ==1 GOTO InstallAllEmu
-
-
-:InstallAllEmu
-::Secondary Emulator Folder check. May not be needed
-mkdir %rkdir%\Emulators
-goto StartAllEmu
-
-:UpdateAllEmu
-cls
-echo  =========================================================================
-echo =                                                                         =
-echo =                Backup and Refresh / Update Emulators                    =
-echo =                                                                         =
-echo =                                                                         =
-echo =    This will move 'Emulators' folder into 'RetroCake\Temp'  folder      =
-echo =                                                                         =
-echo =    Then, a fresh and/or updated set of emulators will be downloaded     =
-echo =    into new 'Emulators' folder.                                         =
-echo =                                                                         =
-echo =    'Emulators-Backup_date_time' folder in Temp folder gives you the     =
-echo =     opportunity to move your configured files from their emulator       =
-echo =     folders back in their places in new 'Emulators' folder.             =
-echo =                                                                         =
-echo =     When you're done with moving files, please empty Temp folder        =
-echo =     for to free up disk space.                                          =
+echo =    2.) Return to main menu                                              =
 echo =                                                                         =
 echo  =========================================================================
 echo .
-pause
-move %rkdir%\Emulators %rkdir%\Temp\Emulators-Backup_%gooddayte%_%goodthyme%
-mkdir %rkdir%\Emulators
+CHOICE /N /C:12 /M "Enter Corresponding Menu choice (1, 2)"
+IF ERRORLEVEL ==2 GOTO menu
+IF ERRORLEVEL ==1 GOTO UpdateAllEmu
+
+:UpdateAllEmu
+
+cls
+echo .
+echo  ===========================================================
+echo =                                                           =
+echo =    This will back up  Emulators  folder to a zipped       =
+echo =    file in  %rkdir%\Temp\Backup  folder
+echo =                                                           =
+echo =    If this folder does not exist, it will be skipped      =
+echo =                                                           =
+echo =                       please wait...                      =
+echo .
+
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_Emulators_%gooddayte%_%goodthyme%.zip" "%rkdir%\Emulators\" > nul
+rmdir "%rkdir%\Emulators" /s /q
 goto StartAllEmu
 
 :StartAllEmu
 ::Creates a temporary file (tmp.txt) for the goto statements after each emulator is installed. Allows chaining emulator installation.
+mkdir %rkdir%\Emulators
 Echo This file is temporary. You should never see it > %rkdir%\Emulators\tmp.txt
 goto AppleWin
 
@@ -504,7 +546,7 @@ cls
 ping 127.0.0.1 -n 2 >nul
 echo @echo off
 echo del %rkdir%\Tools\RetroCake.bat /S /Q > "%rkdir%\Tools\Updater.bat"
-echo %rkdir%\Tools\git\bin\git.exe clone --depth=1 https://github.com/jupiterbox/RetroCake.git %rkdir%\Temp\Script >> "%rkdir%\Tools\Updater.bat"
+echo %rkdir%\Tools\git\bin\git.exe clone --quiet --depth=1 https://github.com/jupiterbox/RetroCake.git %rkdir%\Temp\Script >> "%rkdir%\Tools\Updater.bat"
 echo xcopy %rkdir%\Temp\Script\RetroCake.bat %rkdir%\Tools\ >> "%rkdir%\Tools\Updater.bat"
 echo rmdir %rkdir%\Temp\Script\ /S /Q >> "%rkdir%\Tools\Updater.bat"
 echo start %rkdir%\Tools\RetroCake.bat >> "%rkdir%\Tools\Updater.bat"
@@ -517,86 +559,32 @@ exit
 ::=================================================================================================================================================================================================================================================================================================================
 
 
-:StartESVerCheck
-::Starts checking Emulationstation's version for update. Removes the ESCheck folder to ensure comparison results are good.
-clsecho .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo  ==================================================
-echo =                                                  =
-echo =            Checking for updates for              =
-echo =                                                  =
-echo =                EmulationStation                  =
-echo =                                                  =
-echo  ==================================================
-IF EXIST %rkdir%\Temp\ESCheck\ goto CleanESCheck
-goto ESCheck
-
-:CleanESCheck
-rmdir %rkdir%\Temp\ESCheck /S /Q
-goto ESCheck
-
-:ESCheck
-::Checks if emulationstation is installed. if not it prompts to install. if already installed downloads a small version of the latest update. Compares the downloaded exe with the installed exe. If different prompts to update
-::Accomplishes this version compare by writing the file size of the current exe and the downloaded exe to two text files. Compares the strings in the text files. If they are the same then no update. If they are different then prompts for update.
-::tried through WMIC checks, but version string is not included in the EXE :<
-IF NOT EXIST %rkdir%\EmulationStation\emulationstation.exe goto UpdateESQN
-mkdir %rkdir%\Temp\ESCheck
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/jrassa/EmulationStation/releases/download/continuous-master/EmulationStation-Win32-no-deps.zip','%rkdir%\Temp\ESCheck\tempES.zip')
-cls
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ESCheck\tempES.zip" -o"%rkdir%\Temp\ESCheck" -aoa > nul
-::wmic datafile where name="C:\\RetroCake\\EmulationStation\\emulationstation.exe" get Version /value > %rkdir%\Temp\ESCheck\currentES.txt
-::wmic datafile where name="C:\\RetroCake\\Temp\\ESCheck\\emulationstation.exe" get Version /value > %rkdir%\Temp\ESCheck\newES.txt
-for %%I in (%rkdir%\EmulationStation\emulationstation.exe) do echo %%~zI > %rkdir%\Temp\ESCheck\currentES.txt
-for %%I in (%rkdir%\Temp\ESCheck\emulationstation.exe) do echo %%~zI > %rkdir%\Temp\ESCheck\newES.txt
-cd /D %rkdir%\Temp\ESCheck
-set /p currentES=<currentES.txt
-set /p newES=<newES.txt
-ping 127.0.0.1 -n 2 >nul
-IF %currentES%==%newES% goto UpToDate
-goto UpdateESQ
-
-:UpdateESQ
-::Prompts to update. Sends to Emulationstation installation (Newest available version)
-cls
-
-set /P c=An update is available. Would you like to update [Y/N]?
-if /I "%c%" EQU "Y" goto UpdateES
-if /I "%c%" EQU "N" goto cancelled
-
-:UpdateESQN
-::Lets the user know that emulationstation is not installed. Prompts for installation. (Newest available version)
-cls
-
-set /P c=EmulationStation not found. Would you like to install [Y/N]?
-if /I "%c%" EQU "Y" goto UpdateES
-if /I "%c%" EQU "N" goto cancelled
-
-::=================================================================================================================================================================================================================================================================================================================
-
 :updateES
-::Backs up old installation
-cls
-echo  ========================================================
-echo =                                                        =
-echo =    Backing up EmulationStation folder to a zip file    =
-echo =                                                        =
-echo =    (ES_Backup...)  in RetroCake's Temp folder...       =
-echo =                                                        =
-echo  ========================================================
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\ES_Backup_%gooddayte%_%goodthyme%.zip" "%rkdir%\EmulationStation\"
+::Backs up EmulationStation folder. 
 
-::Removes old emulationstation files
+cls
+echo .
+echo  ==================================================================
+echo =                                                                  =
+echo =    This will back up EmulationStation and ES-Batocera folders    =
+echo =    to zipped files in  %rkdir%\Temp\Backup  folder
+echo =                                                                  =
+echo =    If these folders do not exist, they will be skipped           =
+echo =                                                                  =
+echo =                       please wait...                             =
+echo .
+
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES_%gooddayte%_%goodthyme%.zip" "%rkdir%\EmulationStation\" > nul
 rmdir "%rkdir%\EmulationStation" /s /q
 mkdir "%rkdir%\EmulationStation"
+
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES-Batocera_%gooddayte%_%goodthyme%.zip" "%rkdir%\ES-Batocera\" > nul
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES-Batocera-Themes_%gooddayte%_%goodthyme%.zip" "%rkdir%\ES-Batocera-Themes\" > nul
+rmdir "%rkdir%\ES-Batocera" /s /q
+rmdir "%rkdir%\ES-Batocera-Themes" /s /q
+
+cls
+
 
 ::Downloads the latest build of EmulationStation
 cls
@@ -604,29 +592,26 @@ echo .
 echo .
 echo .
 echo .
+echo  ================================================================
+echo =                                                                =
+echo =     Download / Install:                                        =
+echo =                                                                =
+echo =              - EmulationStation   (jrassa)                     =
+echo =              - Carbon and Mru5 themes for ES                   =
+echo =              - Batocera-EmulationStation  (fabricecaruso)      =
+echo =              - Five themes for ES-Batocera                     =
+echo =                                                                =
+echo =                                                                =
+echo =    --==  How to use ES-Batocera...  Just manually backup       =
+echo =              and swap contents inside ES and themes folders    =
+echo =              with ES-Batocera's. ES-Batocera also needs        =
+echo =              a copy of same es_systems.cfg file for ES.        =
+echo =                                                                =
+echo =                                                                =
+echo =                         please wait ...                        =
+echo =                                                                =
 echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo  =========================================================
-echo =                                                         =
-echo =   Downloading the latest build of EmulationStation      =
-echo =                                         ( jrassa )      =
-echo =   including standard Carbon theme...                    =
-echo =                                                         =
-echo =                                                         =
-echo =     ----== for my experimental purpose ==--             =
-echo =                                                         =
-echo =       also downloads 'Batocera' version with some       =
-echo =       of themes into ES-Batocera and ESB-Themes         =
-echo =       folders  (fabricecaruso/G-rila/ordovice/CkauNui)  =
-echo =                                                         =
-echo =     ----== for my experimental purpose ==--             =
-echo =                                                         =
-echo  =========================================================
+
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/jrassa/EmulationStation/releases/download/continuous-master/EmulationStation-Win32.zip','%rkdir%\Temp\ES.zip')
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/fabricecaruso/batocera-emulationstation/releases/download/continuous-stable/EmulationStation-Win32.zip','%rkdir%\Temp\ES-Batocera.zip')
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/fabricecaruso/es-theme-carbon/archive/master.zip','%rkdir%\Temp\ESB-Theme-Carbon.zip')
@@ -635,10 +620,12 @@ powershell -command (New-Object System.Net.WebClient).DownloadFile('https://gith
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/ordovice/es-theme-next-level-remix/archive/master.zip','%rkdir%\Temp\ESB-Theme-Next-Level-Remix.zip')
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/CkauNui/ckau-book/archive/master.zip','%rkdir%\Temp\ESB-Theme-Ckau-Book.zip')
 
-
 ping 127.0.0.1 -n 3 > nul
+
 ::Extracts to the RetroCake\Emulationstation directory
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ES.zip" -o"%rkdir%\EmulationStation" > nul
+
+::Extracts to the RetroCake\ES-Batocera and ES-Batocera-Themes directories
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ES-Batocera.zip" -o"%rkdir%\ES-Batocera" > nul
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ESB-Theme-Carbon.zip" -o"%rkdir%\ES-Batocera-Themes" > nul
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ESB-Theme-Minimal.zip" -o"%rkdir%\ES-Batocera-Themes" > nul
@@ -694,30 +681,34 @@ if EXIST "%rkdir%\EmulationStation\emulationstation.exe" goto ESNewSucceed
 :ESNewSucceed
 ::Backs up entire themes folder to RetroCake's Temp folder
 cls
-echo  =======================================================
-echo =                                                       =
-echo =    Backing up entire themes folder to ES_Themes zip   =
-echo =    file in RetroCake's Temp folder...                 =
-echo =                                                       =
-echo  =======================================================
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\ES_Themes_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\"
+echo .
+echo  ============================================================
+echo =                                                            =
+echo =    This will back up themes folder to a zipped ES-Themes   =
+echo =    file in  %rkdir%\Temp\Backup  folder,
+echo =                                                            =
+echo =    and then download and install Carbon and Mru5 themes    =
+echo =                                                            =
+echo =                                                            =
+echo =    If this folder does not exist, it will be skipped       =
+echo =                                                            =
+echo =                       please wait...                       =
+echo .
 
-::Installs default Carbon theme (RetroPie)
-echo .
-echo .
-echo .
-echo  ======================================================
-echo =                                                      =
-echo =    Downloading two versions of Carbon themes from    =
-echo =    RetroPie  and  kelvinator3300  sites...           =
-echo =                                                      =
-echo  ======================================================
+::Windows 10's Oct 2020 Update appears to block this script's ability to move folder 
+::from the user profile's folder to another location, (e.g., second hard drive).
+::For now, this just makes a copy of this folder to another location.
+
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES-Themes_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\" > nul
+
+
+::Installs default set of themes-- Carbon theme (RetroPie version) and Mru5
 rmdir "%USERPROFILE%\.emulationstation\themes" /S /Q
 mkdir "%USERPROFILE%\.emulationstation\themes"
 cd /D "%USERPROFILE%\.emulationstation\themes"
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/RetroPie/es-theme-carbon.git
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/RetroPie/es-theme-carbon.git > nul
 ren es-theme-carbon Carbon-Retropie
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/kelvinator3300/es-theme-mru5.git
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/kelvinator3300/es-theme-mru5.git > nul
 ren es-theme-mru5 Mru5
 
 ::Checks for temporary files created during automated installer selection
@@ -734,6 +725,7 @@ goto completed
 :ManESCFG
 ::Menu to manage es_systems.cfg
 cls
+echo .
 echo  =================================================================================
 echo =                                                                                 =
 Echo =    1.) Create new  es_systems.cfg  file without ROM paths 
@@ -748,6 +740,7 @@ echo =                                                                          
 echo =    5.) Return to EmulationStation manager                                       =
 echo =                                                                                 =
 echo  =================================================================================
+echo .
 CHOICE /N /C:12345 /M "Enter Corresponding Menu choice (1, 2, 3, 4, 5)"
 IF ERRORLEVEL ==5 GOTO esmenu
 IF ERRORLEVEL ==4 GOTO editES
@@ -759,7 +752,7 @@ IF ERRORLEVEL ==1 GOTO blankESCFG
 ::Creates an es_systems.cfg without ROM directories incase you need/want something special (Not recommended as it's kinda poop to enter all the stuff manually.
 
 ::Backs up current es_systems.cfg
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_systems_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\es_systems.cfg"
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es_systems-config_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 ::Deletes old es_systems.cfg
 del "%USERPROFILE%\.emulationstation\es_systems.cfg" /q
@@ -2294,14 +2287,14 @@ echo ^</systemList^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 
-IF EXIST %rkdir%\Temp\BrandNewBlank goto updateRA
+IF EXIST %rkdir%\Temp\BrandNewBlank goto FirstInstallRA
 goto completed
 
 :defaultESCFG
 ::Creates an es_systems.cfg using the default ROM directory RetroCake\Roms
 
 ::Backs up current es_systems.cfg
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_systems_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\es_systems.cfg"
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es_systems-config_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 ::Deletes old es_systems.cfg
 del "%USERPROFILE%\.emulationstation\es_systems.cfg" /q
@@ -3842,9 +3835,13 @@ goto completed
 :customESCFG
 ::Creates es_systems.cfg using the custom ROM directory specified during automated installation or when managing ROM directories.
 
+::Backs up current es_systems.cfg
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es_systems-config_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
 cls
 
 set /p cusromdir="Enter Path for ROM Folder (default %rkdir%\ROMS): "
+
 
 
 ::======================================================================================================================================================================================================================================
@@ -5541,12 +5538,12 @@ If Errorlevel 2 Goto No-RkRomsDir
 If Errorlevel 1 Goto Yes-RkRomsDir
 
 :No-RkRomsDir
-IF EXIST %rkdir%\Temp\BrandNewDef goto updateRA
+IF EXIST %rkdir%\Temp\BrandNewDef goto FirstInstallRA
 goto completed
 
 :Yes-RkRomsDir
 start %rkdir%\ROMS
-IF EXIST %rkdir%\Temp\BrandNewDef goto updateRA
+IF EXIST %rkdir%\Temp\BrandNewDef goto FirstInstallRA
 goto completed
 
 
@@ -5710,24 +5707,80 @@ If Errorlevel 2 Goto No-CustomRomsDir
 If Errorlevel 1 Goto Yes-CustomRomsDir
 
 :No-CustomRomsDir
-IF EXIST %rkdir%\Temp\BrandNewDef goto updateRA
+IF EXIST %rkdir%\Temp\BrandNewDef goto FirstInstallRA
 goto completed
 
 :Yes-CustomRomsDir
 start %cusromdir%
-IF EXIST %rkdir%\Temp\BrandNewCus goto updateRA
+IF EXIST %rkdir%\Temp\BrandNewCus goto FirstInstallRA
 goto completed
 
 
 
 ::=================================================================================================================================================================================================================================================================================================================
+
+:FirstInstallRA
+::Installs RetroArch 1.9.0  (64-bit) to RetroCake\RetroArch. Cleans up all downloaded files when done.
+
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =     Download / Install:    RetroArch  (64-bit)                =
+echo =                                                               =
+echo =                       please wait...                          =
+echo =                                                               =
+echo  ===============================================================
+echo .
+
+powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.9.0/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
+
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
+
+cls
+echo  ==============================================
+echo =        Cleaning up downloaded file(s)        =
+echo  ==============================================
+ping 127.0.0.1 -n 4 >nul
+del "%rkdir%\Temp\RetroArch_x64.zip" /q
+goto GetRACores
+
 ::=================================================================================================================================================================================================================================================================================================================
 
 :updateRA
-::RetroArch Updater.
+
 cls
-mkdir "%rkdir%\Temp\cores"
-move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_Backup_%gooddayte%_%goodthyme%"
+echo .
+echo  =========================================================
+echo =                                                         =
+echo =    Before backing up RetroArch folder, RA Cores       
+echo =    folder will be moved into  %rkdir%\Temp  folder 
+echo =                                                       
+echo =    After backing up, RA Cores folder will be            =
+echo =    restored.                                            =
+echo =                                                         =
+echo =    A backup of RetroArch will be in a zipped folder     =
+echo =    in  %rkdir%\Temp\Backup  folder 
+echo =                                                         =
+echo =                                                         =
+echo =    If this folder does not exist, it will be skipped    =
+echo =                                                         =
+echo =                       please wait...                    =
+echo .
+
+move %rkdir%\RetroArch\cores %rkdir%\Temp\RA-cores-tmp
+
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_RetroArch_%gooddayte%_%goodthyme%.zip" "%rkdir%\RetroArch\" > nul
+rmdir "%rkdir%\RetroArch" /s /q
 cls
 
 ::Installs RetroArch 1.9.0  (64-bit) to RetroCake\RetroArch. Cleans up all downloaded files when done.
@@ -5744,50 +5797,145 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =   Downloading RetroArch (64-bit)...                           =
+echo =     Download / Install:    RetroArch  (64-bit)                =
+echo =                                                               =
+echo =                       please wait...                          =
 echo =                                                               =
 echo  ===============================================================
+echo .
+
 powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.9.0/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
+
+move %rkdir%\Temp\RA-cores-tmp %rkdir%\RetroArch\cores 
+
 cls
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
 ping 127.0.0.1 -n 4 >nul
 del "%rkdir%\Temp\RetroArch_x64.zip" /q
-goto UpdateRACores
-
-::=================================================================================================================================================================================================================================================================================================================
+goto UpdateRACoresQ
 
 
-:UpdateRACores
-::Checks architecture for installing/updating retroarch cores
+
+:updateRAn
+
 cls
+echo .
+echo  =========================================================
+echo =                                                         =
+echo =    Before backing up RetroArch folder, RA Cores       
+echo =    folder will be moved into  %rkdir%\Temp  folder 
+echo =                                                       
+echo =    After backing up, RA Cores folder will be            =
+echo =    restored.                                            =
+echo =                                                         =
+echo =    A backup of RetroArch will be in a zipped folder     =
+echo =    in  %rkdir%\Temp\Backup  folder 
+echo =                                                         =
+echo =                                                         =
+echo =    If this folder does not exist, it will be skipped    =
+echo =                                                         =
+echo =                       please wait...                    =
+echo .
+
+move %rkdir%\RetroArch\cores %rkdir%\Temp\RA-cores-tmp
+
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_RetroArch_%gooddayte%_%goodthyme%.zip" "%rkdir%\RetroArch\" > nul
+rmdir "%rkdir%\RetroArch" /s /q
+cls
+
+cls
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =     Download / Install:    RetroArch  (nightly 64-bit)        =
+echo =                                                               =
+echo =                       please wait...                          =
+echo =                                                               =
+echo  ===============================================================
+echo .
+
+powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/nightly/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
+
+move %rkdir%\Temp\RA-cores-tmp %rkdir%\RetroArch\cores
+
+cls
+echo  ==============================================
+echo =        Cleaning up downloaded file(s)        =
+echo  ==============================================
+ping 127.0.0.1 -n 4 >nul
+del "%rkdir%\Temp\RetroArch_x64.zip" /q
+goto UpdateRACoresQ
+
+
+
+:UpdateRACoresQ
+echo . 
+Choice /M "  Do you want to update RetroArch Cores? "
+If Errorlevel 2 Goto completed
+If Errorlevel 1 Goto BackupRACores
+
+
+
+
+:BackupRACores
+
+cls
+echo .
+echo  =========================================================
+echo =                                                         =
+echo =    This will back up RA Cores folder to a zipped        =
+echo =    file in  %rkdir%\Temp\Backup  folder
+echo =                                                         =
+echo =                                                         =
+echo =    If this folder does not exist, it will be skipped    =
+echo =                                                         =
+echo =                       please wait...                    =
+echo .
+
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_RA-Cores_%gooddayte%_%goodthyme%.zip" "%rkdir%\RetroArch\cores\"
+rmdir "%rkdir%\RetroArch\cores" /s /q
+goto GetRACores
+
+
+:GetRACores
+
+cls
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =     Download / Install:    150+ RA Cores  (nightly)           =
+echo =                                                               =
+echo =                       please wait...                          =
+echo =                                                               =
+echo  ===============================================================
+echo .
+
 mkdir "%rkdir%\Temp\cores"
-cls
-
-:x64core
-::Install RetroArch cores -- 64 bit
-cls
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo  ======================================================================
-echo =                                                                      =
-echo =     Downloading  150+  cores  (nightly) for 64-bit RetroArch         =
-echo =                                                                      =
-echo =     This takes some time to complete...                              =
-echo =                                                                      =
-echo  ======================================================================
 
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/81_libretro.dll.zip -Destination "%rkdir%\Temp\cores\1.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/2048_libretro.dll.zip -Destination "%rkdir%\Temp\cores\2.zip"
@@ -5816,209 +5964,168 @@ powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nigh
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume_libretro.dll.zip -Destination "%rkdir%\Temp\cores\25.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dinothawr_libretro.dll.zip -Destination "%rkdir%\Temp\cores\26.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_core_libretro.dll.zip -Destination "%rkdir%\Temp\cores\27.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\28.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/duckstation_libretro.dll.zip -Destination "%rkdir%\Temp\cores\29.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ecwolf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\30.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\31.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\32.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\33.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_libretro.dll.zip -Destination "%rkdir%\Temp\cores\34.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_neogeo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\35.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha_libretro.dll.zip -Destination "%rkdir%\Temp\cores\36.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbneo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\37.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fceumm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\38.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ffmpeg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\39.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixgb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\40.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\41.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\42.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\43.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freechaf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\44.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -Destination "%rkdir%\Temp\cores\45.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/frodo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\46.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -Destination "%rkdir%\Temp\cores\47.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -Destination "%rkdir%\Temp\cores\48.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\49.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\50.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\51.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\52.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\53.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\54.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\55.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -Destination "%rkdir%\Temp\cores\56.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hbmame_libretro.dll.zip -Destination "%rkdir%\Temp\cores\57.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -Destination "%rkdir%\Temp\cores\58.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\59.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2000_libretro.dll.zip -Destination "%rkdir%\Temp\cores\60.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_libretro.dll.zip -Destination "%rkdir%\Temp\cores\61.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_midway_libretro.dll.zip -Destination "%rkdir%\Temp\cores\62.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\63.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\64.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\65.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2016_libretro.dll.zip -Destination "%rkdir%\Temp\cores\66.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\67.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\68.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\69.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\70.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\71.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\72.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\73.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\74.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\75.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_snes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\76.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supafaust_libretro.dll.zip -Destination "%rkdir%\Temp\cores\77.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\78.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\79.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -Destination "%rkdir%\Temp\cores\80.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -Destination "%rkdir%\Temp\cores\81.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -Destination "%rkdir%\Temp\cores\82.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -Destination "%rkdir%\Temp\cores\83.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesens_libretro.dll.zip -Destination "%rkdir%\Temp\cores\84.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\85.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/meteor_libretro.dll.zip -Destination "%rkdir%\Temp\cores\86.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\87.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/minivmac_libretro.dll.zip -Destination "%rkdir%\Temp\cores\88.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\89.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -Destination "%rkdir%\Temp\cores\90.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\91.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\92.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/neocd_libretro.dll.zip -Destination "%rkdir%\Temp\cores\93.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -Destination "%rkdir%\Temp\cores\94.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -Destination "%rkdir%\Temp\cores\95.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\96.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -Destination "%rkdir%\Temp\cores\97.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/oberon_libretro.dll.zip -Destination "%rkdir%\Temp\cores\98.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/openlara_libretro.dll.zip -Destination "%rkdir%\Temp\cores\99.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/opera_libretro.dll.zip -Destination "%rkdir%\Temp\cores\100.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\101.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -Destination "%rkdir%\Temp\cores\102.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -Destination "%rkdir%\Temp\cores\103.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/play_libretro.dll.zip -Destination "%rkdir%\Temp\cores\104.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\105.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -Destination "%rkdir%\Temp\cores\106.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\107.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\108.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\109.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -Destination "%rkdir%\Temp\cores\110.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -Destination "%rkdir%\Temp\cores\111.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -Destination "%rkdir%\Temp\cores\112.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\113.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\114.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -Destination "%rkdir%\Temp\cores\115.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/retro8_libretro.dll.zip -Destination "%rkdir%\Temp\cores\116.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\117.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\118.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/smsplus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\119.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -Destination "%rkdir%\Temp\cores\120.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -Destination "%rkdir%\Temp\cores\121.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\122.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\123.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -Destination "%rkdir%\Temp\cores\124.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\125.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -Destination "%rkdir%\Temp\cores\126.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -Destination "%rkdir%\Temp\cores\127.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/test_libretro.dll.zip -Destination "%rkdir%\Temp\cores\128.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -Destination "%rkdir%\Temp\cores\129.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -Destination "%rkdir%\Temp\cores\130.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\131.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -Destination "%rkdir%\Temp\cores\132.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -Destination "%rkdir%\Temp\cores\133.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\134.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/uzem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\135.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\136.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -Destination "%rkdir%\Temp\cores\137.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\138.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\139.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\140.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\141.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -Destination "%rkdir%\Temp\cores\142.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\143.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm5x0_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xscpu64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -Destination "%rkdir%\Temp\cores\149.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\150.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\151.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/x1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\152.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\153.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\154.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\155.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_pure_libretro.dll.zip -Destination "%rkdir%\Temp\cores\28.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\29.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/duckstation_libretro.dll.zip -Destination "%rkdir%\Temp\cores\30.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ecwolf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\31.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\32.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\33.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\34.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_libretro.dll.zip -Destination "%rkdir%\Temp\cores\35.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_neogeo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\36.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha_libretro.dll.zip -Destination "%rkdir%\Temp\cores\37.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbneo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\38.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fceumm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\39.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ffmpeg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\40.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixgb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\41.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\42.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\43.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\44.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freechaf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\45.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -Destination "%rkdir%\Temp\cores\46.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/frodo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\47.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -Destination "%rkdir%\Temp\cores\48.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -Destination "%rkdir%\Temp\cores\49.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\50.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\51.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\52.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\53.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\54.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\55.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\56.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -Destination "%rkdir%\Temp\cores\57.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hbmame_libretro.dll.zip -Destination "%rkdir%\Temp\cores\58.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -Destination "%rkdir%\Temp\cores\59.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\60.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2000_libretro.dll.zip -Destination "%rkdir%\Temp\cores\61.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_libretro.dll.zip -Destination "%rkdir%\Temp\cores\62.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_midway_libretro.dll.zip -Destination "%rkdir%\Temp\cores\63.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\64.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\65.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\66.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2016_libretro.dll.zip -Destination "%rkdir%\Temp\cores\67.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\68.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\69.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\70.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\71.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\72.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\73.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\74.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\75.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\76.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_snes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\77.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supafaust_libretro.dll.zip -Destination "%rkdir%\Temp\cores\78.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\79.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\80.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -Destination "%rkdir%\Temp\cores\81.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -Destination "%rkdir%\Temp\cores\82.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -Destination "%rkdir%\Temp\cores\83.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -Destination "%rkdir%\Temp\cores\84.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesens_libretro.dll.zip -Destination "%rkdir%\Temp\cores\85.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mess2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\86.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/meteor_libretro.dll.zip -Destination "%rkdir%\Temp\cores\87.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\88.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/minivmac_libretro.dll.zip -Destination "%rkdir%\Temp\cores\89.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\90.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -Destination "%rkdir%\Temp\cores\91.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\92.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\93.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/neocd_libretro.dll.zip -Destination "%rkdir%\Temp\cores\94.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -Destination "%rkdir%\Temp\cores\95.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -Destination "%rkdir%\Temp\cores\96.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\97.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -Destination "%rkdir%\Temp\cores\98.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/oberon_libretro.dll.zip -Destination "%rkdir%\Temp\cores\99.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/openlara_libretro.dll.zip -Destination "%rkdir%\Temp\cores\100.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/opera_libretro.dll.zip -Destination "%rkdir%\Temp\cores\101.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\102.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -Destination "%rkdir%\Temp\cores\103.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -Destination "%rkdir%\Temp\cores\104.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/play_libretro.dll.zip -Destination "%rkdir%\Temp\cores\105.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\106.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -Destination "%rkdir%\Temp\cores\107.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\108.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\109.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\110.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -Destination "%rkdir%\Temp\cores\111.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -Destination "%rkdir%\Temp\cores\112.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -Destination "%rkdir%\Temp\cores\113.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\114.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\115.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -Destination "%rkdir%\Temp\cores\116.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/retro8_libretro.dll.zip -Destination "%rkdir%\Temp\cores\117.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\118.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\119.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/smsplus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\120.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -Destination "%rkdir%\Temp\cores\121.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -Destination "%rkdir%\Temp\cores\122.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\123.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\124.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -Destination "%rkdir%\Temp\cores\125.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\126.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -Destination "%rkdir%\Temp\cores\127.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -Destination "%rkdir%\Temp\cores\128.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/test_libretro.dll.zip -Destination "%rkdir%\Temp\cores\129.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -Destination "%rkdir%\Temp\cores\130.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -Destination "%rkdir%\Temp\cores\131.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\132.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -Destination "%rkdir%\Temp\cores\133.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -Destination "%rkdir%\Temp\cores\134.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\135.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/uzem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\136.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\137.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -Destination "%rkdir%\Temp\cores\138.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\139.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\140.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\141.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\142.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -Destination "%rkdir%\Temp\cores\143.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm5x0_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xscpu64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -Destination "%rkdir%\Temp\cores\149.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -Destination "%rkdir%\Temp\cores\150.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\151.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\152.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/x1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\153.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\154.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\155.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\156.zip"
 
-
 echo .
 echo .
 echo .
+echo  ===============================================================
+echo =                                                               =
+echo =     Download / Install:    RA Cores from other sites          =
+echo =                                                               =
+echo =                           - dolphin_libretro.dll              =
+echo =                                                               =
+echo =                                                               =
+echo =                       please wait...                          =
+echo =                                                               =
+echo  ===============================================================
 echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo  ======================================================================
-echo =                                                                      =
-echo =     Downloading  additional cores from other sites...                =
-echo =                                                                      =
-echo =     For now, it's only   dolphin_libretro.dll                        =
-echo =                                                                      =
-echo  ======================================================================
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/hunterk/libretro_builds/releases/download/Windows_64-bit/dolphin_libretro.dll.zip','%rkdir%\Temp\cores\dolphin-libretro.zip')
 
-
-
-
 mkdir %rkdir%\RetroArch\cores
+
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\cores\*.zip" -o"%rkdir%\RetroArch\cores" -aoa > nul
+
 cls
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
 ping 127.0.0.1 -n 4 >nul
 rmdir "%rkdir%\Temp\cores" /s /q
-IF EXIST %rkdir%\Temp\BrandNewBlank goto InstallAllEmu
-IF EXIST %rkdir%\Temp\BrandNewDef goto InstallAllEmu
-IF EXIST %rkdir%\Temp\BrandNewCus goto InstallAllEmu
+IF EXIST %rkdir%\Temp\BrandNewBlank goto StartAllEmu
+IF EXIST %rkdir%\Temp\BrandNewDef goto StartAllEmu
+IF EXIST %rkdir%\Temp\BrandNewCus goto StartAllEmu
 goto completed
 
-::=================================================================================================================================================================================================================================================================================================================
-
-
-:updateRAn
-cls
-mkdir "%rkdir%\Temp\cores"
-move "%rkdir%\RetroArch" "%rkdir%\Temp\RetroArch_Backup_%gooddayte%_%goodthyme%"
-cls
-
-::Installs nightly RetroArch (64-bit) to RetroCake\RetroArch.
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
-echo  =====================================================================
-echo =                                                                     =
-echo =  Downloading nightly RetroArch (64-bit)...                          =
-echo =                                                                     =
-echo  =====================================================================
-powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/nightly/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%\RetroArch" -aoa > nul
-cls
-echo  ==============================================
-echo =        Cleaning up downloaded file(s)        =
-echo  ==============================================
-ping 127.0.0.1 -n 4 >nul
-del "%rkdir%\Temp\RetroArch_x64.zip" /q
-goto completed
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -6027,25 +6134,28 @@ goto completed
 :ThemeManager
 ::Menu for managing and installing themes for EmulationStation
 cls
+echo .
 echo  =========================================================================
 echo =                                                                         =
-echo =    1.) Update Carbon and Mur5 themes                                    =
+echo =    1.) Update or Reinstall  Carbon and Mur5 themes                      =
 echo =                                                                         =
-echo =    2.) Get or update 9 additional themes                                =
+echo =    2.) Get / Update / Reinstall  9  additional themes                   =
 echo =                                                                         =
 echo =    3.) View themes gallery  (RetroPie's website)                        =
 echo =                                                                         =
 echo =    4.) Exit Theme Manager                                               =
 echo =                                                                         =
 echo  =========================================================================
+echo .
 CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
 IF ERRORLEVEL ==4 GOTO menu
 IF ERRORLEVEL ==3 GOTO ThemeGallery
 IF ERRORLEVEL ==2 GOTO SetOfThemes
-IF ERRORLEVEL ==1 GOTO UpdateCarbonTheme
+IF ERRORLEVEL ==1 GOTO UpdateDefaultThemes
 
 :ThemeGallery
 cls
+echo .
 echo  =========================================================================
 echo =                                                                         =
 echo =   Visit RetroPie's ES Themes webpage in MS Edge web browser.            =
@@ -6056,84 +6166,161 @@ echo =   some ES themes look like...(provided in this batch script).           =
 echo =                                                                         =
 echo =                                                                         =
 echo =   https://retropie.org.uk/docs/Themes/#theme-gallery                    = 
-echo =                                                                         =
+echo =
+echo .                                                                         =
 pause
 start microsoft-edge:https://retropie.org.uk/docs/Themes/#theme-gallery
+echo .
+echo .
 pause
 goto ThemeManager
 
 
-:UpdateCarbonTheme
-::Backup Carbon-Retropie and Mru5 themes then install the updated version
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_Carbon-Retropie_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Carbon-Retropie"
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_Mru5_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Mru5"
+:UpdateDefaultThemes
+
+cls
+echo .
+echo  ===========================================================
+echo =                                                           =
+echo =    This will back up Carbon and Mru5 themes to zipped     =
+echo =    files in  %rkdir%\Temp\Backup  folder,
+echo =                                                           =
+echo =    and then download and install updated themes           =
+echo =                                                           =
+echo =                                                           =
+echo =    If these folders do not exist, they will be skipped    =
+echo =                                                           =
+echo =                       please wait...                      =
+echo .
+
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Carbon-Retropie_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Carbon-Retropie" > nul
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Mru5_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Mru5" > nul
 rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Carbon-Retropie"
 rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Mru5"
 cd /D "%USERPROFILE%\.emulationstation\themes"
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/RetroPie/es-theme-carbon.git
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/kelvinator3300/es-theme-mru5.git
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/RetroPie/es-theme-carbon.git > nul
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/kelvinator3300/es-theme-mru5.git > nul
 ren es-theme-carbon Carbon-Retropie
 ren es-theme-mru5 Mru5
 goto ThemeManager
 
 
 :SetOfThemes
-::Using git to download a selection of themes
+
+cls
+echo .
+echo  ==============================================================
+echo =                                                              =
+echo =    This will back up individual ES Themes to zipped files    =
+echo =    in  %rkdir%\Temp\Backup  folder,
+echo =                                                              =
+echo =    and then download and install updated themes              =
+echo =                                                              =
+echo =                                                              =
+echo =    If these folders do not exist, they will be downloaded    =
+echo =                                                              =
+echo =                       please wait...                         =
+echo .
+
 cd /D "%USERPROFILE%\.emulationstation\themes"
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_ComicBook_SE-Wheelart_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\comicbook_se-wheelart"
+IF EXIST comicbook_se-wheelart (
+    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_ComicBook_SE-Wheelart_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\comicbook_se-wheelart" > nul
+    rmdir comicbook_se-wheelart /s /q
+) ELSE (
+    echo    downloading - comicbook_se-wheelart ...
+)
 set repo=TMNTturtleguy
 set theme=ComicBook_SE-Wheelart
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_CosmicRise_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\cosmicrise"
+
+IF EXIST cosmicrise (
+    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_CosmicRise_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\cosmicrise" > nul
+    rmdir cosmicrise /s /q
+) ELSE (
+    echo    downloading - cosmicrise ...
+)
 set repo=RetroHursty69
 set theme=CosmicRise
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_minimal_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\minimal"
+
+IF EXIST minimal (
+    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_minimal_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\minimal" > nul
+    rmdir minimal /s /q
+) ELSE (
+    echo    downloading - minimal ...
+)
 set repo=lilbud
 set theme=minimal
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_pixel-metadata_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\pixel-metadata"
+
+IF EXIST pixel-metadata (
+    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_pixel-metadata_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\pixel-metadata" > nul
+    rmdir pixel-metadata /s /q
+) ELSE (
+    echo    downloading - pixel-metadata ...
+)
 set repo=ehettervik
 set theme=pixel-metadata
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_Slick_CityLights_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Slick_CityLights"
+
+IF EXIST slick_citylights (
+    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Slick_CityLights_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Slick_CityLights" > nul
+    rmdir slick_citylights /s /q
+) ELSE (
+    echo    downloading - slick_citylights ...
+)
 set repo=RetroHursty69
 set theme=Slick_CityLights
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_SpaceOddity_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\spaceoddity"
+
+IF EXIST spaceoddity (
+    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_SpaceOddity_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\spaceoddity" > nul
+    rmdir spaceoddity /s /q
+) ELSE (
+    echo    downloading - spaceoddity ...
+)
 set repo=lipebello
 set theme=SpaceOddity
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_supersweet_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\supersweet"
+
+IF EXIST supersweet (
+    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_supersweet_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\supersweet" > nul
+    rmdir supersweet /s /q
+) ELSE (
+    echo    downloading - supersweet ...
+)
 set repo=RetroHursty69
 set theme=supersweet
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_switch-dark_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\switch-dark"
+
+IF EXIST switch-dark (
+    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_switch-dark_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\switch-dark" > nul
+    rmdir switch-dark /s /q
+) ELSE (
+    echo    downloading - switch-dark ...
+)
 set repo=lilbud
 set theme=switch-dark
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\es_theme_ZeldaSpin_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\zeldaspin"
+
+IF EXIST zeldaspin (
+    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_ZeldaSpin_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\zeldaspin" > nul
+    rmdir zeldaspin /s /q
+) ELSE (
+    echo    downloading - zeldaspin ...
+)
 set repo=RetroHursty69
 set theme=ZeldaSpin
-rmdir %theme% /S /Q
-%rkdir%\Tools\git\bin\git.exe clone --recursive https://github.com/%repo%/es-theme-%theme%.git %theme%
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
 
 rename ComicBook_SE-Wheelart comicbook_se-wheelart
 rename CosmicRise cosmicrise
@@ -6174,6 +6361,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/AppleWin/AppleWin/releases/download/v1.29.16.0/AppleWin1.29.16.0.zip','%rkdir%\Temp\AppleWin.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\AppleWin.zip" -o"%rkdir%\Emulators\AppleWin" -aoa > nul
@@ -6213,6 +6401,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 ::  github at  https://github.com/stardot/beebem-windows
 
@@ -6257,6 +6446,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 
 powershell -command Start-BitsTransfer -Source http://bluemsx.msxblue.com/rel_download/blueMSXv282full.zip -Destination "%rkdir%\Temp\BlueMSX.zip"
@@ -6300,6 +6490,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command Start-BitsTransfer -Source https://fms.komkon.org/ColEm/ColEm54-Windows-bin.zip -Destination "%rkdir%\Temp\colem.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\colem.zip" -o"%rkdir%\Emulators\ColEm" -aoa > nul
@@ -6340,6 +6531,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/tursilion/classic99/raw/master/dist/classic99.zip','%rkdir%\Temp\Classic99.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Classic99.zip" -o"%rkdir%\Emulators" -aoa > nul
@@ -6384,6 +6576,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command Start-BitsTransfer -Source http://www.daphne-emu.com/download/daphne-1.0v-win32.zip -Destination "%rkdir%\Temp\Daphne.zip"
 mkdir %rkdir%\Emulators\Daphne
@@ -6428,7 +6621,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
-
+echo .
 
 powershell -command Start-BitsTransfer -Source http://demul.emulation64.com/files/demul07_280418.7z -Destination "%rkdir%\Temp\demul.7z"
 :: --------------------
@@ -6504,6 +6697,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command Start-BitsTransfer -Source https://fs-uae.net/stable/3.0.5/FS-UAE-Suite_3.0.5_Windows_x86-64.zip -Destination "%rkdir%\Temp\FS-UAE.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\FS-UAE.7z" -o"%rkdir%\Emulators\FS-UAE" -aoa > nul
@@ -6553,6 +6747,7 @@ echo =                                                               =
 echo =   If latest version properly supports IPF, then use it        =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command Start-BitsTransfer -Source http://download.tuxfamily.org/hatari/2.1.0/hatari-2.1.0_windows64.zip -Destination "%rkdir%\Temp\Hatari64.zip"
 powershell -command Start-BitsTransfer -Source http://download.tuxfamily.org/hatari/2.3.1/hatari-2.3.1_windows64.zip -Destination "%rkdir%\Temp\Hatari64Latest.zip"
@@ -6600,6 +6795,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command Start-BitsTransfer -Source http://spatula-city.org/~im14u2c/intv/dl/jzintv-20200712-win32-sdl2.zip -Destination "%rkdir%\Temp\jzIntv.zip"
 powershell -command Start-BitsTransfer -Source http://spatula-city.org/~im14u2c/intv/dl/jzintv-20200712-linux-x86-64-sdl2.zip -Destination "%rkdir%\Temp\jzIntv-64.zip"
@@ -6645,6 +6841,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/mamedev/mame/releases/download/mame0226/mame0226b_64bit.exe','%rkdir%\Temp\Mame64.exe')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame64.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
@@ -6687,6 +6884,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 :: official site... https://github.com/PCSX2/pcsx2
 
@@ -6731,6 +6929,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 
 powershell -command Start-BitsTransfer -Source http://www.ppsspp.org/files/1_10_3/ppsspp_win.zip -Destination "%rkdir%\Temp\ppsspp.zip"
@@ -6775,6 +6974,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 :: official site... http://vice-emu.sourceforge.net/windows.html
 
@@ -6827,6 +7027,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command Start-BitsTransfer -Source http://www.6809.org.uk/xroar/dl/xroar-0.36.2-w64.zip -Destination "%rkdir%\Temp\XRoar64.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\XRoar64.zip" -o"%rkdir%\Emulators" -aoa > nul
@@ -6857,7 +7058,7 @@ echo Put Cemu files in this directory > %rkdir%\Emulators\Cemu\"_  Put  Cemu  co
 start %rkdir%\Emulators\Cemu
 
 cls
-
+echo .
 echo ================================================
 echo =                                              =
 echo =      MANUAL  Download  and  Install  of      =
@@ -6886,7 +7087,7 @@ echo =
 echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
 echo =          Use other version that is free of malware  OR  skip this.
 echo =
-
+echo .
 pause
 
 start microsoft-edge:http://cemu.info/
@@ -6910,6 +7111,7 @@ start %rkdir%\Emulators\Citra
 
 cls
 
+echo .
 echo ================================================
 echo =                                              =
 echo =      MANUAL  Download  and  Install  of      =
@@ -6937,7 +7139,7 @@ echo =
 echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
 echo =          Use other version that is free of malware  OR  skip this.
 echo = 
-
+echo .
 pause
 
 start microsoft-edge:https://github.com/citra-emu/citra-canary/releases
@@ -6962,6 +7164,7 @@ start %rkdir%\Emulators\Cxbx-Reloaded
 
 cls
 
+echo .
 echo ================================================
 echo =                                              =
 echo =      MANUAL  Download  and  Install  of      =
@@ -6988,7 +7191,7 @@ echo =
 echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
 echo =          Use other version that is free of malware  OR  skip this.
 echo = 
-
+echo .
 pause
 
 start microsoft-edge:https://github.com/Cxbx-Reloaded/Cxbx-Reloaded/releases
@@ -7013,6 +7216,7 @@ start %rkdir%\Emulators\Dolphin-dev
 
 cls
 
+echo .
 echo ================================================
 echo =                                              =
 echo =      MANUAL  Download  and  Install  of      =
@@ -7039,7 +7243,7 @@ echo =
 echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
 echo =          Use other version that is free of malware  OR  skip this.
 echo =
-
+echo .
 pause
 
 start microsoft-edge:https://dolphin-emu.org/download/
@@ -7062,6 +7266,7 @@ start %rkdir%\Emulators\Pcsx2-dev
 
 cls
 
+echo .
 echo ================================================
 echo =                                              =
 echo =      MANUAL  Download  and  Install  of      =
@@ -7094,7 +7299,7 @@ echo =
 echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
 echo =          Use other version that is free of malware  OR  skip this.
 echo =
-
+echo .
 pause
 
 start microsoft-edge:https://pcsx2.net/download/development/dev-windows.html
@@ -7118,6 +7323,7 @@ start %rkdir%\Emulators\Rpcs3
 
 cls
 
+echo .
 echo ================================================
 echo =                                              =
 echo =      MANUAL  Download  and  Install  of      =
@@ -7143,7 +7349,7 @@ echo =
 echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
 echo =          Use other version that is free of malware  OR  skip this.
 echo = 
-
+echo .
 pause
 
 start microsoft-edge:https://rpcs3.net/download
@@ -7166,6 +7372,7 @@ start %rkdir%\Emulators\Xenia
 
 cls
 
+echo .
 echo ================================================
 echo =                                              =
 echo =      MANUAL  Download  and  Install  of      =
@@ -7194,7 +7401,7 @@ echo =
 echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
 echo =          Use other version that is free of malware  OR  skip this.
 echo = 
-
+echo .
 pause
 
 start microsoft-edge:https://xenia.jp
@@ -7219,6 +7426,7 @@ start %rkdir%\Emulators\Yuzu
 
 cls
 
+echo .
 echo ================================================
 echo =                                              =
 echo =      MANUAL  Download  and  Install  of      =
@@ -7246,7 +7454,7 @@ echo =
 echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
 echo =          Use other version that is free of malware  OR  skip this.
 echo =
-
+echo .
 pause
 
 start microsoft-edge:https://github.com/yuzu-emu/yuzu-mainline/releases
@@ -7283,6 +7491,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_amd64.zip','%rkdir%\Temp\scraperx64.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\scraperx64.zip" -o"%rkdir%\Tools\scraper" -aoa > nul
@@ -7310,6 +7519,7 @@ echo =                                                               =
 echo =        please wait...                                         =
 echo =                                                               =
 echo  ===============================================================
+echo .
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/paradadf/recaltools/archive/master.zip','%rkdir%\Temp\recaltools.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\recaltools.zip" -o"%rkdir%\Tools" -aoa > nul
@@ -7345,6 +7555,7 @@ goto ScraperMenuDefault
 :ScraperMenuDefault
 
 cls
+echo .
 echo ===========================================================================
 echo =                                                                         =
 echo =    Info on  Fastscraper Batch File                                      =
@@ -7368,7 +7579,7 @@ echo =    Be sure to append existing gamelist after first-time scraping.       =
 echo =                                                                         =
 echo =                                                                         =
 echo ===========================================================================
-
+echo .
 pause
 
 if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
@@ -7425,6 +7636,7 @@ goto ScraperMenuCustom
 :ScraperMenuCustom
 
 cls
+echo .
 echo ===========================================================================
 echo =                                                                         =
 echo =    Info on  Fastscraper Batch File                                      =
@@ -7448,45 +7660,12 @@ echo =    Be sure to append existing gamelist after first-time scraping.       =
 echo =                                                                         =
 echo =                                                                         =
 echo ===========================================================================
-
+echo .
 pause
 
 if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
 goto completed
 
-
-
-
-::=================================================================================================================================================================================================================================================================================================================
-::=================================================================================================================================================================================================================================================================================================================
-
-:HowToCleanupBackup
-cls
-echo ===========================================================================
-echo =                                                                         =
-echo =    How to clean up and/or backup contents                               =
-echo =    -------------------------------                                      =
-echo =                                                                         =
-echo =    Most of RetroCake contents, including ROMS are inside                =
-echo =    (drive letter):\RetroCake folder                                     =
-echo =                                                                         =
-echo =    To backup ROMS, just move ROMS folder to another storage             =
-echo =    location.                                                            =
-Echo =                                                                         =
-echo =    If you did put system BIOS in RetroArch's System folder, then        =
-echo =    move that System folder to another storage location.                 =
-echo =                                                                         =
-echo =    If you did configure and/or add some files in each emulator folder   =
-echo =    inside 'Emulators' folder, then you need to back them up.            =
-echo =                                                                         =
-echo =    Just remove RetroCake folder when you're done with it.               =
-echo =                                                                         =
-echo =    Themes and ES_Systems.cfg are inside '.emulationstation' folder      =
-echo =    in user profile folder.  Just back them up as necessary.             =
-echo =                                                                         =
-echo ===========================================================================
-pause
-goto menu
 
 
 
@@ -7510,13 +7689,14 @@ goto completed
 :erroorr
 ::Informs you if there is an error, should only show if the script totally failed and ran through to the end somehow
 cls
+echo .
 echo  ===========================================
 echo =                                           =
 echo =          Something went wrong...          =
 echo =                                           =
 echo  ===========================================
-echo      Press any key to return to main menu
-pause >nul
+echo .
+pause
 goto menu
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7524,13 +7704,14 @@ goto menu
 :completed
 ::Informs you of when a selected operation is done.
 cls
+echo .
 echo  ===========================================
 echo =                                           =
 echo =            Operation completed!           =
 echo =                                           =
 echo  ===========================================
-echo      Press any key to return to main menu
-pause >nul
+echo .
+pause
 goto menu
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7538,13 +7719,14 @@ goto menu
 :cancelled
 ::Informs you when an operation is canceled.
 cls
+echo .
 echo  ===========================================
 echo =                                           =
 echo =            Operation cancelled            =
 echo =                                           =
 echo  ===========================================
-echo      Press any key to return to main menu
-pause >nul
+echo .
+pause
 goto menu
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7552,13 +7734,14 @@ goto menu
 :NoFeat
 ::Informs you when a dummy feature is used (for testing purpose or future release)
 cls
+echo .
 echo  ===========================================
 echo =                                           =
 echo =    This feature is not yet implemented    =
 echo =                                           =
 echo  ===========================================
-echo      Press any key to return to main menu
-pause >nul
+echo .
+pause
 goto menu
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7566,13 +7749,14 @@ goto menu
 :Disabled
 ::Informs you that a feature that is temporarily disabled
 cls
+echo .
 echo  ============================================
 echo =                                            =
 echo = Currently Disabled due to dependency issue =
 echo =                                            =
 echo  ============================================
-echo      Press any key to return to main menu
-pause >nul
+echo .
+pause
 goto menu
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7580,38 +7764,22 @@ goto menu
 :UpToDate
 ::Informs you that EmulationStation is up to date and does not need updates.
 cls
+echo .
 echo  ===========================================
 echo =                                           =
 echo =       EmulationStation is up to date.     =
 echo =                                           =
 echo  ===========================================
-echo      Press any key to return to main menu
-pause >nul
+echo .
+pause
 goto menu
 
-::=================================================================================================================================================================================================================================================================================================================
-
-:CleanAllExit
-::Informs you that all files are removed, and then exits this batch file.
-cls
-echo  ======================================================
-echo =                                                      =
-echo =  Cleanup completed...  Please restart RetroCake.bat  =
-echo =                                                      =
-echo =  If you had anything in %rkdir%\ROMS  they           =
-echo =         are now in %USERPROFILE%\ROMS                =
-echo =                                                      =
-echo  ======================================================
-echo            Press Any Key to Exit
-pause >nul
-exit
-
-::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
 :7zerror
 ::Informs you of an error if 7z fails to download
 cls
+echo .
 echo  ===========================================
 echo =                                           =
 echo =    7z tools download / install failed!    =
@@ -7621,8 +7789,8 @@ echo =                                           =
 echo =       filename in this batch script       =
 echo =                                           =
 echo  ===========================================
-echo            Press Any Key to Exit
-pause >nul
+echo .
+pause
 exit
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7630,6 +7798,7 @@ exit
 :GITerror
 ::Informs you of an error if Git for Windows fails to download
 cls
+echo .
 echo  ==================================================
 echo =                                                  =
 echo =    Git for Windows download / install failed!    =
@@ -7639,8 +7808,8 @@ echo =                                                  =
 echo =          filename in this batch script           =
 echo =                                                  =
 echo  ==================================================
-echo            Press Any Key to Exit
-pause >nul
+echo .
+pause
 exit
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7648,11 +7817,12 @@ exit
 :AdminFail
 ::Informs you that this batch file requires admin right
 cls
+echo .
 echo  ===========================================
 echo =                                           =
 echo =        Please run as Administrator        =
 echo =                                           =
 echo  ===========================================
-echo            Press Any Key to Exit
-pause >nul
+echo .
+pause
 exit
