@@ -319,7 +319,7 @@ goto menu
 ::Main menu selection.
 cls
 echo .
-echo   RetroCake-Plus                               Modified date: Mar 1, 2021
+echo   RetroCake-Plus                               Modified date: Mar 6, 2021
 echo  =========================================================================
 echo =                                                                         =
 Echo =    1.) Automated Installers                                             =
@@ -6573,7 +6573,7 @@ echo =                                                               =
 echo  ===============================================================
 echo .
 
-powershell -command Start-BitsTransfer -Source https://fms.komkon.org/ColEm/ColEm55-Windows-bin.zip -Destination "%rkdir%\Temp\colem.zip"
+powershell -command Start-BitsTransfer -Source https://fms.komkon.org/ColEm/ColEm56-Windows-bin.zip -Destination "%rkdir%\Temp\colem.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\colem.zip" -o"%rkdir%\Emulators\ColEm" -aoa > nul
 
 cls
@@ -6924,7 +6924,7 @@ echo =                                                               =
 echo  ===============================================================
 echo .
 
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/mamedev/mame/releases/download/mame0228/mame0228b_64bit.exe','%rkdir%\Temp\Mame64.exe')
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/mamedev/mame/releases/download/mame0229/mame0229b_64bit.exe','%rkdir%\Temp\Mame64.exe')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame64.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
@@ -7013,7 +7013,7 @@ echo  ===============================================================
 echo .
 
 
-powershell -command Start-BitsTransfer -Source http://www.ppsspp.org/files/1_10_3/ppsspp_win.zip -Destination "%rkdir%\Temp\ppsspp.zip"
+powershell -command Start-BitsTransfer -Source http://www.ppsspp.org/files/1_11_3/ppsspp_win.zip -Destination "%rkdir%\Temp\ppsspp.zip"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ppsspp.zip" -o"%rkdir%\Emulators\Ppsspp" -aoa > nul
 
 cls
