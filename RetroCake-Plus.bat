@@ -177,7 +177,7 @@ echo  ===============================================================
 echo .
 
 mkdir %rkdir%\Tools\Git
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/git-for-windows/git/releases/download/v2.29.2.windows.3/PortableGit-2.29.2.3-64-bit.7z.exe','%rkdir%\Temp\Git.7z.exe')
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/git-for-windows/git/releases/download/v2.31.0.windows.1/PortableGit-2.31.0-64-bit.7z.exe','%rkdir%\Temp\Git.7z.exe')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Git.7z.exe" -o"%rkdir%\Tools\Git" -aoa > nul
 cls
 echo  ==============================================
@@ -319,7 +319,7 @@ goto menu
 ::Main menu selection.
 cls
 echo .
-echo   RetroCake-Plus                               Modified date: Mar 6, 2021
+echo   RetroCake-Plus                              Modified date: Mar 22, 2021
 echo  =========================================================================
 echo =                                                                         =
 Echo =    1.) Automated Installers                                             =
@@ -602,10 +602,10 @@ cls
 echo .
 echo  ==================================================================
 echo =                                                                  =
-echo =    This will back up EmulationStation and ES-Batocera folders    =
+echo =    This will back up EmulationStation folder                     =
 echo =    to zipped files in  %rkdir%\Temp\Backup  folder
 echo =                                                                  =
-echo =    If these folders do not exist, they will be skipped           =
+echo =    If this folder does not exist, it will be skipped             =
 echo =                                                                  =
 echo =                       please wait...                             =
 echo .
@@ -613,11 +613,6 @@ echo .
 %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES_%gooddayte%_%goodthyme%.zip" "%rkdir%\EmulationStation\" > nul
 rmdir "%rkdir%\EmulationStation" /s /q
 mkdir "%rkdir%\EmulationStation"
-
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES-Batocera_%gooddayte%_%goodthyme%.zip" "%rkdir%\ES-Batocera\" > nul
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES-Batocera-Themes_%gooddayte%_%goodthyme%.zip" "%rkdir%\ES-Batocera-Themes\" > nul
-rmdir "%rkdir%\ES-Batocera" /s /q
-rmdir "%rkdir%\ES-Batocera-Themes" /s /q
 
 cls
 
@@ -632,49 +627,28 @@ echo  ================================================================
 echo =                                                                =
 echo =     Download / Install:                                        =
 echo =                                                                =
-echo =              - EmulationStation   (jrassa)                     =
-echo =              - Carbon and Mru5 themes for ES                   =
 echo =              - Batocera-EmulationStation  (fabricecaruso)      =
-echo =              - Five themes for ES-Batocera                     =
-echo =                                                                =
-echo =                                                                =
-echo =    --==  How to use ES-Batocera...  Just manually backup       =
-echo =              and swap contents inside ES and themes folders    =
-echo =              with ES-Batocera's. ES-Batocera also needs        =
-echo =              a copy of same es_systems.cfg file for ES.        =
-echo =                                                                =
+echo =              - Carbon theme  (fabricecaruso)                   =
+echo =              - Mru5 theme    (kelvinator3300)                  =
 echo =                                                                =
 echo =                         please wait ...                        =
 echo =                                                                =
 echo .
 
-
+:: Lines below are commented out -- for now.
 ::powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/jrassa/EmulationStation/releases/download/continuous-master/EmulationStation-Win32.zip','%rkdir%\Temp\ES.zip')
-
 :: Alternative - comment out the link above and then comment in this link below when Jrassa's github fails to download
 :: This link below pulls previously working build for Windows from AppVeyor site
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://ci.appveyor.com/api/buildjobs/ue3rq2weq0re3fqq/artifacts/EmulationStation-Win32.zip','%rkdir%\Temp\ES.zip')
+::powershell -command (New-Object System.Net.WebClient).DownloadFile('https://ci.appveyor.com/api/buildjobs/ue3rq2weq0re3fqq/artifacts/EmulationStation-Win32.zip','%rkdir%\Temp\ES.zip')
 :: https://ci.appveyor.com/project/jrassa/emulationstation
+:: Lines above are commented out -- for now.
 
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/fabricecaruso/batocera-emulationstation/releases/download/continuous-stable/EmulationStation-Win32.zip','%rkdir%\Temp\ES-Batocera.zip')
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/fabricecaruso/es-theme-carbon/archive/master.zip','%rkdir%\Temp\ESB-Theme-Carbon.zip')
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/fabricecaruso/es-theme-minimal/archive/master.zip','%rkdir%\Temp\ESB-Theme-Minimal.zip')
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/G-rila/es-theme-fundamental/archive/master.zip','%rkdir%\Temp\ESB-Theme-Fundamental.zip')
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/ordovice/es-theme-next-level-remix/archive/master.zip','%rkdir%\Temp\ESB-Theme-Next-Level-Remix.zip')
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/CkauNui/ckau-book/archive/master.zip','%rkdir%\Temp\ESB-Theme-Ckau-Book.zip')
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/fabricecaruso/batocera-emulationstation/releases/download/continuous-stable/EmulationStation-Win32.zip','%rkdir%\Temp\ES.zip')
 
 ping 127.0.0.1 -n 3 > nul
 
-::Extracts to the RetroCake-Plus\Emulationstation directory
+::Extracts to the RetroCake-Plus\EmulationStation directory
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ES.zip" -o"%rkdir%\EmulationStation" > nul
-
-::Extracts to the RetroCake-Plus\ES-Batocera and ES-Batocera-Themes directories
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ES-Batocera.zip" -o"%rkdir%\ES-Batocera" > nul
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ESB-Theme-Carbon.zip" -o"%rkdir%\ES-Batocera-Themes" > nul
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ESB-Theme-Minimal.zip" -o"%rkdir%\ES-Batocera-Themes" > nul
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ESB-Theme-Fundamental.zip" -o"%rkdir%\ES-Batocera-Themes" > nul
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ESB-Theme-Next-Level-Remix.zip" -o"%rkdir%\ES-Batocera-Themes" > nul
-%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ESB-Theme-Ckau-Book.zip" -o"%rkdir%\ES-Batocera-Themes" > nul
 
 
 cls
@@ -683,12 +657,6 @@ echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
 ::Cleans up Downlaoded zip
 del "%rkdir%\Temp\ES.zip"
-del "%rkdir%\Temp\ES-Batocera.zip"
-del "%rkdir%\Temp\ESB-Theme-Carbon.zip"
-del "%rkdir%\Temp\ESB-Theme-Minimal.zip"
-del "%rkdir%\Temp\ESB-Theme-Fundamental.zip"
-del "%rkdir%\Temp\ESB-Theme-Next-Level-Remix.zip"
-del "%rkdir%\Temp\ESB-Theme-Ckau-Book.zip"
 
 
 echo .
@@ -745,12 +713,14 @@ echo .
 %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES-Themes_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\" > nul
 
 
-::Installs default set of themes-- Carbon theme (RetroPie version) and Mru5
+::Installs default set of themes-- Carbon theme (Batocera-ES version)
 rmdir "%USERPROFILE%\.emulationstation\themes" /S /Q
 mkdir "%USERPROFILE%\.emulationstation\themes"
 cd /D "%USERPROFILE%\.emulationstation\themes"
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/RetroPie/es-theme-carbon.git > nul
-ren es-theme-carbon Carbon-Retropie
+
+
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/fabricecaruso/es-theme-carbon.git > nul
+ren es-theme-carbon Carbon-Batocera
 %rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/kelvinator3300/es-theme-mru5.git > nul
 ren es-theme-mru5 Mru5
 
@@ -6012,155 +5982,157 @@ echo .
 
 mkdir "%rkdir%\Temp\cores"
 
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/2048_libretro.dll.zip -Destination "%rkdir%\Temp\cores\1.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/81_libretro.dll.zip -Destination "%rkdir%\Temp\cores\2.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/81_libretro.dll.zip -Destination "%rkdir%\Temp\cores\1.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/2048_libretro.dll.zip -Destination "%rkdir%\Temp\cores\2.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/atari800_libretro.dll.zip -Destination "%rkdir%\Temp\cores\3.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bk_libretro.dll.zip -Destination "%rkdir%\Temp\cores\4.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/blastem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\5.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bluemsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\6.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/boom3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\7.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_cplusplus98_libretro.dll.zip -Destination "%rkdir%\Temp\cores\8.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_hd_beta_libretro.dll.zip -Destination "%rkdir%\Temp\cores\9.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\10.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\11.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\12.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\13.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\14.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\15.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\16.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\8.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\9.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes2014_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\10.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_cplusplus98_libretro.dll.zip -Destination "%rkdir%\Temp\cores\11.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_hd_beta_libretro.dll.zip -Destination "%rkdir%\Temp\cores\12.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\13.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_accuracy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\14.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_balanced_libretro.dll.zip -Destination "%rkdir%\Temp\cores\15.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/bsnes_mercury_performance_libretro.dll.zip -Destination "%rkdir%\Temp\cores\16.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cannonball_libretro.dll.zip -Destination "%rkdir%\Temp\cores\17.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/cap32_libretro.dll.zip -Destination "%rkdir%\Temp\cores\18.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_libretro.dll.zip -Destination "%rkdir%\Temp\cores\19.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/craft_libretro.dll.zip -Destination "%rkdir%\Temp\cores\20.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/crocods_libretro.dll.zip -Destination "%rkdir%\Temp\cores\21.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume_libretro.dll.zip -Destination "%rkdir%\Temp\cores\22.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra2018_libretro.dll.zip -Destination "%rkdir%\Temp\cores\19.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/citra_libretro.dll.zip -Destination "%rkdir%\Temp\cores\20.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/craft_libretro.dll.zip -Destination "%rkdir%\Temp\cores\21.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/crocods_libretro.dll.zip -Destination "%rkdir%\Temp\cores\22.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume2015_libretro.dll.zip -Destination "%rkdir%\Temp\cores\23.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dinothawr_libretro.dll.zip -Destination "%rkdir%\Temp\cores\24.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dolphin_libretro.dll.zip -Destination "%rkdir%\Temp\cores\25.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_core_libretro.dll.zip -Destination "%rkdir%\Temp\cores\26.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_pure_libretro.dll.zip -Destination "%rkdir%\Temp\cores\27.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\28.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/duckstation_libretro.dll.zip -Destination "%rkdir%\Temp\cores\29.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/easyrpg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\30.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ecwolf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\31.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha_libretro.dll.zip -Destination "%rkdir%\Temp\cores\32.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/desmume_libretro.dll.zip -Destination "%rkdir%\Temp\cores\24.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dinothawr_libretro.dll.zip -Destination "%rkdir%\Temp\cores\25.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dolphin_libretro.dll.zip -Destination "%rkdir%\Temp\cores\26.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_core_libretro.dll.zip -Destination "%rkdir%\Temp\cores\27.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_pure_libretro.dll.zip -Destination "%rkdir%\Temp\cores\28.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/dosbox_svn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\29.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/duckstation_libretro.dll.zip -Destination "%rkdir%\Temp\cores\30.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/easyrpg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\31.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ecwolf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\32.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\33.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\34.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_cps3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\35.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_libretro.dll.zip -Destination "%rkdir%\Temp\cores\36.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha2012_neogeo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\37.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbneo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\38.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fceumm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\39.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixgb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\40.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\41.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\42.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\43.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freechaf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\44.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -Destination "%rkdir%\Temp\cores\45.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/frodo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\46.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -Destination "%rkdir%\Temp\cores\47.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -Destination "%rkdir%\Temp\cores\48.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\49.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\50.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\51.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_wide_libretro.dll.zip -Destination "%rkdir%\Temp\cores\52.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\53.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\54.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\55.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\56.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -Destination "%rkdir%\Temp\cores\57.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -Destination "%rkdir%\Temp\cores\58.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lowresnx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\59.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\60.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame_libretro.dll.zip -Destination "%rkdir%\Temp\cores\61.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbalpha_libretro.dll.zip -Destination "%rkdir%\Temp\cores\38.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fbneo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\39.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fceumm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\40.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixgb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\41.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fixnes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\42.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/flycast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\43.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fmsx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\44.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freechaf_libretro.dll.zip -Destination "%rkdir%\Temp\cores\45.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/freeintv_libretro.dll.zip -Destination "%rkdir%\Temp\cores\46.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/frodo_libretro.dll.zip -Destination "%rkdir%\Temp\cores\47.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/fuse_libretro.dll.zip -Destination "%rkdir%\Temp\cores\48.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gambatte_libretro.dll.zip -Destination "%rkdir%\Temp\cores\49.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\50.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gearsystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\51.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\52.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/genesis_plus_gx_wide_libretro.dll.zip -Destination "%rkdir%\Temp\cores\53.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\54.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gpsp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\55.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/gw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\56.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/handy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\57.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/hatari_libretro.dll.zip -Destination "%rkdir%\Temp\cores\58.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/kronos_libretro.dll.zip -Destination "%rkdir%\Temp\cores\59.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lowresnx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\60.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/lutro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\61.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2000_libretro.dll.zip -Destination "%rkdir%\Temp\cores\62.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_libretro.dll.zip -Destination "%rkdir%\Temp\cores\63.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_midway_libretro.dll.zip -Destination "%rkdir%\Temp\cores\64.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2003_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\65.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\66.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\67.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\68.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\69.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\70.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\71.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\72.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\73.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\74.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\75.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_snes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\76.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supafaust_libretro.dll.zip -Destination "%rkdir%\Temp\cores\77.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\78.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\79.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -Destination "%rkdir%\Temp\cores\80.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -Destination "%rkdir%\Temp\cores\81.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -Destination "%rkdir%\Temp\cores\82.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mame_libretro.dll.zip -Destination "%rkdir%\Temp\cores\67.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_gba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\68.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_lynx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\69.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_ngp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\70.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_fast_libretro.dll.zip -Destination "%rkdir%\Temp\cores\71.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pce_libretro.dll.zip -Destination "%rkdir%\Temp\cores\72.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_pcfx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\73.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_hw_libretro.dll.zip -Destination "%rkdir%\Temp\cores\74.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_psx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\75.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_saturn_libretro.dll.zip -Destination "%rkdir%\Temp\cores\76.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_snes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\77.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supafaust_libretro.dll.zip -Destination "%rkdir%\Temp\cores\78.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_supergrafx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\79.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_vb_libretro.dll.zip -Destination "%rkdir%\Temp\cores\80.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mednafen_wswan_libretro.dll.zip -Destination "%rkdir%\Temp\cores\81.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/melonds_libretro.dll.zip -Destination "%rkdir%\Temp\cores\82.zip"
 powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen-s_libretro.dll.zip -Destination "%rkdir%\Temp\cores\83.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/meteor_libretro.dll.zip -Destination "%rkdir%\Temp\cores\84.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\85.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/minivmac_libretro.dll.zip -Destination "%rkdir%\Temp\cores\86.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\87.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -Destination "%rkdir%\Temp\cores\88.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\89.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\90.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/neocd_libretro.dll.zip -Destination "%rkdir%\Temp\cores\91.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -Destination "%rkdir%\Temp\cores\92.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -Destination "%rkdir%\Temp\cores\93.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\94.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -Destination "%rkdir%\Temp\cores\95.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/oberon_libretro.dll.zip -Destination "%rkdir%\Temp\cores\96.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/opera_libretro.dll.zip -Destination "%rkdir%\Temp\cores\97.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\98.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -Destination "%rkdir%\Temp\cores\99.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -Destination "%rkdir%\Temp\cores\100.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\101.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -Destination "%rkdir%\Temp\cores\102.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\103.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\104.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\105.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -Destination "%rkdir%\Temp\cores\106.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -Destination "%rkdir%\Temp\cores\107.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -Destination "%rkdir%\Temp\cores\108.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\109.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\110.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -Destination "%rkdir%\Temp\cores\111.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/retro8_libretro.dll.zip -Destination "%rkdir%\Temp\cores\112.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\113.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\114.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/smsplus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\115.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -Destination "%rkdir%\Temp\cores\116.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -Destination "%rkdir%\Temp\cores\117.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -Destination "%rkdir%\Temp\cores\118.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\119.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\120.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\121.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -Destination "%rkdir%\Temp\cores\122.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -Destination "%rkdir%\Temp\cores\123.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -Destination "%rkdir%\Temp\cores\124.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -Destination "%rkdir%\Temp\cores\125.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\126.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -Destination "%rkdir%\Temp\cores\127.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -Destination "%rkdir%\Temp\cores\128.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/uzem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\129.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\130.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -Destination "%rkdir%\Temp\cores\131.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\132.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\133.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -Destination "%rkdir%\Temp\cores\134.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\135.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\136.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\137.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm5x0_libretro.dll.zip -Destination "%rkdir%\Temp\cores\138.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -Destination "%rkdir%\Temp\cores\139.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -Destination "%rkdir%\Temp\cores\140.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xscpu64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\141.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -Destination "%rkdir%\Temp\cores\142.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -Destination "%rkdir%\Temp\cores\143.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/x1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
-powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\149.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mesen_libretro.dll.zip -Destination "%rkdir%\Temp\cores\84.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/meteor_libretro.dll.zip -Destination "%rkdir%\Temp\cores\85.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mgba_libretro.dll.zip -Destination "%rkdir%\Temp\cores\86.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/minivmac_libretro.dll.zip -Destination "%rkdir%\Temp\cores\87.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mrboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\88.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mu_libretro.dll.zip -Destination "%rkdir%\Temp\cores\89.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/mupen64plus_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\90.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nekop2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\91.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/neocd_libretro.dll.zip -Destination "%rkdir%\Temp\cores\92.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nestopia_libretro.dll.zip -Destination "%rkdir%\Temp\cores\93.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/np2kai_libretro.dll.zip -Destination "%rkdir%\Temp\cores\94.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/nxengine_libretro.dll.zip -Destination "%rkdir%\Temp\cores\95.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/o2em_libretro.dll.zip -Destination "%rkdir%\Temp\cores\96.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/oberon_libretro.dll.zip -Destination "%rkdir%\Temp\cores\97.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/opera_libretro.dll.zip -Destination "%rkdir%\Temp\cores\98.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/parallel_n64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\99.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pcsx_rearmed_libretro.dll.zip -Destination "%rkdir%\Temp\cores\100.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/picodrive_libretro.dll.zip -Destination "%rkdir%\Temp\cores\101.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pocketcdg_libretro.dll.zip -Destination "%rkdir%\Temp\cores\102.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/pokemini_libretro.dll.zip -Destination "%rkdir%\Temp\cores\103.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/potator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\104.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/ppsspp_libretro.dll.zip -Destination "%rkdir%\Temp\cores\105.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prboom_libretro.dll.zip -Destination "%rkdir%\Temp\cores\106.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/prosystem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\107.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/puae_libretro.dll.zip -Destination "%rkdir%\Temp\cores\108.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/px68k_libretro.dll.zip -Destination "%rkdir%\Temp\cores\109.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quasi88_libretro.dll.zip -Destination "%rkdir%\Temp\cores\110.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/quicknes_libretro.dll.zip -Destination "%rkdir%\Temp\cores\111.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/race_libretro.dll.zip -Destination "%rkdir%\Temp\cores\112.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/reminiscence_libretro.dll.zip -Destination "%rkdir%\Temp\cores\113.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/retro8_libretro.dll.zip -Destination "%rkdir%\Temp\cores\114.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/sameboy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\115.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/scummvm_libretro.dll.zip -Destination "%rkdir%\Temp\cores\116.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/smsplus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\117.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2002_libretro.dll.zip -Destination "%rkdir%\Temp\cores\118.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_libretro.dll.zip -Destination "%rkdir%\Temp\cores\119.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2005_plus_libretro.dll.zip -Destination "%rkdir%\Temp\cores\120.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x2010_libretro.dll.zip -Destination "%rkdir%\Temp\cores\121.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/snes9x_libretro.dll.zip -Destination "%rkdir%\Temp\cores\122.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/squirreljme_libretro.dll.zip -Destination "%rkdir%\Temp\cores\123.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella2014_libretro.dll.zip -Destination "%rkdir%\Temp\cores\124.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/stella_libretro.dll.zip -Destination "%rkdir%\Temp\cores\125.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tgbdual_libretro.dll.zip -Destination "%rkdir%\Temp\cores\126.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/theodore_libretro.dll.zip -Destination "%rkdir%\Temp\cores\127.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/thepowdertoy_libretro.dll.zip -Destination "%rkdir%\Temp\cores\128.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tic80_libretro.dll.zip -Destination "%rkdir%\Temp\cores\129.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/tyrquake_libretro.dll.zip -Destination "%rkdir%\Temp\cores\130.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/uzem_libretro.dll.zip -Destination "%rkdir%\Temp\cores\131.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vba_next_libretro.dll.zip -Destination "%rkdir%\Temp\cores\132.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vbam_libretro.dll.zip -Destination "%rkdir%\Temp\cores\133.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vecx_libretro.dll.zip -Destination "%rkdir%\Temp\cores\134.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vemulator_libretro.dll.zip -Destination "%rkdir%\Temp\cores\135.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\136.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x64sc_libretro.dll.zip -Destination "%rkdir%\Temp\cores\137.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_x128_libretro.dll.zip -Destination "%rkdir%\Temp\cores\138.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\139.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xcbm5x0_libretro.dll.zip -Destination "%rkdir%\Temp\cores\140.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xpet_libretro.dll.zip -Destination "%rkdir%\Temp\cores\141.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xplus4_libretro.dll.zip -Destination "%rkdir%\Temp\cores\142.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xscpu64_libretro.dll.zip -Destination "%rkdir%\Temp\cores\143.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vice_xvic_libretro.dll.zip -Destination "%rkdir%\Temp\cores\144.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/virtualjaguar_libretro.dll.zip -Destination "%rkdir%\Temp\cores\145.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake2_libretro.dll.zip -Destination "%rkdir%\Temp\cores\146.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/vitaquake3_libretro.dll.zip -Destination "%rkdir%\Temp\cores\147.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/x1_libretro.dll.zip -Destination "%rkdir%\Temp\cores\148.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/xrick_libretro.dll.zip -Destination "%rkdir%\Temp\cores\149.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabasanshiro_libretro.dll.zip -Destination "%rkdir%\Temp\cores\150.zip"
+powershell -command Start-BitsTransfer -Source http://buildbot.libretro.com/nightly/windows/x86_64/latest/yabause_libretro.dll.zip -Destination "%rkdir%\Temp\cores\151.zip"
 
 
 ::echo .
@@ -6209,41 +6181,13 @@ echo  =========================================================================
 echo =                                                                         =
 echo =    1.) Update or Reinstall  Carbon and Mur5 themes                      =
 echo =                                                                         =
-echo =    2.) Get / Update / Reinstall  10  additional themes                  =
-echo =                                                                         =
-echo =    3.) View themes gallery  (RetroPie's website)                        =
-echo =                                                                         =
-echo =    4.) Exit Theme Manager                                               =
+echo =    2.) Exit Theme Manager                                               =
 echo =                                                                         =
 echo  =========================================================================
 echo .
-CHOICE /N /C:1234 /M "Enter Corresponding Menu choice (1, 2, 3, 4)"
-IF ERRORLEVEL ==4 GOTO menu
-IF ERRORLEVEL ==3 GOTO ThemeGallery
-IF ERRORLEVEL ==2 GOTO SetOfThemes
+CHOICE /N /C:12 /M "Enter Corresponding Menu choice (1, 2)"
+IF ERRORLEVEL ==2 GOTO menu
 IF ERRORLEVEL ==1 GOTO UpdateDefaultThemes
-
-:ThemeGallery
-cls
-echo .
-echo  =========================================================================
-echo =                                                                         =
-echo =   Visit RetroPie's ES Themes webpage in MS Edge web browser.            =
-echo =                                                                         =
-echo =   That site has set of preview images of different themes, but          =
-echo =   they are not downloadable.  It just gives you idea of what            =
-echo =   some ES themes look like...(provided in this batch script).           =
-echo =                                                                         =
-echo =                                                                         =
-echo =   https://retropie.org.uk/docs/Themes/#theme-gallery                    = 
-echo =
-echo .                                                                         =
-pause
-start microsoft-edge:https://retropie.org.uk/docs/Themes/#theme-gallery
-echo .
-echo .
-pause
-goto ThemeManager
 
 
 :UpdateDefaultThemes
@@ -6263,152 +6207,17 @@ echo =                                                           =
 echo =                       please wait...                      =
 echo .
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Carbon-Retropie_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Carbon-Retropie" > nul
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Carbon-Batocera_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Carbon-Batocera" > nul
 %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Mru5_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Mru5" > nul
-rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Carbon-Retropie"
+rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Carbon-Batocera"
 rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Mru5"
 cd /D "%USERPROFILE%\.emulationstation\themes"
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/RetroPie/es-theme-carbon.git > nul
+%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/fabricecaruso/es-theme-carbon.git > nul
 %rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/kelvinator3300/es-theme-mru5.git > nul
-ren es-theme-carbon Carbon-Retropie
+ren es-theme-carbon Carbon-Batocera
 ren es-theme-mru5 Mru5
 goto ThemeManager
 
-
-:SetOfThemes
-
-cls
-echo .
-echo  ==============================================================
-echo =                                                              =
-echo =    This will back up individual ES Themes to zipped files    =
-echo =    in  %rkdir%\Temp\Backup  folder,
-echo =                                                              =
-echo =    and then download and install updated themes              =
-echo =                                                              =
-echo =                                                              =
-echo =    If these folders do not exist, they will be downloaded    =
-echo =                                                              =
-echo =                       please wait...                         =
-echo .
-
-cd /D "%USERPROFILE%\.emulationstation\themes"
-
-IF EXIST comicbook_se-wheelart (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_ComicBook_SE-Wheelart_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\comicbook_se-wheelart" > nul
-    rmdir comicbook_se-wheelart /s /q
-) ELSE (
-    echo    downloading - comicbook_se-wheelart ...
-)
-set repo=TMNTturtleguy
-set theme=ComicBook_SE-Wheelart
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-
-IF EXIST cosmicrise (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_CosmicRise_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\cosmicrise" > nul
-    rmdir cosmicrise /s /q
-) ELSE (
-    echo    downloading - cosmicrise ...
-)
-set repo=RetroHursty69
-set theme=CosmicRise
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-
-IF EXIST minimal (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_minimal_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\minimal" > nul
-    rmdir minimal /s /q
-) ELSE (
-    echo    downloading - minimal ...
-)
-set repo=lilbud
-set theme=minimal
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-
-IF EXIST pixel-metadata (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_pixel-metadata_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\pixel-metadata" > nul
-    rmdir pixel-metadata /s /q
-) ELSE (
-    echo    downloading - pixel-metadata ...
-)
-set repo=ehettervik
-set theme=pixel-metadata
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-
-IF EXIST slick_citylights (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Slick_CityLights_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Slick_CityLights" > nul
-    rmdir slick_citylights /s /q
-) ELSE (
-    echo    downloading - slick_citylights ...
-)
-set repo=RetroHursty69
-set theme=Slick_CityLights
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-
-IF EXIST spaceoddity (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_SpaceOddity_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\spaceoddity" > nul
-    rmdir spaceoddity /s /q
-) ELSE (
-    echo    downloading - spaceoddity ...
-)
-set repo=lipebello
-set theme=SpaceOddity
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-
-IF EXIST supersweet (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_supersweet_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\supersweet" > nul
-    rmdir supersweet /s /q
-) ELSE (
-    echo    downloading - supersweet ...
-)
-set repo=RetroHursty69
-set theme=supersweet
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-
-IF EXIST switch-dark (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_switch-dark_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\switch-dark" > nul
-    rmdir switch-dark /s /q
-) ELSE (
-    echo    downloading - switch-dark ...
-)
-set repo=lilbud
-set theme=switch-dark
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-
-IF EXIST uniflyered (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme-uniflyered_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\uniflyered" > nul
-    rmdir uniflyered /s /q
-) ELSE (
-    echo    downloading - uniflyered ...
-)
-set repo=RetroHursty69
-set theme=uniflyered
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-
-IF EXIST zeldaspin (
-    %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_ZeldaSpin_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\zeldaspin" > nul
-    rmdir zeldaspin /s /q
-) ELSE (
-    echo    downloading - zeldaspin ...
-)
-set repo=RetroHursty69
-set theme=ZeldaSpin
-%rkdir%\Tools\git\bin\git.exe clone --quiet --recursive https://github.com/%repo%/es-theme-%theme%.git %theme% > nul
-
-rename ComicBook_SE-Wheelart comicbook_se-wheelart
-rename CosmicRise cosmicrise
-rename SpaceOddity spaceoddity
-rename ZeldaSpin zeldaspin
-
-goto ThemeManager
 
 
 
@@ -7280,7 +7089,6 @@ echo .
 pause
 
 start microsoft-edge:https://github.com/Cxbx-Reloaded/Cxbx-Reloaded/releases
-
 pause
 
 if EXIST %rkdir%\Emulators\tmp.txt goto Dolphin-devEmu
@@ -7441,8 +7249,58 @@ start microsoft-edge:https://rpcs3.net/download
 
 pause
 
+if EXIST %rkdir%\Emulators\tmp.txt goto Xemu-Emu
+goto completed
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+
+:Xemu-Emu
+::Manual install for  Xemu  emulator  ( XBOX ) 
+
+mkdir %rkdir%\Emulators\Xemu
+echo Put Xemu files in this directory > %rkdir%\Emulators\Xemu\"_  Put  Xemu  contents  in  here  _.txt"
+start %rkdir%\Emulators\Xemu
+
+cls
+
+echo .
+echo ================================================
+echo =                                              =
+echo =      MANUAL  Download  and  Install  of      =
+echo =                                              =
+echo =           Xemu  (XBOX Emulator)              =
+echo =                                              =
+echo ================================================
+echo =
+echo =   Some websites require some interactivity
+echo =   in web browser in order to obtain proper file
+echo = 
+echo =   This will open Xemu's GitHub site in 
+echo =   MS Edge web browser.
+echo =
+echo =     - Look for the latest build number for
+echo =       Windows, such as  xemu-win-release.zip
+echo =       and click on that link to download the zipped file
+echo = 
+echo =     - Extract contents of this file into this directory
+echo = 
+echo =       'drive-letter:\RetroCake-Plus\Emulators\Xemu'
+echo =
+echo =   
+echo =   NOTE:  If malware is detected, DO NOT INSTALL / USE !!!
+echo =          Use other version that is free of malware  OR  skip this.
+echo = 
+echo .
+pause
+
+start microsoft-edge:https://github.com/mborgerson/xemu/releases
+pause
+
 if EXIST %rkdir%\Emulators\tmp.txt goto XeniaEmu
 goto completed
+
 
 
 ::=================================================================================================================================================================================================================================================================================================================
