@@ -6003,6 +6003,7 @@ mkdir %rkdir%\ROMS\portable-touch\3ds
 mkdir %rkdir%\ROMS\portable-touch\3ds-eshop
 mkdir %rkdir%\ROMS\portable-touch\nds
 mkdir %rkdir%\ROMS\portable-touch\switch
+mkdir %rkdir%\ROMS\portable-touch\switch-eshop
 
 mkdir %rkdir%\ROMS\specialty\adventurevision
 mkdir %rkdir%\ROMS\specialty\commodore-cdtv
@@ -6174,6 +6175,7 @@ mkdir %cusromdir%\ROMS\portable-touch\3ds
 mkdir %cusromdir%\ROMS\portable-touch\3ds-eshop
 mkdir %cusromdir%\ROMS\portable-touch\nds
 mkdir %cusromdir%\ROMS\portable-touch\switch
+mkdir %cusromdir%\ROMS\portable-touch\switch-eshop
 
 mkdir %cusromdir%\ROMS\specialty\adventurevision
 mkdir %cusromdir%\ROMS\specialty\commodore-cdtv
