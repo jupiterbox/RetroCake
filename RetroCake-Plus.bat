@@ -10,6 +10,31 @@
 ::          Additional emulators, RetroArch Cores and MS runtimes, etc.                                       ::
 ::                                                                                                            ::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::
+::                                                  ::
+::   Run this script in admin mode for to install   ::
+::   these software properly.                       ::
+::                                                  ::
+::   7-Zip for Windows, Microsoft Visual Studio     ::
+::   Redistributable, .Net Core and DirectX v9      ::
+::   Runtimes                                       ::
+::                                                  ::
+::   Files List:                                    ::
+::   ----------                                     ::
+::   7z1900-x64.exe                                 ::
+::   VC_Redist_2019_32.exe                          ::
+::   VC_Redist_2019_64.exe                          ::
+::   VC_Redist_2017.exe                             ::
+::   VC_Redist_2015_32.exe                          ::
+::   VC_Redist_2015_64.exe                          ::
+::   VC_Redist_2010_32.exe                          ::
+::   VC_Redist_2010_64.exe                          ::
+::   NET_Core_Runtime_3.1.11_x86.exe                ::
+::   NET_Core_Runtime_3.1.11_x64.exe                ::
+::                                                  ::
+::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 @echo off
 
 ::Checks if the batch file was run as admin. If not, then it informs you to run this with admin right.
@@ -42,28 +67,33 @@ set rkdir=%rkdiruhh:~0,-1%
 goto CheckRetroCake-Plus
 
 :CusInstall
-::Prompts to install in a custom directory or default C:\RetroCake-Plus.
+::Prompts to install RetroCake-Plus on a specific storage drive.
 cls
 echo .
-echo  ===============================================================
-echo =                                                               =
-echo =    Install RetroCake-Plus in which directory...               =
-echo =                                                               =
-echo =       1  =  Default directory  ( C:\RetroCake-Plus )          =
-echo =                                                               =
-echo =       2  =  Custom directory   ( Preferred folder name )      =
-echo =                                                               =
-echo  ===============================================================
+echo  =============================================================
+echo =                                                             =
+echo =    Install RetroCake-Plus on a storage drive...             =
+echo =                                                             =
+echo =       1  =  Default drive  ( C:\RetroCake-Plus )            =
+echo =                                                             =
+echo =       2  =  Custom drive   ( Set drive letter for           =
+echo =                              RetroCake-Plus directory )     =
+echo =                                                             =
+echo  =============================================================
 echo .
 CHOICE /N /C:12 /M ".. Your choice (1 or 2)"
 IF ERRORLEVEL ==2 GOTO CusInstallY
 IF ERRORLEVEL ==1 GOTO CusInstallN
 
 :CusInstallY
-::Prompts to enter the custom installation directory.
+::Prompts to enter the drive letter for RetroCake-Plus directory.
 cls
-
-set /p rkdir="Enter Custom RetroCake-Plus Install Path (default C:\RetroCake-Plus): "
+echo .
+echo .   Install RetroCake-Plus on a specific storage drive...
+echo .
+echo .
+set /p rklet=".   Enter drive letter, and then press Enter key: "
+set rkdir=%rklet%:\RetroCake-Plus
 ::writes the directory to %APPDATA%\RetroCake-Plus\ for use when launching the bat file.
 mkdir %APPDATA%\RetroCake-Plus\
 echo %rkdir% > %APPDATA%\RetroCake-Plus\CusInstallDir.txt
@@ -206,7 +236,7 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =    Download / Install:    Visual C++ Redistributables         =
+echo =    Download / Install:    Visual C++ Redistributable          =
 echo =                           and NET Core Desktop Runtimes       =
 echo =                                                               =
 echo =     Important:  Some of these Installers may force Windows    =
@@ -227,7 +257,7 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =    Installing redistributables and runtimes...                =
+echo =    Installing redistributable runtimes...                     =
 echo =                                                               =
 echo =                       please wait...                          =
 echo =                                                               =
@@ -319,7 +349,7 @@ goto menu
 ::Main menu selection.
 cls
 echo .
-echo   RetroCake-Plus                              Modified date: Apr 13, 2021
+echo   RetroCake-Plus                              Modified date: Apr 14, 2021
 echo  =========================================================================
 echo =                                                                         =
 Echo =    1.) Automated Installers                                             =
@@ -569,6 +599,7 @@ cls
 del %rkdir%\Temp\BrandNewBlank /S /Q
 del %rkdir%\Temp\BrandNewDef /S /Q
 del %rkdir%\Temp\BrandNewCus /S /Q
+start %rkdir%
 goto completed
 
 
@@ -6057,20 +6088,25 @@ mkdir %rkdir%\ROMS\computer\x68000
 mkdir %rkdir%\ROMS\computer\zx81
 mkdir %rkdir%\ROMS\computer\zxspectrum
 
-:RkRomsDir
-echo . 
-Choice /M "  Do you want to open and review ROMS directory? "
-If Errorlevel 2 Goto No-RkRomsDir
-If Errorlevel 1 Goto Yes-RkRomsDir
 
-:No-RkRomsDir
+:StartInstallRA
 IF EXIST %rkdir%\Temp\BrandNewDef goto FirstInstallRA
 goto completed
 
-:Yes-RkRomsDir
-start %rkdir%\ROMS
-IF EXIST %rkdir%\Temp\BrandNewDef goto FirstInstallRA
-goto completed
+:: :RkRomsDir
+:: echo . 
+:: Choice /M "  Do you want to open and review ROMS directory? "
+:: If Errorlevel 2 Goto No-RkRomsDir
+:: If Errorlevel 1 Goto Yes-RkRomsDir
+
+:: :No-RkRomsDir
+:: IF EXIST %rkdir%\Temp\BrandNewDef goto FirstInstallRA
+:: goto completed
+
+:: :Yes-RkRomsDir
+:: start %rkdir%\ROMS
+:: IF EXIST %rkdir%\Temp\BrandNewDef goto FirstInstallRA
+:: goto completed
 
 
 :CusRomDirSet
@@ -6229,20 +6265,25 @@ mkdir %cusromdir%\ROMS\computer\x68000
 mkdir %cusromdir%\ROMS\computer\zx81
 mkdir %cusromdir%\ROMS\computer\zxspectrum
 
-:CustomRomsDir
-echo .
-Choice /M "  Do you want to open and review ROMS directory? "
-If Errorlevel 2 Goto No-CustomRomsDir
-If Errorlevel 1 Goto Yes-CustomRomsDir
 
-:No-CustomRomsDir
+:StartCustomRomsDir
 IF EXIST %rkdir%\Temp\BrandNewDef goto FirstInstallRA
 goto completed
 
-:Yes-CustomRomsDir
-start %cusromdir%
-IF EXIST %rkdir%\Temp\BrandNewCus goto FirstInstallRA
-goto completed
+:: :CustomRomsDir
+:: echo .
+:: Choice /M "  Do you want to open and review ROMS directory? "
+:: If Errorlevel 2 Goto No-CustomRomsDir
+:: If Errorlevel 1 Goto Yes-CustomRomsDir
+
+:: :No-CustomRomsDir
+:: IF EXIST %rkdir%\Temp\BrandNewDef goto FirstInstallRA
+:: goto completed
+
+:: :Yes-CustomRomsDir
+:: start %cusromdir%
+:: IF EXIST %rkdir%\Temp\BrandNewCus goto FirstInstallRA
+:: goto completed
 
 
 
@@ -8235,11 +8276,31 @@ exit
 ::Informs you that this batch file requires admin right
 cls
 echo .
-echo  ===========================================
-echo =                                           =
-echo =        Please run as Administrator        =
-echo =                                           =
-echo  ===========================================
+echo  ==================================================
+echo =                                                  =
+echo =        Please run as Administrator               =
+echo =                                                  =
+echo =   Run this script in admin mode for to install   =
+echo =   these software properly.                       =
+echo =                                                  =
+echo =   7-Zip for Windows, Microsoft Visual Studio     =
+echo =   Redistributable, .Net Core and DirectX v9      =
+echo =   Runtimes                                       =
+echo =                                                  =
+echo =   Files List:                                    =
+echo =   ----------                                     =
+echo =   7z1900-x64.exe                                 =
+echo =   VC_Redist_2019_32.exe                          =
+echo =   VC_Redist_2019_64.exe                          =
+echo =   VC_Redist_2017.exe                             =
+echo =   VC_Redist_2015_32.exe                          =
+echo =   VC_Redist_2015_64.exe                          =
+echo =   VC_Redist_2010_32.exe                          =
+echo =   VC_Redist_2010_64.exe                          =
+echo =   NET_Core_Runtime_3.1.11_x86.exe                =
+echo =   NET_Core_Runtime_3.1.11_x64.exe                =
+echo =                                                  =
+echo  ==================================================
 echo .
 pause
 exit
