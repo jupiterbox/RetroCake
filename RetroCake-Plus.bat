@@ -349,7 +349,7 @@ goto menu
 ::Main menu selection.
 cls
 echo .
-echo   RetroCake-Plus                              Modified date: Apr 14, 2021
+echo   RetroCake-Plus                              Modified date: Apr 22, 2021
 echo  =========================================================================
 echo =                                                                         =
 Echo =    1.) Automated Installers                                             =
@@ -725,14 +725,14 @@ echo oLink.Save >> "%rkdir%\Temp\CreateShortcut.vbs"
 cscript "%rkdir%\Temp\CreateShortcut.vbs"
 del "%rkdir%\Temp\CreateShortcut.vbs"
 
-echo Set oWS = WScript.CreateObject("WScript.Shell") > "C:\RetroCake-Plus\Temp\CreateShortcut2.vbs"
-echo sLinkFile = "%USERPROFILE%\Desktop\RetroCake-Plus Windowed.lnk" >> "C:\RetroCake-Plus\Temp\CreateShortcut2.vbs"
-echo Set oLink = oWS.CreateShortcut(sLinkFile) >> "C:\RetroCake-Plus\Temp\CreateShortcut2.vbs"
-echo oLink.TargetPath = "C:\RetroCake-Plus\EmulationStation\emulationstation.exe" >> "C:\RetroCake-Plus\Temp\CreateShortcut2.vbs"
-echo oLink.Arguments = "--resolution 1280 720 --windowed" >> "C:\RetroCake-Plus\Temp\CreateShortcut2.vbs"
-echo oLink.Save >> "C:\RetroCake-Plus\Temp\CreateShortcut2.vbs"
-cscript "C:\RetroCake-Plus\Temp\CreateShortcut2.vbs"
-del "C:\RetroCake-Plus\Temp\CreateShortcut2.vbs"
+echo Set oWS = WScript.CreateObject("WScript.Shell") > "%rkdir%\Temp\CreateShortcut2.vbs"
+echo sLinkFile = "%USERPROFILE%\Desktop\RetroCake-Plus Windowed.lnk" >> "%rkdir%\Temp\CreateShortcut2.vbs"
+echo Set oLink = oWS.CreateShortcut(sLinkFile) >> "%rkdir%\Temp\CreateShortcut2.vbs"
+echo oLink.TargetPath = "%rkdir%\EmulationStation\emulationstation.exe" >> "%rkdir%\Temp\CreateShortcut2.vbs"
+echo oLink.Arguments = "--resolution 1280 720 --windowed" >> "%rkdir%\Temp\CreateShortcut2.vbs"
+echo oLink.Save >> "%rkdir%\Temp\CreateShortcut2.vbs"
+cscript "%rkdir%\Temp\CreateShortcut2.vbs"
+del "%rkdir%\Temp\CreateShortcut2.vbs"
 
 if EXIST "%rkdir%\EmulationStation\emulationstation.exe" goto ESNewSucceed
 
