@@ -477,7 +477,7 @@ cls
 echo .
 echo  =========================================================================
 echo =                                                                         =
-Echo =    1.) Update or Reinstall RetroArch  -- 1.9.1                          =
+Echo =    1.) Update or Reinstall RetroArch  -- (Latest)                       =
 echo =                                                                         =
 echo =    2.) Update Cores for RetroArch  -- Nightly build (Latest)            =
 echo =                                                                         =
@@ -6320,7 +6320,7 @@ goto completed
 ::=================================================================================================================================================================================================================================================================================================================
 
 :FirstInstallRA
-::Installs RetroArch 1.9.2  (64-bit) to RetroCake-Plus\RetroArch. Cleans up all downloaded files when done.
+::Installs RetroArch (64-bit) to RetroCake-Plus\RetroArch. Cleans up all downloaded files when done.
 cls
 echo .
 echo .
@@ -6335,7 +6335,7 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =     Download / Install:    RetroArch  (64-bit)                =
+echo =     Download / Install:    RetroArch  1.9.2     (64-bit)      =
 echo =                                                               =
 echo =                       please wait...                          =
 echo =                                                               =
@@ -6384,7 +6384,7 @@ move %rkdir%\RetroArch\cores %rkdir%\Temp\RA-cores-tmp
 rmdir "%rkdir%\RetroArch" /s /q
 cls
 
-::Installs RetroArch 1.9.2  (64-bit) to RetroCake-Plus\RetroArch. Cleans up all downloaded files when done.
+::Installs RetroArch (64-bit) to RetroCake-Plus\RetroArch. Cleans up all downloaded files when done.
 echo .
 echo .
 echo .
@@ -6398,7 +6398,7 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =     Download / Install:    RetroArch  (64-bit)                =
+echo =     Download / Install:    RetroArch  1.9.2     (64-bit)      =
 echo =                                                               =
 echo =                       please wait...                          =
 echo =                                                               =
@@ -6463,7 +6463,7 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =     Download / Install:    RetroArch  (nightly 64-bit)        =
+echo =     Download / Install:    RetroArch  Nightly    (64-bit)     =
 echo =                                                               =
 echo =                       please wait...                          =
 echo =                                                               =
