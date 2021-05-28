@@ -6296,7 +6296,8 @@ powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/sta
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%" -aoa > nul
 ren %rkdir%\RetroArch-Win64 RetroArch
 
-move %rkdir%\Temp\RA-cores-tmp %rkdir%\RetroArch\cores 
+move %rkdir%\Temp\RA-cores-tmp %rkdir%\RetroArch\cores
+ren %rkdir%\RetroArch\system system-backup
 move %rkdir%\Temp\RA-system-tmp %rkdir%\RetroArch\system
 
 cls
@@ -6368,6 +6369,7 @@ powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/nig
 ren %rkdir%\RetroArch-Win64 RetroArch
 
 move %rkdir%\Temp\RA-cores-tmp %rkdir%\RetroArch\cores
+ren %rkdir%\RetroArch\system system-backup
 move %rkdir%\Temp\RA-system-tmp %rkdir%\RetroArch\system
 
 cls
