@@ -432,17 +432,15 @@ IF ERRORLEVEL ==1 GOTO UpdateAllEmu
 
 cls
 echo .
-echo  ===========================================================
-echo =                                                           =
-echo =    This will back up  Emulators  folder to a zipped       =
-echo =    file in  %rkdir%\Temp\Backup  folder
-echo =                                                           =
-echo =    If this folder does not exist, it will be skipped      =
-echo =                                                           =
-echo =                       please wait...                      =
+echo  ==================================================================
+echo =                                                                  =
+echo =    Backing up  Emulators  folder                                 =
+echo =                                                                  =
+echo =                                                                  =
+echo =                       please wait...                             =
 echo .
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_Emulators_%gooddayte%_%goodthyme%.zip" "%rkdir%\Emulators\" > nul
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_Emulators_%gooddayte%_%goodthyme%.zip" "%rkdir%\Emulators\"
 rmdir "%rkdir%\Emulators" /s /q
 goto StartAllEmu
 
@@ -514,15 +512,14 @@ cls
 echo .
 echo  ==================================================================
 echo =                                                                  =
-echo =    This will back up EmulationStation folder                     =
-echo =    to zipped files in  %rkdir%\Temp\Backup  folder
+echo =    Backing up  EmulationStation  folder                          =
 echo =                                                                  =
 echo =    If this folder does not exist, it will be skipped             =
 echo =                                                                  =
 echo =                       please wait...                             =
 echo .
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES_%gooddayte%_%goodthyme%.zip" "%rkdir%\EmulationStation\" > nul
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES_%gooddayte%_%goodthyme%.zip" "%rkdir%\EmulationStation\"
 rmdir "%rkdir%\EmulationStation" /s /q
 mkdir "%rkdir%\EmulationStation"
 
@@ -622,24 +619,20 @@ if EXIST "%rkdir%\EmulationStation\emulationstation.exe" goto ESNewSucceed
 ::Backs up entire themes folder to RetroCake-Plus's Temp folder
 cls
 echo .
-echo  ============================================================
-echo =                                                            =
-echo =    This will back up themes folder to a zipped ES-Themes   =
-echo =    file in  %rkdir%\Temp\Backup  folder,
-echo =                                                            =
-echo =    and then download and install Carbon and Mru5 themes    =
-echo =                                                            =
-echo =                                                            =
-echo =    If this folder does not exist, it will be skipped       =
-echo =                                                            =
-echo =                       please wait...                       =
+echo  ==================================================================
+echo =                                                                  =
+echo =    Backing up  ES Themes  folder                                 =
+echo =                                                                  =
+echo =    If this folder does not exist, it will be skipped             =
+echo =                                                                  =
+echo =                       please wait...                             =
 echo .
 
 ::Windows 10's Oct 2020 Update appears to block this script's ability to move folder 
 ::from the user profile's folder to another location, (e.g., second hard drive).
 ::For now, this just makes a copy of this folder to another location.
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES-Themes_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\" > nul
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES-Themes_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\"
 
 
 ::Installs default set of themes-- Carbon theme (Batocera-ES version)
@@ -6222,6 +6215,7 @@ echo =                       please wait...                          =
 echo =                                                               =
 echo  ===============================================================
 echo .
+echo .
 
 powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.9.3/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
 
@@ -6242,31 +6236,22 @@ goto GetRACores
 
 cls
 echo .
-echo  =========================================================
-echo =                                                         =
-echo =    Before backing up RetroArch folder, RA Cores         =
-echo =    and System folders will be moved into this folder,   = 
-echo =     %rkdir%\Temp                                 
-echo =                                                         =
-echo =    After updating RetroArch, RA Cores and System        =
-echo =    folders will be restored.                            =
-echo =                                                         =
-echo =    A backup of RetroArch will be in a zipped file       =
-echo =    in this folder,  %rkdir%\Temp\Backup 
-echo =                                                         =
-echo =                                                         =
-echo =    If any of these folders does not exist, it will be   =
-echo =    skipped.                                             =
-echo =                                                         =
-echo =                                                         =
-echo =                       please wait...                    =
+echo  ==================================================================
+echo =                                                                  =
+echo =    Backing up  RetroArch  folder                                 =
+echo =                                                                  =
+echo =    If this folder does not exist, it will be skipped             =
+echo =                                                                  =
+echo =                       please wait...                             =
 echo .
 echo .
-
+echo    moving RA Cores and System folders...
+echo .
 move %rkdir%\RetroArch\cores %rkdir%\Temp\RA-cores-tmp
 move %rkdir%\RetroArch\system %rkdir%\Temp\RA-system-tmp
-
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_RetroArch_%gooddayte%_%goodthyme%.zip" "%rkdir%\RetroArch\" > nul
+echo .
+echo .
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_RetroArch_%gooddayte%_%goodthyme%.zip" "%rkdir%\RetroArch\"
 rmdir "%rkdir%\RetroArch" /s /q
 cls
 
@@ -6296,6 +6281,10 @@ powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/sta
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%" -aoa > nul
 ren %rkdir%\RetroArch-Win64 RetroArch
 
+echo .
+echo .
+echo    restoring RA Cores and System folders...
+echo .
 move %rkdir%\Temp\RA-cores-tmp %rkdir%\RetroArch\cores
 ren %rkdir%\RetroArch\system system-backup
 move %rkdir%\Temp\RA-system-tmp %rkdir%\RetroArch\system
@@ -6314,31 +6303,22 @@ goto UpdateRACoresQ
 
 cls
 echo .
-echo  =========================================================
-echo =                                                         =
-echo =    Before backing up RetroArch folder, RA Cores         =
-echo =    and System folders will be moved into this folder,   = 
-echo =     %rkdir%\Temp                                 
-echo =                                                         =
-echo =    After updating RetroArch, RA Cores and System        =
-echo =    folders will be restored.                            =
-echo =                                                         =
-echo =    A backup of RetroArch will be in a zipped file       =
-echo =    in this folder,  %rkdir%\Temp\Backup 
-echo =                                                         =
-echo =                                                         =
-echo =    If any of these folders does not exist, it will be   =
-echo =    skipped.                                             =
-echo =                                                         =
-echo =                                                         =
-echo =                       please wait...                    =
+echo  ==================================================================
+echo =                                                                  =
+echo =    Backing up  RetroArch  folder                                 =
+echo =                                                                  =
+echo =    If this folder does not exist, it will be skipped             =
+echo =                                                                  =
+echo =                       please wait...                             =
 echo .
 echo .
-
+echo    moving RA Cores and System folders...
+echo .
 move %rkdir%\RetroArch\cores %rkdir%\Temp\RA-cores-tmp
 move %rkdir%\RetroArch\system %rkdir%\Temp\RA-system-tmp
-
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_RetroArch_%gooddayte%_%goodthyme%.zip" "%rkdir%\RetroArch\" > nul
+echo .
+echo .
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_RetroArch_%gooddayte%_%goodthyme%.zip" "%rkdir%\RetroArch\"
 rmdir "%rkdir%\RetroArch" /s /q
 cls
 
@@ -6362,12 +6342,17 @@ echo =                       please wait...                          =
 echo =                                                               =
 echo  ===============================================================
 echo .
+echo .
 
 powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/nightly/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%" -aoa > nul
 ren %rkdir%\RetroArch-Win64 RetroArch
 
+echo .
+echo .
+echo    restoring RA Cores and System folders...
+echo .
 move %rkdir%\Temp\RA-cores-tmp %rkdir%\RetroArch\cores
 ren %rkdir%\RetroArch\system system-backup
 move %rkdir%\Temp\RA-system-tmp %rkdir%\RetroArch\system
@@ -6395,16 +6380,13 @@ If Errorlevel 1 Goto BackupRACores
 
 cls
 echo .
-echo  =========================================================
-echo =                                                         =
-echo =    This will back up RA Cores folder to a zipped        =
-echo =    file in  %rkdir%\Temp\Backup  folder
-echo =                                                         =
-echo =                                                         =
-echo =    If this folder does not exist, it will be skipped    =
-echo =                                                         =
-echo =                                                         =
-echo =                       please wait...                    =
+echo  ==================================================================
+echo =                                                                  =
+echo =    Backing up  RA Cores  folder                                  =
+echo =                                                                  =
+echo =    If this folder does not exist, it will be skipped             =
+echo =                                                                  =
+echo =                       please wait...                             =
 echo .
 echo .
 
@@ -6513,8 +6495,8 @@ echo =                       please wait...                      =
 echo .
 echo .
 
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Carbon-Batocera_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Carbon-Batocera" > nul
-%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Mru5_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Mru5" > nul
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Carbon-Batocera_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Carbon-Batocera"
+%rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_es-theme_Mru5_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\Mru5"
 rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Carbon-Batocera"
 rmdir /S /Q "%USERPROFILE%\.emulationstation\themes\Mru5"
 cd /D "%USERPROFILE%\.emulationstation\themes"
