@@ -227,7 +227,7 @@ goto GITerror
 ::Main menu selection.
 cls
 echo .
-echo   RetroCake-Plus                              Modified date: May 27, 2021
+echo   RetroCake-Plus                              Modified date: June 1, 2021
 echo  =========================================================================
 echo =                                                                         =
 Echo =    1.) Automated Installers                                             =
@@ -451,6 +451,7 @@ Echo This file is temporary. You should never see it > %rkdir%\Emulators\tmp.txt
 goto AppleWin
 
 
+
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -630,7 +631,7 @@ echo .
 
 ::Windows 10's Oct 2020 Update appears to block this script's ability to move folder 
 ::from the user profile's folder to another location, (e.g., second hard drive).
-::For now, this just makes a copy of this folder to another location.
+::For now, this just makes a zipped backup of this folder to another location.
 
 %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_ES-Themes_%gooddayte%_%goodthyme%.zip" "%USERPROFILE%\.emulationstation\themes\"
 
@@ -1559,20 +1560,6 @@ echo     ^<theme^>ps3^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.c
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>creativision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  VTech CreatiVision - Europe - (1982-1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\console-keypad\creativision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .zip^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\mame\mame.exe -rompath C:\RetroCake-Plus\ROMS\console-keypad\creativision\ crvision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll crvision -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>creativision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>crvision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<!--  END    -  CONSOLE   CONSOLE   CONSOLE   CONSOLE      --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -1806,6 +1793,17 @@ echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\p
 echo     ^<platform^>psp-minis^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>pspminis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<theme^>pspgo-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>psvita^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sony PS Vita - (2011-2019)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\portable-touch\psvita^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.vpk^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\Vita3k\vita3k.exe --vpk-path "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>psvita^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>psvita^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -2377,6 +2375,19 @@ echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\c
 echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame.exe -rompath C:\RetroCake-Plus\ROMS\computer\ti99\ ti99_4a -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>ti99^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>ti99^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>creativision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  VTech CreatiVision - Europe - (1982-1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>C:\PATH\TO\ROMS-FOLDER\ROMS\computer\creativision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .bin .zip^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\mame\mame.exe -rompath C:\RetroCake-Plus\ROMS\computer\creativision\ crvision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll crvision -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>creativision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>crvision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -3277,20 +3288,6 @@ echo     ^<theme^>ps3^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.c
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>creativision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  VTech CreatiVision - Europe - (1982-1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%rkdir%\ROMS\console-keypad\creativision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .zip^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\mame\mame.exe -rompath C:\RetroCake-Plus\ROMS\console-keypad\creativision\ crvision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll crvision -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>creativision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>crvision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<!--  END    -  CONSOLE   CONSOLE   CONSOLE   CONSOLE      --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -3524,6 +3521,17 @@ echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\p
 echo     ^<platform^>psp-minis^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>pspminis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<theme^>pspgo-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>psvita^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sony PS Vita - (2011-2019)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\portable-touch\psvita^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.vpk^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\Vita3k\vita3k.exe --vpk-path "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>psvita^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>psvita^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -4095,6 +4103,19 @@ echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\c
 echo     ^<!-- ^<command^>%rkdir%\Emulators\mame\mame.exe -rompath C:\RetroCake-Plus\ROMS\computer\ti99\ ti99_4a -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<platform^>ti99^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>ti99^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>creativision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  VTech CreatiVision - Europe - (1982-1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%rkdir%\ROMS\computer\creativision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .bin .zip^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\mame\mame.exe -rompath C:\RetroCake-Plus\ROMS\computer\creativision\ crvision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll crvision -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>creativision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>crvision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -4992,20 +5013,6 @@ echo     ^<theme^>ps3^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.c
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
-
-echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<name^>creativision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<fullname^>Console.  VTech CreatiVision - Europe - (1982-1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<path^>%cusromdir%\ROMS\console-keypad\creativision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<extension^>.7z .bin .zip^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<command^>%rkdir%\Emulators\mame\mame.exe -rompath C:\RetroCake-Plus\ROMS\console-keypad\creativision\ crvision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll crvision -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<platform^>creativision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<theme^>crvision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo     ^<!-- ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
-
-
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<!--  END    -  CONSOLE   CONSOLE   CONSOLE   CONSOLE      --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5239,6 +5246,17 @@ echo     ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\p
 echo     ^<platform^>psp-minis^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<theme^>pspminis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo     ^<!-- ^<theme^>pspgo-minis^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>psvita^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Portable.  Sony PS Vita - (2011-2019)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\portable-touch\psvita^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.vpk^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\Vita3k\vita3k.exe --vpk-path "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>psvita^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>psvita^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
@@ -5813,6 +5831,19 @@ echo     ^<theme^>ti99^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.
 echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 
 
+echo   ^<system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<name^>creativision^</name^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<fullname^>Computer.  VTech CreatiVision - Europe - (1982-1986)^</fullname^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<path^>%cusromdir%\ROMS\computer\creativision^</path^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<extension^>.7z .bin .zip^</extension^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<command^>%rkdir%\Emulators\mame\mame.exe -rompath C:\RetroCake-Plus\ROMS\computer\creativision\ crvision -cart "%%ROM_RAW%%"^</command^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<command^>%rkdir%\RetroArch\retroarch.exe -L %rkdir%\RetroArch\cores\mame_libretro.dll crvision -cart "%%ROM_RAW%%"^</command^> --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<platform^>creativision^</platform^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<theme^>crvision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo     ^<!-- ^<theme^>creativision^</theme^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg" --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+echo   ^</system^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
+
+
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<!--  END   -   COMPUTER  COMPUTER   COMPUTER  COMPUTER    --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
 echo   ^<!--  **************************************************   --^> >> "%USERPROFILE%\.emulationstation\es_systems.cfg"
@@ -5879,7 +5910,6 @@ mkdir %rkdir%\ROMS\console-keypad\astrocade
 mkdir %rkdir%\ROMS\console-keypad\atari5200
 mkdir %rkdir%\ROMS\console-keypad\atarijaguar
 mkdir %rkdir%\ROMS\console-keypad\colecovision
-mkdir %rkdir%\ROMS\console-keypad\creativision
 mkdir %rkdir%\ROMS\console-keypad\intellivision
 mkdir %rkdir%\ROMS\console-keypad\intellivision-jzintv
 mkdir %rkdir%\ROMS\console-keypad\rca-studio-ii
@@ -5937,6 +5967,7 @@ mkdir %rkdir%\ROMS\portable-optical\psp-minis
 mkdir %rkdir%\ROMS\portable-touch\3ds
 mkdir %rkdir%\ROMS\portable-touch\3ds-eshop
 mkdir %rkdir%\ROMS\portable-touch\nds
+mkdir %rkdir%\ROMS\portable-touch\psvita
 mkdir %rkdir%\ROMS\portable-touch\switch
 mkdir %rkdir%\ROMS\portable-touch\switch-eshop
 
@@ -5975,6 +6006,7 @@ mkdir %rkdir%\ROMS\computer\atarist
 mkdir %rkdir%\ROMS\computer\bbcmicro
 mkdir %rkdir%\ROMS\computer\c64
 mkdir %rkdir%\ROMS\computer\coco
+mkdir %rkdir%\ROMS\computer\creativision
 mkdir %rkdir%\ROMS\computer\dragon32
 mkdir %rkdir%\ROMS\computer\electron
 mkdir %rkdir%\ROMS\computer\macintosh
@@ -6056,7 +6088,6 @@ mkdir %cusromdir%\ROMS\console-keypad\astrocade
 mkdir %cusromdir%\ROMS\console-keypad\atari5200
 mkdir %cusromdir%\ROMS\console-keypad\atarijaguar
 mkdir %cusromdir%\ROMS\console-keypad\colecovision
-mkdir %cusromdir%\ROMS\console-keypad\creativision
 mkdir %cusromdir%\ROMS\console-keypad\intellivision
 mkdir %cusromdir%\ROMS\console-keypad\intellivision-jzintv
 mkdir %cusromdir%\ROMS\console-keypad\rca-studio-ii
@@ -6114,6 +6145,7 @@ mkdir %cusromdir%\ROMS\portable-optical\psp-minis
 mkdir %cusromdir%\ROMS\portable-touch\3ds
 mkdir %cusromdir%\ROMS\portable-touch\3ds-eshop
 mkdir %cusromdir%\ROMS\portable-touch\nds
+mkdir %cusromdir%\ROMS\portable-touch\psvita
 mkdir %cusromdir%\ROMS\portable-touch\switch
 mkdir %cusromdir%\ROMS\portable-touch\switch-eshop
 
@@ -6152,6 +6184,7 @@ mkdir %cusromdir%\ROMS\computer\atarist
 mkdir %cusromdir%\ROMS\computer\bbcmicro
 mkdir %cusromdir%\ROMS\computer\c64
 mkdir %cusromdir%\ROMS\computer\coco
+mkdir %cusromdir%\ROMS\computer\creativision
 mkdir %cusromdir%\ROMS\computer\dragon32
 mkdir %cusromdir%\ROMS\computer\electron
 mkdir %cusromdir%\ROMS\computer\macintosh
@@ -6209,7 +6242,7 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =     Download / Install:    RetroArch  1.9.3     (64-bit)      =
+echo =     Download / Install:    RetroArch  1.9.4     (64-bit)      =
 echo =                                                               =
 echo =                       please wait...                          =
 echo =                                                               =
@@ -6217,7 +6250,7 @@ echo  ===============================================================
 echo .
 echo .
 
-powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.9.3/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
+powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.9.4/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%" -aoa > nul
 ren %rkdir%\RetroArch-Win64 RetroArch
@@ -6269,14 +6302,14 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =     Download / Install:    RetroArch  1.9.3     (64-bit)      =
+echo =     Download / Install:    RetroArch  1.9.4     (64-bit)      =
 echo =                                                               =
 echo =                       please wait...                          =
 echo =                                                               =
 echo  ===============================================================
 echo .
 
-powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.9.3/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
+powershell -command Start-BitsTransfer -Source https://buildbot.libretro.com/stable/1.9.4/windows/x86_64/RetroArch.7z -Destination "%rkdir%\Temp\RetroArch_x64.zip"
 
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\RetroArch_x64.zip" -o"%rkdir%" -aoa > nul
 ren %rkdir%\RetroArch-Win64 RetroArch
@@ -6508,7 +6541,6 @@ goto ThemeManager
 
 
 
-
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -6541,7 +6573,7 @@ echo =                                                               =
 echo  ===============================================================
 echo .
 
-powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/AppleWin/AppleWin/releases/download/v1.30.1.0/AppleWin1.30.1.0.zip','%rkdir%\Temp\AppleWin.zip')
+powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/AppleWin/AppleWin/releases/download/v1.30.2.0/AppleWin1.30.2.0.zip','%rkdir%\Temp\AppleWin.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\AppleWin.zip" -o"%rkdir%\Emulators\AppleWin" -aoa > nul
 cls
 
@@ -7158,7 +7190,51 @@ del %rkdir%\Temp\VICE64-old.7z
 del %rkdir%\Temp\VICE64-GTK.7z
 del %rkdir%\Temp\VICE64-SDL2.7z
 del %rkdir%\Emulators\buildnote.txt
-if EXIST %rkdir%\Emulators\tmp.txt goto XRoar
+if EXIST %rkdir%\Emulators\tmp.txt goto Vita3k
+goto completed
+
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+
+
+:Vita3k-Emu
+::Installs  Vita3k  emulator  ( PS Vita )
+cls
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo .
+echo  ===============================================================
+echo =                                                               =
+echo =       Downloading:    Vita3k                                  =
+echo =                                                               =
+echo =        please wait...                                         =
+echo =                                                               =
+echo  ===============================================================
+echo .
+
+powershell -command Start-BitsTransfer -Source https://github.com/Vita3K/Vita3K/releases/download/continous/windows-latest.zip -Destination "%rkdir%\Temp\Vita3k.zip"
+
+%rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Vita3k.zip" -o"%rkdir%\Emulators\Vita3k" -aoa > nul
+
+cls
+
+echo  ==============================================
+echo =        Cleaning up downloaded file(s)        =
+echo  ==============================================
+
+ping 127.0.0.1 -n 2 > nul
+del %rkdir%\Temp\Vita3k.zip
+if EXIST %rkdir%\Emulators\tmp.txt goto Xroar
 goto completed
 
 
@@ -7683,6 +7759,12 @@ pause
 if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
 goto completed
 
+
+
+
+
+::=================================================================================================================================================================================================================================================================================================================
+::=================================================================================================================================================================================================================================================================================================================
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
