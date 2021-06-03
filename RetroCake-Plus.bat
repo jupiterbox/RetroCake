@@ -227,7 +227,7 @@ goto GITerror
 ::Main menu selection.
 cls
 echo .
-echo   RetroCake-Plus                              Modified date: June 1, 2021
+echo   RetroCake-Plus                              Modified date: June 2, 2021
 echo  =========================================================================
 echo =                                                                         =
 Echo =    1.) Automated Installers                                             =
@@ -6266,7 +6266,6 @@ goto GetRACores
 ::=================================================================================================================================================================================================================================================================================================================
 
 :updateRA
-
 cls
 echo .
 echo  ==================================================================
@@ -6331,9 +6330,7 @@ del "%rkdir%\Temp\RetroArch_x64.zip" /q
 goto UpdateRACoresQ
 
 
-
 :updateRAn
-
 cls
 echo .
 echo  ==================================================================
@@ -6353,7 +6350,7 @@ echo .
 echo .
 %rkdir%\Tools\7za\7za.exe a "%rkdir%\Temp\Backup\Backup_RetroArch_%gooddayte%_%goodthyme%.zip" "%rkdir%\RetroArch\"
 rmdir "%rkdir%\RetroArch" /s /q
-cls
+
 
 cls
 echo .
@@ -6408,9 +6405,7 @@ If Errorlevel 1 Goto BackupRACores
 
 
 
-
 :BackupRACores
-
 cls
 echo .
 echo  ==================================================================
@@ -6429,7 +6424,6 @@ goto GetRACores
 
 
 :GetRACores
-
 cls
 echo .
 echo .
@@ -6575,8 +6569,8 @@ echo .
 
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/AppleWin/AppleWin/releases/download/v1.30.2.0/AppleWin1.30.2.0.zip','%rkdir%\Temp\AppleWin.zip')
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\AppleWin.zip" -o"%rkdir%\Emulators\AppleWin" -aoa > nul
-cls
 
+cls
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -6619,7 +6613,6 @@ powershell -command Start-BitsTransfer -Source http://www.mkw.me.uk/beebem/BeebE
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\BeebEm.zip" -o"%rkdir%\Emulators" -aoa > nul
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -6661,7 +6654,6 @@ powershell -command Start-BitsTransfer -Source http://bluemsx.msxblue.com/rel_do
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\BlueMSX.zip" -o"%rkdir%\Emulators\BlueMSX" -aoa > nul
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -6670,7 +6662,6 @@ ping 127.0.0.1 -n 3 > nul
 del %rkdir%\Temp\BlueMSX.zip
 if EXIST %rkdir%\Emulators\tmp.txt goto ColecoEmu
 goto completed
-
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -6703,7 +6694,6 @@ powershell -command Start-BitsTransfer -Source https://fms.komkon.org/ColEm/ColE
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\colem.zip" -o"%rkdir%\Emulators\ColEm" -aoa > nul
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -6745,7 +6735,6 @@ powershell -command (New-Object System.Net.WebClient).DownloadFile('https://gith
 ren %rkdir%\Emulators\classic99 Classic99
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -6754,7 +6743,6 @@ ping 127.0.0.1 -n 3 > nul
 del %rkdir%\Temp\Classic99.zip
 if EXIST %rkdir%\Emulators\tmp.txt goto Daphne
 goto completed
-
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -6788,7 +6776,6 @@ mkdir %rkdir%\Emulators\Daphne
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Daphne.zip" -o"%rkdir%\Emulators\Daphne" -aoa > nul
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -6865,7 +6852,6 @@ powershell -command Start-BitsTransfer -Source http://demul.emulation64.com/file
 ::ren %rkdir%\Emulators\Demul-xxx Demul
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -6908,7 +6894,6 @@ powershell -command Start-BitsTransfer -Source https://fs-uae.net/stable/3.0.5/F
 
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -6917,8 +6902,6 @@ ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\FS-UAE.7z
 if EXIST %rkdir%\Emulators\tmp.txt goto Hatari
 goto completed
-
-
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -6960,7 +6943,6 @@ ren %rkdir%\Emulators\hatari-2.1.0_windows64 Hatari
 ren %rkdir%\Emulators\hatari-2.3.1_windows64 Hatari-latest
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -6970,7 +6952,6 @@ del %rkdir%\Temp\Hatari64.zip
 del %rkdir%\Temp\Hatari64Latest.zip
 if EXIST %rkdir%\Emulators\tmp.txt goto jzIntv
 goto completed
-
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7007,7 +6988,6 @@ ren %rkdir%\Emulators\jzintv-20200712-win32-sdl2 JzIntv
 ren %rkdir%\Emulators\jzintv-20200712-linux-x86-64-sdl2 JzIntv-64
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -7017,7 +6997,6 @@ del %rkdir%\Temp\jzIntv.zip
 del %rkdir%\Temp\jzIntv-64.zip
 if EXIST %rkdir%\Emulators\tmp.txt goto MAME
 goto completed
-
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7049,7 +7028,6 @@ powershell -command (New-Object System.Net.WebClient).DownloadFile('https://gith
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Mame64.exe" -o"%rkdir%\Emulators\Mame" -aoa > nul
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -7080,13 +7058,9 @@ echo =================================================================
 
 powershell -command Start-BitsTransfer -Source https://github.com/PCSX2/pcsx2/releases/download/v1.6.0/pcsx2-1.6.0-binaries.7z -Destination "%rkdir%\Temp\PCSX2.7z"
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\PCSX2.7z" -o"%rkdir%\Emulators" -aoa > nul
-ren "%rkdir%\Emulators\PCSX2 1.6.0" PCSX2
-
-
-
+ren "%rkdir%\Emulators\PCSX2 1.6.0" Pcsx2
 
 cls
-
 echo ================================================
 echo =        Cleaning up downloaded file(s)        =
 echo ================================================
@@ -7129,7 +7103,6 @@ powershell -command Start-BitsTransfer -Source https://www.ppsspp.org/files/1_11
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\ppsspp.zip" -o"%rkdir%\Emulators\Ppsspp" -aoa > nul
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -7138,7 +7111,6 @@ ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\ppsspp.zip
 if EXIST %rkdir%\Emulators\tmp.txt goto VICE
 goto completed
-
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7180,7 +7152,6 @@ ren %rkdir%\Emulators\GTK3VICE-3.5-win64 Vice-GTK
 ren %rkdir%\Emulators\SDL2VICE-3.5-win64 Vice-SDL2
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -7189,11 +7160,8 @@ ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\VICE64-old.7z
 del %rkdir%\Temp\VICE64-GTK.7z
 del %rkdir%\Temp\VICE64-SDL2.7z
-del %rkdir%\Emulators\buildnote.txt
-if EXIST %rkdir%\Emulators\tmp.txt goto Vita3k
+if EXIST %rkdir%\Emulators\tmp.txt goto Vita3k-Emu
 goto completed
-
-
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7227,7 +7195,6 @@ powershell -command Start-BitsTransfer -Source https://github.com/Vita3K/Vita3K/
 %rkdir%\Tools\7za\7za.exe x "%rkdir%\Temp\Vita3k.zip" -o"%rkdir%\Emulators\Vita3k" -aoa > nul
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ==============================================
@@ -7236,8 +7203,6 @@ ping 127.0.0.1 -n 2 > nul
 del %rkdir%\Temp\Vita3k.zip
 if EXIST %rkdir%\Emulators\tmp.txt goto Xroar
 goto completed
-
-
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7271,7 +7236,6 @@ powershell -command Start-BitsTransfer -Source https://www.6809.org.uk/xroar/dl/
 ren %rkdir%\Emulators\xroar-0.36.2-w64 Xroar
 
 cls
-
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
 echo  ============================================== 
@@ -7335,7 +7299,6 @@ if EXIST %rkdir%\Emulators\tmp.txt goto CitraEmu
 goto completed
 
 
-
 ::=================================================================================================================================================================================================================================================================================================================
 
 
@@ -7388,8 +7351,6 @@ if EXIST %rkdir%\Emulators\tmp.txt goto Cxbx-ReloadedEmu
 goto completed
 
 
-
-
 ::=================================================================================================================================================================================================================================================================================================================
 
 
@@ -7438,7 +7399,6 @@ pause
 
 if EXIST %rkdir%\Emulators\tmp.txt goto Dolphin-devEmu
 goto completed
-
 
 
 ::=================================================================================================================================================================================================================================================================================================================
@@ -7652,7 +7612,6 @@ if EXIST %rkdir%\Emulators\tmp.txt goto XeniaEmu
 goto completed
 
 
-
 ::=================================================================================================================================================================================================================================================================================================================
 
 
@@ -7706,7 +7665,6 @@ if EXIST %rkdir%\Emulators\tmp.txt goto YuzuEmu
 goto completed
 
 
-
 ::=================================================================================================================================================================================================================================================================================================================
 
 
@@ -7717,9 +7675,7 @@ mkdir %rkdir%\Emulators\Yuzu
 echo Put Yuzu files in this directory > %rkdir%\Emulators\Yuzu\"_  Put  Yuzu  contents  in  here  _.txt"
 start %rkdir%\Emulators\Yuzu
 
-
 cls
-
 echo .
 echo ================================================
 echo =                                              =
@@ -7760,15 +7716,11 @@ if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
 goto completed
 
 
-
-
-
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
-
 
 ::        Rom Scraper Tools
 
@@ -7856,7 +7808,6 @@ goto ScraperMenuDefault
 
 
 :ScraperMenuDefault
-
 cls
 echo .
 echo ===========================================================================
@@ -7889,13 +7840,10 @@ if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
 goto completed
 
 
-
-
 ::=================================================================================================================================================================================================================================================================================================================
 
 ::=================================================================================================================================================================================================================================================================================================================
 ::        Rom Scraper Tools
-
 
 :ScraperSetupCustom
 powershell -command (New-Object System.Net.WebClient).DownloadFile('https://github.com/sselph/scraper/releases/download/v1.4.6/scraper_windows_amd64.zip','%rkdir%\Temp\scraperx64.zip')
@@ -7939,7 +7887,6 @@ goto ScraperMenuCustom
 
 
 :ScraperMenuCustom
-
 cls
 echo .
 echo ===========================================================================
@@ -7972,8 +7919,6 @@ if EXIST %rkdir%\Emulators\tmp.txt goto tmpClean
 goto completed
 
 
-
-
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
 
@@ -7991,14 +7936,7 @@ goto completed
 
 :VCREDISTInstall
 ::Install Visual Studio Redistributables
-
 cls
-echo .
-echo .
-echo .
-echo .
-echo .
-echo .
 echo .
 echo .
 echo .
@@ -8006,25 +7944,26 @@ echo .
 echo .
 echo  ===============================================================
 echo =                                                               =
-echo =    Download / Install:    Visual C++, NET Core Desktop        =
+echo =    Install when necessary....                                 =
+echo =                                                               =
+echo =                           Visual C++, NET Core Desktop        =
 echo =                           and DirectX Runtimes                =
 echo =                                                               =
+echo =                                                               =
 echo =     Important:  Some of these Installers may force Windows    =
-echo =                 to restart !                                  =
+echo =                 to restart immediately !!                     =
 echo =                                                               =
-echo =                 Please save data and close other apps         =
-echo =                 and keep this Command window open             =
-echo =                 before proceeding !!!                         =
-echo =                                                               =
-echo =                 You will need to run RetroCake-Plus.bat       =
-echo =                 to install runtimes several times until       =
-echo =                 entire runtimes are installed and Windows     = 
-echo =                 stops restarting and returns to the           =
-echo =                 Main Menu.                                    =
+echo =                 Run RetroCake-Plus.bat again every time       =
+echo =                 Windows restarts until all runtimes are       =
+echo =                 installed, and returns to the Main menu.      =
 echo =                                                               =
 echo .
-echo .
-pause
+choice /c YN /m ".    Install runtime now   "
+if %errorlevel%==1 goto YesInstallRuntimes
+if %errorlevel%==2 goto menu
+
+:YesInstallRuntimes
+cls
 echo .
 echo .
 echo .
@@ -8056,7 +7995,6 @@ powershell -command Start-BitsTransfer -Source https://download.microsoft.com/do
 powershell -command Start-BitsTransfer -Source https://download.visualstudio.microsoft.com/download/pr/42b8e14d-6f6d-421f-a150-39adc1727e07/c2963b894eaea409ca33f8c7076c41a8/windowsdesktop-runtime-3.1.11-win-x86.exe -Destination "%rkdir%\Temp\VC-Redists\NET_Core_Runtime_3.1.11_x86.exe"
 powershell -command Start-BitsTransfer -Source https://download.visualstudio.microsoft.com/download/pr/3f1cc4f7-0c1a-48ca-9551-a8447fa55892/ed9809822448f55b649858920afb35cb/windowsdesktop-runtime-3.1.11-win-x64.exe -Destination "%rkdir%\Temp\VC-Redists\NET_Core_Runtime_3.1.11_x64.exe"
 
-
 %rkdir%\Temp\VC-Redists\VC_Redist_2019_32.exe /install /quiet
 %rkdir%\Temp\VC-Redists\VC_Redist_2019_64.exe /install /quiet
 %rkdir%\Temp\VC-Redists\VC_Redist_2017.exe /install /quiet
@@ -8066,7 +8004,6 @@ powershell -command Start-BitsTransfer -Source https://download.visualstudio.mic
 %rkdir%\Temp\VC-Redists\VC_Redist_2010_64.exe /install /quiet
 %rkdir%\Temp\VC-Redists\NET_Core_Runtime_3.1.11_x86.exe /install /quiet
 %rkdir%\Temp\VC-Redists\NET_Core_Runtime_3.1.11_x64.exe /install /quiet
-
 
 cls
 echo  ==============================================
@@ -8108,7 +8045,6 @@ del "%rkdir%\Temp\dxwebsetup.exe"
 powershell -command Start-BitsTransfer -Source https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe -Destination "%rkdir%\Temp\dxwebsetup.exe"
 %rkdir%\Temp\dxwebsetup.exe /Q
 
-
 cls
 echo  ==============================================
 echo =        Cleaning up downloaded file(s)        =
@@ -8118,11 +8054,8 @@ del "%rkdir%\Temp\dxwebsetup.exe"
 goto menu
 
 
-
-
 ::=================================================================================================================================================================================================================================================================================================================
 ::=================================================================================================================================================================================================================================================================================================================
-
 
 
 ::Informational Echoes
